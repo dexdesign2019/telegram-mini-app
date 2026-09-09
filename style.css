@@ -1,216 +1,339 @@
+```css
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
 
 
 :root {
+
     --bg: #07080d;
+
     --surface: #10121a;
     --surface-2: #161923;
 
-    --border: rgba(255,255,255,.08);
+    --border:
+        rgba(255,255,255,.08);
 
     --white: #ffffff;
+
     --muted: #858999;
 
     --yellow: #f5c542;
+
     --yellow-light: #ffe48a;
 
     --red: #e53935;
+
     --red-dark: #a91f1c;
 
     --green: #48d27a;
+
 }
 
 
+/* =========================================================
+   RESET
+========================================================= */
+
 * {
+
     box-sizing: border-box;
+
 }
 
 
 html,
 body {
+
     margin: 0;
+
     padding: 0;
 
     width: 100%;
+
     min-height: 100%;
 
-    background: var(--bg);
+    background:
+        var(--bg);
+
 }
 
 
 body {
-    font-family: "Vazirmatn", Arial, sans-serif;
 
-    color: var(--white);
+    font-family:
+        "Vazirmatn",
+        Arial,
+        sans-serif;
+
+    color:
+        var(--white);
 
     overflow-x: hidden;
 
-    user-select: none;
-    -webkit-user-select: none;
+    user-select:
+        none;
 
-    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select:
+        none;
 
-    overscroll-behavior: none;
+    -webkit-tap-highlight-color:
+        transparent;
+
+    overscroll-behavior:
+        none;
+
 }
 
 
 button,
 input {
-    font-family: inherit;
+
+    font-family:
+        inherit;
+
 }
 
 
 button {
+
     border: none;
+
     outline: none;
 
-    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+
 }
 
 
+/* =========================================================
+   APP
+========================================================= */
+
 .app {
-    position: relative;
 
-    width: 100%;
-    max-width: 560px;
+    position:
+        relative;
 
-    min-height: 100vh;
+    width:
+        100%;
 
-    margin: 0 auto;
+    max-width:
+        560px;
 
-    overflow: hidden;
+    min-height:
+        100vh;
+
+    margin:
+        0 auto;
+
+    overflow:
+        hidden;
 
     background:
+
         radial-gradient(
             circle at 85% 5%,
             rgba(245,197,66,.05),
             transparent 28%
         ),
+
         radial-gradient(
             circle at 10% 80%,
             rgba(74,88,232,.08),
             transparent 30%
         ),
+
         var(--bg);
+
 }
 
 
+/* =========================================================
+   GLOW
+========================================================= */
+
 .bg-glow {
-    position: fixed;
 
-    width: 220px;
-    height: 220px;
+    position:
+        fixed;
 
-    border-radius: 50%;
+    width:
+        220px;
 
-    filter: blur(100px);
+    height:
+        220px;
 
-    pointer-events: none;
+    border-radius:
+        50%;
+
+    filter:
+        blur(100px);
+
+    pointer-events:
+        none;
+
 }
 
 
 .glow-a {
-    right: -120px;
-    top: -100px;
 
-    background: rgba(245,197,66,.07);
+    right:
+        -120px;
+
+    top:
+        -100px;
+
+    background:
+        rgba(245,197,66,.07);
+
 }
 
 
 .glow-b {
-    left: -120px;
-    bottom: -100px;
 
-    background: rgba(74,88,232,.08);
+    left:
+        -120px;
+
+    bottom:
+        -100px;
+
+    background:
+        rgba(74,88,232,.08);
+
 }
 
 
-/* =========================
-   SCREENS
-========================= */
+/* =========================================================
+   SCREEN
+========================================================= */
 
 .screen {
-    display: none;
 
-    position: relative;
+    display:
+        none;
 
-    min-height: 100vh;
+    position:
+        relative;
 
-    padding: 22px 18px 30px;
+    min-height:
+        100vh;
 
-    z-index: 2;
+    padding:
+        22px 18px 30px;
+
+    z-index:
+        2;
+
 }
 
 
 .screen.active {
-    display: block;
+
+    display:
+        block;
+
 }
 
 
-/* =========================
+/* =========================================================
    BRAND
-========================= */
+========================================================= */
 
 .brand-center {
-    display: flex;
 
-    align-items: center;
-    justify-content: center;
+    display:
+        flex;
 
-    gap: 10px;
+    align-items:
+        center;
 
-    margin-top: 25px;
-    margin-bottom: 75px;
+    justify-content:
+        center;
+
+    gap:
+        10px;
+
+    margin-top:
+        25px;
+
+    margin-bottom:
+        75px;
+
 }
 
 
 .brand-mark {
-    width: 43px;
-    height: 43px;
 
-    display: flex;
+    width:
+        43px;
 
-    align-items: center;
-    justify-content: center;
+    height:
+        43px;
 
-    border-radius: 13px;
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        13px;
 
     background:
+
         linear-gradient(
             145deg,
             #6976ff,
             #303cae
         );
 
-    font-size: 14px;
+    font-size:
+        14px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
     box-shadow:
-        0 10px 40px rgba(74,88,232,.30);
+
+        0 10px 40px
+        rgba(74,88,232,.30);
+
 }
 
 
 .brand-title {
-    font-size: 15px;
 
-    letter-spacing: 1.5px;
+    font-size:
+        15px;
 
-    font-weight: 800;
+    letter-spacing:
+        1.5px;
+
+    font-weight:
+        800;
+
 }
 
 
-/* =========================
+/* =========================================================
    LICENSE
-========================= */
+========================================================= */
 
 .license-card {
-    width: 100%;
-    max-width: 410px;
 
-    margin: auto;
+    width:
+        100%;
 
-    padding: 30px 22px 24px;
+    max-width:
+        410px;
+
+    margin:
+        auto;
+
+    padding:
+        30px 22px 24px;
 
     background:
         rgba(17,19,28,.86);
@@ -218,142 +341,212 @@ button {
     border:
         1px solid var(--border);
 
-    border-radius: 27px;
+    border-radius:
+        27px;
 
-    backdrop-filter: blur(20px);
+    backdrop-filter:
+        blur(20px);
 
     box-shadow:
-        0 30px 70px rgba(0,0,0,.38);
 
-    text-align: center;
+        0 30px 70px
+        rgba(0,0,0,.38);
+
+    text-align:
+        center;
+
 }
 
 
 .license-symbol {
-    width: 58px;
-    height: 58px;
 
-    margin: 0 auto 18px;
+    width:
+        58px;
 
-    display: flex;
+    height:
+        58px;
 
-    align-items: center;
-    justify-content: center;
+    margin:
+        0 auto 18px;
 
-    border-radius: 18px;
+    display:
+        flex;
 
-    color: var(--yellow-light);
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        18px;
+
+    color:
+        var(--yellow-light);
 
     background:
         rgba(245,197,66,.08);
 
     border:
-        1px solid rgba(245,197,66,.13);
+        1px solid
+        rgba(245,197,66,.13);
 
-    font-size: 25px;
+    font-size:
+        25px;
+
 }
 
 
 .license-card h1 {
-    margin: 0;
 
-    font-size: 23px;
+    margin:
+        0;
 
-    font-weight: 800;
+    font-size:
+        23px;
+
+    font-weight:
+        800;
+
 }
 
 
 .license-card p {
-    margin: 10px 0 25px;
 
-    color: var(--muted);
+    margin:
+        10px 0 25px;
 
-    font-size: 12px;
+    color:
+        var(--muted);
 
-    line-height: 1.9;
+    font-size:
+        12px;
+
+    line-height:
+        1.9;
+
 }
 
 
 #licenseInput {
-    width: 100%;
-    height: 53px;
 
-    padding: 0 15px;
+    width:
+        100%;
 
-    border-radius: 15px;
+    height:
+        53px;
+
+    padding:
+        0 15px;
+
+    border-radius:
+        15px;
 
     border:
-        1px solid rgba(255,255,255,.08);
+        1px solid
+        rgba(255,255,255,.08);
 
-    outline: none;
+    outline:
+        none;
 
     background:
         rgba(255,255,255,.035);
 
-    color: white;
+    color:
+        white;
 
-    text-align: center;
+    text-align:
+        center;
 
-    font-size: 13px;
+    font-size:
+        13px;
 
-    direction: ltr;
+    direction:
+        ltr;
 
-    letter-spacing: 1px;
+    letter-spacing:
+        1px;
+
 }
 
 
 #licenseInput::placeholder {
-    color: #636779;
+
+    color:
+        #636779;
+
 }
 
 
 #licenseInput:focus {
+
     border-color:
         rgba(245,197,66,.50);
 
     box-shadow:
-        0 0 0 4px rgba(245,197,66,.05);
+        0 0 0 4px
+        rgba(245,197,66,.05);
+
 }
 
 
 .primary-button {
-    width: 100%;
-    height: 52px;
 
-    margin-top: 12px;
+    width:
+        100%;
 
-    border-radius: 15px;
+    height:
+        52px;
+
+    margin-top:
+        12px;
+
+    border-radius:
+        15px;
 
     background:
+
         linear-gradient(
             135deg,
             #ffe27a,
             #f5c542
         );
 
-    color: #151515;
+    color:
+        #151515;
 
-    font-size: 14px;
+    font-size:
+        14px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
     box-shadow:
-        0 12px 35px rgba(245,197,66,.15);
 
-    cursor: pointer;
+        0 12px 35px
+        rgba(245,197,66,.15);
+
 }
 
 
 .primary-button:active {
-    transform: scale(.98);
+
+    transform:
+        scale(.98);
+
 }
 
 
 .secondary-button {
-    width: 100%;
-    height: 52px;
 
-    border-radius: 15px;
+    width:
+        100%;
+
+    height:
+        52px;
+
+    border-radius:
+        15px;
 
     background:
         rgba(255,255,255,.06);
@@ -361,224 +554,340 @@ button {
     border:
         1px solid var(--border);
 
-    color: white;
+    color:
+        white;
 
-    font-size: 14px;
+    font-size:
+        14px;
 
-    cursor: pointer;
 }
 
+
+/* =========================================================
+   MESSAGE
+========================================================= */
 
 .message {
-    min-height: 19px;
 
-    margin-top: 12px;
+    min-height:
+        19px;
 
-    color: #ff6f6f;
+    margin-top:
+        12px;
 
-    font-size: 11px;
+    color:
+        #ff6f6f;
+
+    font-size:
+        11px;
+
 }
 
 
-/* =========================
-   HOME HEADER
-========================= */
+/* =========================================================
+   HOME
+========================================================= */
 
 .top-header {
-    display: flex;
 
-    align-items: center;
-    justify-content: space-between;
+    display:
+        flex;
 
-    gap: 10px;
+    align-items:
+        center;
 
-    margin-bottom: 74px;
+    justify-content:
+        space-between;
+
+    gap:
+        10px;
+
+    margin-bottom:
+        74px;
+
 }
 
 
 .score-box {
-    display: flex;
 
-    align-items: center;
+    display:
+        flex;
 
-    gap: 8px;
+    align-items:
+        center;
 
-    padding: 8px 10px;
+    gap:
+        8px;
+
+    padding:
+        8px 10px;
 
     border:
         1px solid var(--border);
 
-    border-radius: 14px;
+    border-radius:
+        14px;
 
     background:
         rgba(255,255,255,.035);
+
 }
 
 
 .score-star {
-    width: 31px;
-    height: 31px;
 
-    display: flex;
+    width:
+        31px;
 
-    align-items: center;
-    justify-content: center;
+    height:
+        31px;
 
-    border-radius: 9px;
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        9px;
 
     background:
         rgba(245,197,66,.09);
 
-    color: var(--yellow);
+    color:
+        var(--yellow);
 
-    font-size: 15px;
+    font-size:
+        15px;
+
 }
 
 
 .score-text {
-    display: flex;
 
-    flex-direction: column;
+    display:
+        flex;
 
-    align-items: flex-start;
+    flex-direction:
+        column;
+
+    align-items:
+        flex-start;
+
 }
 
 
 .score-text span {
-    color: var(--muted);
 
-    font-size: 8px;
+    color:
+        var(--muted);
+
+    font-size:
+        8px;
+
 }
 
 
 .score-text strong {
-    margin-top: 1px;
 
-    font-size: 13px;
+    margin-top:
+        1px;
+
+    font-size:
+        13px;
+
 }
 
 
-/* =========================
+/* =========================================================
    PROFILE
-========================= */
+========================================================= */
 
 .profile-mini {
-    display: flex;
 
-    align-items: center;
+    display:
+        flex;
 
-    gap: 8px;
+    align-items:
+        center;
 
-    max-width: 60%;
+    gap:
+        8px;
+
+    max-width:
+        60%;
+
 }
 
 
 .profile-photo,
 .profile-fallback {
-    width: 43px;
-    height: 43px;
 
-    flex-shrink: 0;
+    width:
+        43px;
 
-    border-radius: 50%;
+    height:
+        43px;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        50%;
+
 }
 
 
 .profile-photo {
-    object-fit: cover;
+
+    object-fit:
+        cover;
 
     border:
-        2px solid rgba(255,255,255,.10);
+        2px solid
+        rgba(255,255,255,.10);
+
 }
 
 
 .profile-fallback {
-    display: flex;
 
-    align-items: center;
-    justify-content: center;
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
 
     background:
+
         linear-gradient(
             145deg,
             #5866ee,
             #2c379e
         );
 
-    font-size: 14px;
+    font-size:
+        14px;
 
-    font-weight: 800;
+    font-weight:
+        800;
+
 }
 
 
 .profile-info {
-    display: flex;
 
-    flex-direction: column;
+    display:
+        flex;
 
-    align-items: flex-end;
+    flex-direction:
+        column;
 
-    min-width: 0;
+    align-items:
+        flex-end;
+
+    min-width:
+        0;
+
 }
 
 
 .profile-info strong,
 .profile-info span {
-    max-width: 130px;
 
-    overflow: hidden;
+    max-width:
+        130px;
 
-    text-overflow: ellipsis;
+    overflow:
+        hidden;
 
-    white-space: nowrap;
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+
 }
 
 
 .profile-info strong {
-    font-size: 12px;
+
+    font-size:
+        12px;
+
 }
 
 
 .profile-info span {
-    margin-top: 2px;
 
-    color: var(--muted);
+    margin-top:
+        2px;
 
-    direction: ltr;
+    color:
+        var(--muted);
 
-    font-size: 9px;
+    direction:
+        ltr;
+
+    font-size:
+        9px;
+
 }
 
 
-/* =========================
+/* =========================================================
    LEVEL
-========================= */
+========================================================= */
 
 .level-area {
-    display: flex;
 
-    align-items: center;
-    justify-content: center;
+    display:
+        flex;
 
-    margin-bottom: 60px;
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin-bottom:
+        60px;
+
 }
 
 
 .level-ring {
-    width: 180px;
-    height: 180px;
 
-    display: flex;
+    width:
+        180px;
 
-    align-items: center;
-    justify-content: center;
+    height:
+        180px;
 
-    border-radius: 50%;
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
 
     border:
-        2px solid rgba(245,197,66,.92);
+        2px solid
+        rgba(245,197,66,.92);
 
     background:
+
         radial-gradient(
             circle,
             rgba(245,197,66,.04),
@@ -586,11 +895,18 @@ button {
         );
 
     box-shadow:
-        0 0 20px rgba(245,197,66,.18),
-        0 0 70px rgba(245,197,66,.08);
+
+        0 0 20px
+        rgba(245,197,66,.18),
+
+        0 0 70px
+        rgba(245,197,66,.08);
 
     animation:
-        ringGlow 3s ease-in-out infinite;
+        ringGlow 3s
+        ease-in-out
+        infinite;
+
 }
 
 
@@ -598,155 +914,231 @@ button {
 
     0%,
     100% {
+
         box-shadow:
-            0 0 18px rgba(245,197,66,.17),
-            0 0 55px rgba(245,197,66,.07);
+
+            0 0 18px
+            rgba(245,197,66,.17),
+
+            0 0 55px
+            rgba(245,197,66,.07);
+
     }
 
+
     50% {
+
         box-shadow:
-            0 0 28px rgba(245,197,66,.28),
-            0 0 78px rgba(245,197,66,.12);
+
+            0 0 28px
+            rgba(245,197,66,.28),
+
+            0 0 78px
+            rgba(245,197,66,.12);
+
     }
 
 }
 
 
 .level-inner {
-    display: flex;
 
-    flex-direction: column;
+    display:
+        flex;
 
-    align-items: center;
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
 }
 
 
 .level-inner strong {
-    font-size: 34px;
 
-    line-height: 1;
+    font-size:
+        34px;
+
+    line-height:
+        1;
+
 }
 
 
 .level-inner span {
-    margin-top: 7px;
 
-    color: var(--yellow);
+    margin-top:
+        7px;
 
-    font-size: 10px;
+    color:
+        var(--yellow);
+
+    font-size:
+        10px;
+
 }
 
 
-/* =========================
-   HOME CARDS
-========================= */
+/* =========================================================
+   HOME GRID
+========================================================= */
 
 .home-grid {
-    display: grid;
+
+    display:
+        grid;
 
     grid-template-columns:
         repeat(2, minmax(0,1fr));
 
-    gap: 12px;
+    gap:
+        12px;
+
 }
 
 
 .home-card {
-    min-height: 96px;
 
-    padding: 15px;
+    min-height:
+        96px;
 
-    display: flex;
+    padding:
+        15px;
 
-    flex-direction: column;
+    display:
+        flex;
 
-    align-items: flex-start;
+    flex-direction:
+        column;
 
-    justify-content: space-between;
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
 
     border:
         1px solid var(--border);
 
-    border-radius: 20px;
+    border-radius:
+        20px;
 
     background:
+
         linear-gradient(
             145deg,
             rgba(24,26,38,.76),
             rgba(14,16,24,.84)
         );
 
-    color: white;
+    color:
+        white;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
     transition:
         transform .18s,
         border-color .18s;
+
 }
 
 
 .home-card:active {
-    transform: scale(.97);
+
+    transform:
+        scale(.97);
+
 }
 
 
 .home-card:hover {
+
     border-color:
         rgba(245,197,66,.15);
+
 }
 
 
 .home-card-icon {
-    width: 36px;
-    height: 36px;
 
-    display: flex;
+    width:
+        36px;
 
-    align-items: center;
-    justify-content: center;
+    height:
+        36px;
 
-    border-radius: 11px;
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        11px;
 
     background:
         rgba(245,197,66,.08);
 
-    color: var(--yellow);
+    color:
+        var(--yellow);
 
-    font-size: 15px;
+    font-size:
+        15px;
+
 }
 
 
 .home-card > span:last-child {
-    font-size: 12px;
 
-    font-weight: 600;
+    font-size:
+        12px;
+
+    font-weight:
+        600;
+
 }
 
 
-/* =========================
+/* =========================================================
    MINI GAME BUTTON
-========================= */
+========================================================= */
 
 .mini-game-button {
-    width: 100%;
-    height: 64px;
 
-    margin-top: 16px;
+    width:
+        100%;
 
-    display: flex;
+    height:
+        64px;
 
-    align-items: center;
+    margin-top:
+        16px;
 
-    gap: 12px;
+    display:
+        flex;
 
-    padding: 0 17px;
+    align-items:
+        center;
 
-    border-radius: 18px;
+    gap:
+        12px;
 
-    color: white;
+    padding:
+        0 17px;
+
+    border-radius:
+        18px;
+
+    color:
+        white;
 
     background:
+
         linear-gradient(
             135deg,
             #f03d38,
@@ -754,377 +1146,611 @@ button {
         );
 
     box-shadow:
-        0 14px 40px rgba(229,57,53,.18);
 
-    cursor: pointer;
+        0 14px 40px
+        rgba(229,57,53,.18);
+
 }
 
 
 .mini-game-button:active {
-    transform: scale(.985);
+
+    transform:
+        scale(.985);
+
 }
 
 
 .mini-game-icon {
-    font-size: 23px;
+
+    font-size:
+        23px;
+
 }
 
 
 .mini-game-label {
-    flex: 1;
 
-    text-align: right;
+    flex:
+        1;
 
-    font-size: 14px;
+    text-align:
+        right;
 
-    font-weight: 800;
+    font-size:
+        14px;
+
+    font-weight:
+        800;
+
 }
 
 
 .mini-game-arrow {
-    font-size: 21px;
+
+    font-size:
+        21px;
+
 }
 
 
 .footer {
-    margin-top: 28px;
 
-    text-align: center;
+    margin-top:
+        28px;
 
-    color: #454957;
+    text-align:
+        center;
 
-    font-size: 8px;
+    color:
+        #454957;
 
-    letter-spacing: 1px;
+    font-size:
+        8px;
+
+    letter-spacing:
+        1px;
+
 }
 
 
-/* =========================
+/* =========================================================
    PAGE HEADER
-========================= */
+========================================================= */
 
 .page-header {
-    display: flex;
 
-    align-items: center;
+    display:
+        flex;
 
-    gap: 12px;
+    align-items:
+        center;
 
-    margin-bottom: 28px;
+    gap:
+        12px;
+
+    margin-bottom:
+        28px;
+
 }
 
 
 .page-header > div:nth-child(2) {
-    flex: 1;
+
+    flex:
+        1;
+
 }
 
 
 .page-header h1 {
-    margin: 0;
 
-    font-size: 22px;
+    margin:
+        0;
+
+    font-size:
+        22px;
+
 }
 
 
 .page-header p {
-    margin: 3px 0 0;
 
-    color: var(--muted);
+    margin:
+        3px 0 0;
 
-    font-size: 10px;
+    color:
+        var(--muted);
+
+    font-size:
+        10px;
+
 }
 
 
 .page-back {
-    width: 41px;
-    height: 41px;
 
-    border-radius: 13px;
+    width:
+        41px;
+
+    height:
+        41px;
+
+    border-radius:
+        13px;
 
     background:
         rgba(255,255,255,.05);
 
-    color: white;
+    color:
+        white;
 
-    font-size: 18px;
+    font-size:
+        18px;
 
-    cursor: pointer;
 }
 
 
+/* =========================================================
+   REWARD
+========================================================= */
+
 .reward-score {
-    padding: 8px 10px;
+
+    padding:
+        8px 10px;
 
     border:
         1px solid var(--border);
 
-    border-radius: 12px;
+    border-radius:
+        12px;
 
-    color: var(--yellow);
+    color:
+        var(--yellow);
 
-    font-size: 12px;
+    font-size:
+        12px;
+
 }
 
 
-/* =========================
-   REWARDS
-========================= */
-
 .rewards-grid {
-    display: grid;
+
+    display:
+        grid;
 
     grid-template-columns:
-        repeat(2,minmax(0,1fr));
+        repeat(2, minmax(0,1fr));
 
-    gap: 12px;
+    gap:
+        12px;
+
 }
 
 
 .reward-card {
-    padding: 16px;
+
+    padding:
+        16px;
 
     border:
         1px solid var(--border);
 
-    border-radius: 19px;
+    border-radius:
+        19px;
 
     background:
         rgba(17,19,28,.75);
+
 }
 
 
 .reward-icon {
-    font-size: 29px;
 
-    margin-bottom: 13px;
+    font-size:
+        29px;
+
+    margin-bottom:
+        13px;
+
 }
 
 
 .reward-name {
-    min-height: 36px;
 
-    font-size: 12px;
+    min-height:
+        36px;
 
-    font-weight: 700;
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
 }
 
 
 .reward-price {
-    margin-top: 7px;
 
-    color: var(--yellow);
+    margin-top:
+        7px;
 
-    font-size: 11px;
+    color:
+        var(--yellow);
+
+    font-size:
+        11px;
+
 }
 
 
 .reward-button {
-    width: 100%;
-    height: 34px;
 
-    margin-top: 13px;
+    width:
+        100%;
 
-    border-radius: 10px;
+    height:
+        34px;
+
+    margin-top:
+        13px;
+
+    border-radius:
+        10px;
 
     background:
         rgba(245,197,66,.10);
 
-    color: var(--yellow-light);
+    color:
+        var(--yellow-light);
 
-    font-size: 10px;
+    font-size:
+        10px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
-    cursor: pointer;
 }
 
 
 .reward-button.disabled {
-    opacity: .35;
 
-    cursor: not-allowed;
+    opacity:
+        .35;
+
 }
 
 
-/* =========================
+/* =========================================================
    GAME
-========================= */
+========================================================= */
 
 .game-screen {
-    padding: 0;
 
-    height: 100vh;
-    min-height: 100vh;
+    padding:
+        0;
 
-    overflow: hidden;
+    height:
+        100vh;
 
-    background: #101215;
+    min-height:
+        100vh;
+
+    overflow:
+        hidden;
+
+    background:
+        #101215;
+
 }
 
 
 .game-topbar {
-    position: absolute;
 
-    top: 14px;
-    left: 14px;
-    right: 14px;
+    position:
+        absolute;
 
-    z-index: 10;
+    top:
+        14px;
 
-    display: flex;
+    left:
+        10px;
 
-    align-items: center;
+    right:
+        10px;
 
-    justify-content: space-between;
+    z-index:
+        10;
 
-    gap: 10px;
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        6px;
+
 }
 
 
 .game-back {
-    width: 39px;
-    height: 39px;
 
-    border-radius: 12px;
+    width:
+        39px;
+
+    height:
+        39px;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        12px;
 
     background:
         rgba(10,10,12,.72);
 
-    color: white;
+    color:
+        white;
 
-    font-size: 22px;
+    font-size:
+        22px;
 
-    backdrop-filter: blur(12px);
+    backdrop-filter:
+        blur(12px);
 
-    cursor: pointer;
+}
+
+
+.leaderboard-button {
+
+    height:
+        39px;
+
+    padding:
+        0 9px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        4px;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(245,197,66,.10);
+
+    border:
+        1px solid
+        rgba(245,197,66,.16);
+
+    color:
+        var(--yellow);
+
+    font-size:
+        9px;
+
+    font-weight:
+        700;
+
+}
+
+
+.leaderboard-button span {
+
+    white-space:
+        nowrap;
+
 }
 
 
 .game-distance,
 .game-score {
-    padding: 7px 12px;
 
-    border-radius: 12px;
+    min-width:
+        60px;
+
+    padding:
+        7px 9px;
+
+    border-radius:
+        12px;
 
     background:
         rgba(10,10,12,.72);
 
-    backdrop-filter: blur(12px);
+    backdrop-filter:
+        blur(12px);
 
     border:
-        1px solid rgba(255,255,255,.08);
+        1px solid
+        rgba(255,255,255,.08);
 
-    text-align: center;
+    text-align:
+        center;
+
 }
 
 
 .game-distance span,
 .game-score span {
-    display: block;
 
-    color: #969aa7;
+    display:
+        block;
 
-    font-size: 8px;
+    color:
+        #969aa7;
+
+    font-size:
+        8px;
+
 }
 
 
 .game-distance strong,
 .game-score strong {
-    display: block;
 
-    margin-top: 2px;
+    display:
+        block;
 
-    font-size: 13px;
+    margin-top:
+        2px;
+
+    font-size:
+        13px;
+
 }
 
 
 .game-world {
-    position: relative;
 
-    width: 100%;
-    height: 100vh;
+    position:
+        relative;
 
-    overflow: hidden;
+    width:
+        100%;
 
-    touch-action: none;
+    height:
+        100vh;
+
+    overflow:
+        hidden;
+
+    touch-action:
+        none;
+
 }
 
 
 #gameCanvas {
-    display: block;
 
-    width: 100%;
-    height: 100%;
+    display:
+        block;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
 }
 
 
 .point-animation {
-    position: absolute;
 
-    left: 50%;
-    top: 16%;
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        16%;
 
     transform:
-        translate(-50%, 0);
+        translate(-50%,0);
 
-    opacity: 0;
+    opacity:
+        0;
 
-    pointer-events: none;
+    pointer-events:
+        none;
 
-    color: var(--yellow);
+    color:
+        var(--yellow);
 
-    font-size: 29px;
+    font-size:
+        29px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
     text-shadow:
-        0 0 20px rgba(245,197,66,.45);
+        0 0 20px
+        rgba(245,197,66,.45);
+
 }
 
 
 .point-animation.show {
+
     animation:
         pointUp .8s ease-out;
+
 }
 
 
 @keyframes pointUp {
 
     0% {
+
         transform:
             translate(-50%,20px)
             scale(.8);
 
-        opacity: 0;
+        opacity:
+            0;
+
     }
+
 
     25% {
-        opacity: 1;
+
+        opacity:
+            1;
+
     }
 
+
     100% {
+
         transform:
             translate(-50%,-25px)
             scale(1.08);
 
-        opacity: 0;
+        opacity:
+            0;
+
     }
 
 }
 
 
 .swipe-hint {
-    position: absolute;
 
-    left: 50%;
-    bottom: 25px;
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    bottom:
+        25px;
 
     transform:
         translateX(-50%);
 
-    padding: 8px 13px;
+    padding:
+        8px 13px;
 
-    border-radius: 10px;
+    border-radius:
+        10px;
 
     background:
         rgba(0,0,0,.28);
@@ -1132,249 +1758,237 @@ button {
     color:
         rgba(255,255,255,.50);
 
-    font-size: 9px;
+    font-size:
+        9px;
 
-    pointer-events: none;
+    pointer-events:
+        none;
 
-    white-space: nowrap;
+    white-space:
+        nowrap;
+
 }
 
 
-/* =========================
+/* =========================================================
    GAME OVER
-========================= */
+========================================================= */
 
 .game-over {
-    position: absolute;
 
-    inset: 0;
+    position:
+        absolute;
 
-    z-index: 30;
+    inset:
+        0;
 
-    display: flex;
+    z-index:
+        30;
 
-    align-items: center;
-    justify-content: center;
+    display:
+        flex;
 
-    padding: 20px;
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
 
     background:
         rgba(0,0,0,.64);
 
-    backdrop-filter: blur(10px);
+    backdrop-filter:
+        blur(10px);
+
 }
 
 
 .game-over.hidden {
-    display: none;
+
+    display:
+        none;
+
 }
 
 
 .game-over-card {
-    width: 100%;
-    max-width: 340px;
 
-    padding: 26px 20px 20px;
+    width:
+        100%;
+
+    max-width:
+        340px;
+
+    padding:
+        26px 20px 20px;
 
     border:
-        1px solid rgba(255,255,255,.08);
+        1px solid
+        rgba(255,255,255,.08);
 
-    border-radius: 25px;
+    border-radius:
+        25px;
 
     background:
         #11141c;
 
-    text-align: center;
+    text-align:
+        center;
 
     box-shadow:
-        0 30px 80px rgba(0,0,0,.50);
+        0 30px 80px
+        rgba(0,0,0,.50);
+
 }
 
 
 .game-over-icon {
-    font-size: 36px;
 
-    margin-bottom: 10px;
+    font-size:
+        36px;
+
+    margin-bottom:
+        10px;
+
 }
 
 
 .game-over-title {
-    font-size: 21px;
 
-    font-weight: 800;
+    font-size:
+        21px;
+
+    font-weight:
+        800;
+
 }
 
 
 .game-over-subtitle {
-    margin-top: 5px;
 
-    color: var(--muted);
+    margin-top:
+        5px;
 
-    font-size: 11px;
+    color:
+        var(--muted);
+
+    font-size:
+        11px;
+
 }
 
 
 .final-score {
-    margin-top: 22px;
 
-    padding: 15px;
+    margin-top:
+        22px;
 
-    border-radius: 17px;
+    padding:
+        15px;
+
+    border-radius:
+        17px;
 
     background:
         rgba(245,197,66,.06);
 
     border:
-        1px solid rgba(245,197,66,.10);
+        1px solid
+        rgba(245,197,66,.10);
+
 }
 
 
 .final-score span {
-    display: block;
 
-    color: var(--muted);
+    display:
+        block;
 
-    font-size: 10px;
+    color:
+        var(--muted);
+
+    font-size:
+        10px;
+
 }
 
 
 .final-score strong {
-    display: block;
 
-    margin-top: 4px;
+    display:
+        block;
 
-    color: var(--yellow-light);
+    margin-top:
+        4px;
 
-    font-size: 28px;
+    color:
+        var(--yellow-light);
+
+    font-size:
+        28px;
+
 }
 
 
 .game-over-buttons {
-    display: grid;
+
+    display:
+        grid;
 
     grid-template-columns:
         1fr 1fr;
 
-    gap: 10px;
+    gap:
+        10px;
 
-    margin-top: 15px;
+    margin-top:
+        15px;
+
 }
 
 
 .game-over-buttons .primary-button {
-    margin-top: 0;
-}
 
-
-/* =========================
-   PLACEHOLDER
-========================= */
-
-.coming-soon {
-    padding: 35px 20px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 22px;
-
-    background:
-        rgba(17,19,28,.75);
-
-    color: var(--muted);
-
-    text-align: center;
-
-    font-size: 12px;
-}
-
-
-/* =========================
-   SMALL SCREENS
-========================= */
-
-@media (max-width: 360px) {
-
-    .top-header {
-        margin-bottom: 55px;
-    }
-
-    .level-ring {
-        width: 160px;
-        height: 160px;
-    }
-
-    .home-card {
-        min-height: 90px;
-    }
+    margin-top:
+        0;
 
 }
 
 
-/* =========================
+/* =========================================================
    LEADERBOARD
-========================= */
-
-.leaderboard-button {
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 4px;
-
-    height: 39px;
-
-    padding: 0 10px;
-
-    border-radius: 12px;
-
-    background:
-        rgba(245,197,66,.10);
-
-    border:
-        1px solid rgba(245,197,66,.16);
-
-    color:
-        var(--yellow);
-
-    font-size: 9px;
-
-    font-weight: 700;
-
-}
-
-
-.leaderboard-button span {
-
-    white-space: nowrap;
-
-}
-
+========================================================= */
 
 .leaderboard-summary {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         1fr 1fr;
 
-    gap: 10px;
+    gap:
+        10px;
 
-    margin-bottom: 15px;
+    margin-bottom:
+        15px;
 
 }
 
 
 .leaderboard-summary > div {
 
-    padding: 15px;
+    padding:
+        15px;
 
     border:
         1px solid var(--border);
 
-    border-radius: 18px;
+    border-radius:
+        18px;
 
     background:
         rgba(17,19,28,.75);
@@ -1384,57 +1998,71 @@ button {
 
 .leaderboard-summary span {
 
-    display: block;
+    display:
+        block;
 
     color:
         var(--muted);
 
-    font-size: 9px;
+    font-size:
+        9px;
 
 }
 
 
 .leaderboard-summary strong {
 
-    display: block;
+    display:
+        block;
 
-    margin-top: 5px;
+    margin-top:
+        5px;
 
     color:
         var(--yellow-light);
 
-    font-size: 21px;
+    font-size:
+        21px;
 
 }
 
 
 .leaderboard-list {
 
-    display: flex;
+    display:
+        flex;
 
-    flex-direction: column;
+    flex-direction:
+        column;
 
-    gap: 8px;
+    gap:
+        8px;
 
 }
 
 
 .leaderboard-row {
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    gap: 12px;
+    gap:
+        12px;
 
-    min-height: 62px;
+    min-height:
+        62px;
 
-    padding: 9px 12px;
+    padding:
+        9px 12px;
 
     border:
         1px solid var(--border);
 
-    border-radius: 17px;
+    border-radius:
+        17px;
 
     background:
         rgba(17,19,28,.72);
@@ -1455,81 +2083,172 @@ button {
 
 .leaderboard-rank {
 
-    width: 30px;
+    width:
+        30px;
 
-    text-align: center;
+    flex-shrink:
+        0;
+
+    text-align:
+        center;
 
     color:
         var(--muted);
 
-    font-size: 11px;
+    font-size:
+        11px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
 }
 
 
 .leaderboard-rank.top {
 
-    font-size: 18px;
+    font-size:
+        18px;
+
+}
+
+
+.leaderboard-avatar {
+
+    width:
+        38px;
+
+    height:
+        38px;
+
+    flex-shrink:
+        0;
+
+    object-fit:
+        cover;
+
+    border-radius:
+        50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.leaderboard-avatar-fallback {
+
+    width:
+        38px;
+
+    height:
+        38px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #5866ee,
+            #2c379e
+        );
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
 
 }
 
 
 .leaderboard-user {
 
-    flex: 1;
+    flex:
+        1;
 
-    min-width: 0;
+    min-width:
+        0;
 
 }
 
 
 .leaderboard-name {
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
-    text-overflow: ellipsis;
+    text-overflow:
+        ellipsis;
 
-    white-space: nowrap;
+    white-space:
+        nowrap;
 
-    font-size: 12px;
+    font-size:
+        12px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
 }
 
 
 .leaderboard-username {
 
-    margin-top: 2px;
+    margin-top:
+        2px;
+
+    overflow:
+        hidden;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
 
     color:
         var(--muted);
 
-    overflow: hidden;
+    direction:
+        ltr;
 
-    text-overflow: ellipsis;
+    text-align:
+        right;
 
-    white-space: nowrap;
-
-    direction: ltr;
-
-    text-align: right;
-
-    font-size: 8px;
+    font-size:
+        8px;
 
 }
 
 
 .leaderboard-points {
 
+    flex-shrink:
+        0;
+
     color:
         var(--yellow);
 
-    font-size: 12px;
+    font-size:
+        12px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
 }
 
@@ -1537,39 +2256,53 @@ button {
 .leaderboard-loading,
 .leaderboard-empty {
 
-    padding: 35px 20px;
+    padding:
+        35px 20px;
 
     border:
         1px solid var(--border);
 
-    border-radius: 18px;
+    border-radius:
+        18px;
 
     color:
         var(--muted);
 
-    text-align: center;
+    background:
+        rgba(17,19,28,.72);
 
-    font-size: 11px;
+    text-align:
+        center;
+
+    font-size:
+        11px;
 
 }
 
 
 .my-leaderboard-card {
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
-    margin-top: 14px;
+    margin-top:
+        14px;
 
-    padding: 15px 17px;
+    padding:
+        15px 17px;
 
     border:
-        1px solid rgba(245,197,66,.18);
+        1px solid
+        rgba(245,197,66,.18);
 
-    border-radius: 18px;
+    border-radius:
+        18px;
 
     background:
         rgba(20,20,28,.94);
@@ -1579,25 +2312,131 @@ button {
 
 .my-leaderboard-card span {
 
-    display: block;
+    display:
+        block;
 
     color:
         var(--muted);
 
-    font-size: 9px;
+    font-size:
+        9px;
 
 }
 
 
 .my-leaderboard-card strong {
 
-    display: block;
+    display:
+        block;
 
-    margin-top: 3px;
+    margin-top:
+        3px;
 
     color:
         var(--yellow-light);
 
-    font-size: 18px;
+    font-size:
+        18px;
 
 }
+
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.coming-soon {
+
+    padding:
+        35px 20px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        22px;
+
+    background:
+        rgba(17,19,28,.75);
+
+    color:
+        var(--muted);
+
+    text-align:
+        center;
+
+    font-size:
+        12px;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 390px) {
+
+    .game-topbar {
+
+        gap:
+            4px;
+
+    }
+
+
+    .leaderboard-button {
+
+        padding:
+            0 7px;
+
+        font-size:
+            8px;
+
+    }
+
+
+    .game-distance,
+    .game-score {
+
+        min-width:
+            54px;
+
+        padding:
+            7px 6px;
+
+    }
+
+}
+
+
+@media (max-width: 360px) {
+
+    .top-header {
+
+        margin-bottom:
+            55px;
+
+    }
+
+
+    .level-ring {
+
+        width:
+            160px;
+
+        height:
+            160px;
+
+    }
+
+
+    .home-card {
+
+        min-height:
+            90px;
+
+    }
+
+}
+```
