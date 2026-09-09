@@ -42,6 +42,8 @@ const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_f8eKkpgrTdFK08_XQq-ozg_24-UOyLh";
 
 
+
+
 let supabaseClient = null;
 
 
@@ -50,11 +52,11 @@ if (
     typeof window.supabase.createClient === "function"
 ) {
 
-    supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_PUBLISHABLE_KEY
-        );
+    const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 }
 
@@ -382,11 +384,9 @@ function showScreen(name) {
         name === "license" &&
         licenseScreen
     ) {
-
         licenseScreen.classList.add(
             "active"
         );
-
     }
 
 
@@ -394,11 +394,9 @@ function showScreen(name) {
         name === "home" &&
         homeScreen
     ) {
-
         homeScreen.classList.add(
             "active"
         );
-
     }
 
 
@@ -406,11 +404,9 @@ function showScreen(name) {
         name === "game" &&
         gameScreen
     ) {
-
         gameScreen.classList.add(
             "active"
         );
-
     }
 
 
@@ -418,11 +414,9 @@ function showScreen(name) {
         name === "rewards" &&
         rewardsScreen
     ) {
-
         rewardsScreen.classList.add(
             "active"
         );
-
     }
 
 
@@ -430,11 +424,9 @@ function showScreen(name) {
         name === "leaderboard" &&
         leaderboardScreen
     ) {
-
         leaderboardScreen.classList.add(
             "active"
         );
-
     }
 
 
@@ -442,18 +434,15 @@ function showScreen(name) {
         name === "placeholder" &&
         placeholderScreen
     ) {
-
         placeholderScreen.classList.add(
             "active"
         );
-
     }
 
 
     updatePointsUI();
 
 }
-
 
 /* =========================================================
    START APP
@@ -2743,7 +2732,93 @@ function startGame() {
 
 }
 
+/* =========================================================
+   SEND GAME SCORE TO SERVER
+========================================================= */
 
+async function submitGameScore(score) {
+
+    if (!user) {
+
+        console.error(
+            "Telegram user not found."
+        );
+
+        return;
+
+    }
+
+
+    if (!score || score <= 0) {
+
+        return;
+
+    }
+
+
+    if (!supabaseClient) {
+
+        console.error(
+            "Supabase is not connected."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.functions.invoke(
+                "submit-score",
+                {
+                    body: {
+
+                        initData:
+                            tg?.initData || "",
+
+                        score:
+                            Math.floor(
+                                score
+                            )
+
+                    }
+                }
+            );
+
+
+        if (error) {
+
+            console.error(
+                "Submit score error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "Score submitted successfully:",
+            data
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Score request failed:",
+            error
+        );
+
+    }
+
+}
 /* =========================================================
    END GAME
 ========================================================= */
@@ -2754,13 +2829,22 @@ function endGame() {
         return;
 
 
-    gameRunning =
-        false;
+    gameRunning = false;
+
+    gameOver = true;
 
 
-    gameOver =
-        true;
+    submitGameScore(
+        gamePoints
+    );
 
+
+    cancelAnimationFrame(
+        animationId
+    );
+
+    // ادامه کد قبلی...
+}
 
     cancelAnimationFrame(
         animationId
@@ -3260,8 +3344,432 @@ function showPointAnimation() {
     );
 
 }
+/* =========================================================
+   LEADERBOARD BUTTON
+========================================================= */
+
+const leaderboardButton =
+    document.getElementById(
+        "leaderboardButton"
+    );
 
 
+const leaderboardScreen =
+    document.getElementById(
+        "leaderboardScreen"
+    );
+
+
+const leaderboardBackButton =
+    document.getElementById(
+        "leaderboardBackButton"
+    );
+
+
+if (leaderboardButton) {
+
+    leaderboardButton.addEventListener(
+        "click",
+        async () => {
+
+            showScreen(
+                "leaderboard"
+            );
+
+
+            await loadLeaderboard();
+
+        }
+    );
+
+}
+
+
+if (leaderboardBackButton) {
+
+    leaderboardBackButton.addEventListener(
+        "click",
+        () => {
+
+            showScreen(
+                "game"
+            );
+
+        }
+    );
+
+}
+/* =========================================================
+   LEADERBOARD
+========================================================= */
+
+let leaderboardData = [];
+
+
+function getCurrentMonthKey() {
+
+    const now =
+        new Date();
+
+
+    return new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        1
+    )
+        .toISOString()
+        .slice(
+            0,
+            10
+        );
+
+}
+
+
+async function loadLeaderboard() {
+
+    const list =
+        document.getElementById(
+            "leaderboardList"
+        );
+
+
+    if (!list)
+        return;
+
+
+    list.innerHTML = `
+        <div class="leaderboard-loading">
+            در حال دریافت اطلاعات...
+        </div>
+    `;
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from(
+                    "game_leaderboard"
+                )
+                .select("*")
+                .eq(
+                    "month_key",
+                    getCurrentMonthKey()
+                )
+                .order(
+                    "best_score",
+                    {
+                        ascending: false
+                    }
+                );
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        leaderboardData =
+            data || [];
+
+
+        renderLeaderboard();
+
+
+    } catch (error) {
+
+        console.error(
+            "Leaderboard error:",
+            error
+        );
+
+
+        list.innerHTML = `
+            <div class="leaderboard-empty">
+                دریافت اطلاعات با مشکل مواجه شد.
+            </div>
+        `;
+
+    }
+
+}
+
+
+function renderLeaderboard() {
+
+    const list =
+        document.getElementById(
+            "leaderboardList"
+        );
+
+
+    if (!list)
+        return;
+
+
+    list.innerHTML =
+        "";
+
+
+    const count =
+        leaderboardData.length;
+
+
+    const playerCount =
+        document.getElementById(
+            "playerCount"
+        );
+
+
+    const players =
+        document.getElementById(
+            "leaderboardPlayers"
+        );
+
+
+    if (playerCount) {
+
+        playerCount.textContent =
+            count;
+
+    }
+
+
+    if (players) {
+
+        players.textContent =
+            count;
+
+    }
+
+
+    leaderboardData.forEach(
+        (player, index) => {
+
+            const rank =
+                index + 1;
+
+
+            const isMe =
+                user &&
+                Number(
+                    player.telegram_id
+                ) ===
+                Number(
+                    user.id
+                );
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "leaderboard-row" +
+                (
+                    isMe
+                        ? " current-user"
+                        : ""
+                );
+
+
+            let rankText =
+                rank;
+
+
+            if (rank === 1)
+                rankText = "🥇";
+
+            if (rank === 2)
+                rankText = "🥈";
+
+            if (rank === 3)
+                rankText = "🥉";
+
+
+            const name =
+                `${player.first_name || ""} ${
+                    player.last_name || ""
+                }`
+                    .trim()
+                ||
+                "کاربر";
+
+
+            const username =
+                player.username
+                    ? `@${player.username}`
+                    : "";
+
+
+            row.innerHTML = `
+
+                <div class="leaderboard-rank ${
+                    rank <= 3
+                        ? "top"
+                        : ""
+                }">
+                    ${rankText}
+                </div>
+
+                <div class="leaderboard-user">
+
+                    <div class="leaderboard-name">
+                        ${escapeHtml(name)}
+                    </div>
+
+                    ${
+                        username
+                            ? `
+                                <div class="leaderboard-username">
+                                    ${escapeHtml(
+                                        username
+                                    )}
+                                </div>
+                              `
+                            : ""
+                    }
+
+                </div>
+
+                <div class="leaderboard-points">
+                    ★ ${player.best_score}
+                </div>
+
+            `;
+
+
+            list.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    const myIndex =
+        user
+            ? leaderboardData.findIndex(
+                player =>
+                    Number(
+                        player.telegram_id
+                    ) ===
+                    Number(
+                        user.id
+                    )
+            )
+            : -1;
+
+
+    if (
+        myIndex >= 0
+    ) {
+
+        updateMyRank(
+            myIndex + 1,
+            leaderboardData[
+                myIndex
+            ].best_score
+        );
+
+    } else {
+
+        updateMyRank(
+            null,
+            0
+        );
+
+    }
+
+}
+
+
+function updateMyRank(
+    rank,
+    score
+) {
+
+    const myRank =
+        document.getElementById(
+            "myRank"
+        );
+
+
+    const myRankBottom =
+        document.getElementById(
+            "myRankBottom"
+        );
+
+
+    const myBestScore =
+        document.getElementById(
+            "myBestScore"
+        );
+
+
+    if (myRank) {
+
+        myRank.textContent =
+            rank
+                ? `#${rank}`
+                : "—";
+
+    }
+
+
+    if (myRankBottom) {
+
+        myRankBottom.textContent =
+            rank
+                ? `#${rank}`
+                : "—";
+
+    }
+
+
+    if (myBestScore) {
+
+        myBestScore.textContent =
+            score || 0;
+
+    }
+
+}
+
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
 /* =========================================================
    INITIALIZATION
 ========================================================= */
