@@ -1,7 +1,9 @@
-
+```html
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -9,11 +11,18 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     >
 
-    <meta name="theme-color" content="#07080d">
+    <meta
+        name="theme-color"
+        content="#07080d"
+    >
 
     <title>DEX DESIGN</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
 
 <body>
@@ -24,11 +33,14 @@
         <div class="bg-glow glow-b"></div>
 
 
-        <!-- =========================
-             LICENSE
-        ========================== -->
+        <!-- =========================================
+             LICENSE SCREEN
+        ========================================== -->
 
-        <section id="licenseScreen" class="screen active">
+        <section
+            id="licenseScreen"
+            class="screen active"
+        >
 
             <div class="brand-center">
 
@@ -57,6 +69,7 @@
                     برای دسترسی به برنامه، لایسنس خود را وارد کنید.
                 </p>
 
+
                 <input
                     id="licenseInput"
                     type="text"
@@ -65,6 +78,7 @@
                     spellcheck="false"
                 >
 
+
                 <button
                     id="licenseButton"
                     class="primary-button"
@@ -72,6 +86,7 @@
                 >
                     ورود
                 </button>
+
 
                 <div
                     id="licenseMessage"
@@ -83,13 +98,18 @@
         </section>
 
 
-        <!-- =========================
+        <!-- =========================================
              HOME
-        ========================== -->
+        ========================================== -->
 
-        <section id="homeScreen" class="screen">
+        <section
+            id="homeScreen"
+            class="screen"
+        >
 
             <header class="top-header">
+
+                <!-- SCORE -->
 
                 <div class="score-box">
 
@@ -112,6 +132,8 @@
                 </div>
 
 
+                <!-- PROFILE -->
+
                 <div class="profile-mini">
 
                     <img
@@ -125,13 +147,18 @@
                         class="profile-fallback"
                     ></div>
 
+
                     <div class="profile-info">
 
-                        <strong id="homeProfileName">
+                        <strong
+                            id="homeProfileName"
+                        >
                             کاربر
                         </strong>
 
-                        <span id="homeProfileUsername">
+                        <span
+                            id="homeProfileUsername"
+                        >
                             @username
                         </span>
 
@@ -141,6 +168,8 @@
 
             </header>
 
+
+            <!-- LEVEL -->
 
             <section class="level-area">
 
@@ -162,6 +191,8 @@
 
             </section>
 
+
+            <!-- MENU -->
 
             <section class="home-grid">
 
@@ -269,6 +300,8 @@
             </section>
 
 
+            <!-- MINI GAME -->
+
             <button
                 id="miniGameButton"
                 class="mini-game-button"
@@ -297,9 +330,9 @@
         </section>
 
 
-        <!-- =========================
-             GAME
-        ========================== -->
+        <!-- =========================================
+             GAME SCREEN
+        ========================================== -->
 
         <section
             id="gameScreen"
@@ -316,6 +349,7 @@
                     ×
                 </button>
 
+
                 <button
                     id="leaderboardButton"
                     class="leaderboard-button"
@@ -326,6 +360,7 @@
                         لیدربرد
                     </span>
                 </button>
+
 
                 <div class="game-distance">
 
@@ -360,7 +395,10 @@
                 class="game-world"
             >
 
-                <canvas id="gameCanvas"></canvas>
+                <canvas
+                    id="gameCanvas"
+                ></canvas>
+
 
                 <div
                     id="pointAnimation"
@@ -369,12 +407,15 @@
                     +1
                 </div>
 
+
                 <div class="swipe-hint">
                     ← برای تغییر لاین Swipe کن →
                 </div>
 
             </div>
 
+
+            <!-- GAME OVER -->
 
             <div
                 id="gameOver"
@@ -387,9 +428,11 @@
                         💥
                     </div>
 
+
                     <div class="game-over-title">
                         بازی تمام شد
                     </div>
+
 
                     <div class="game-over-subtitle">
                         با یک مانع برخورد کردی
@@ -402,7 +445,9 @@
                             امتیاز این بازی
                         </span>
 
-                        <strong id="finalGameScore">
+                        <strong
+                            id="finalGameScore"
+                        >
                             0
                         </strong>
 
@@ -418,6 +463,7 @@
                         >
                             خروج
                         </button>
+
 
                         <button
                             id="restartGameButton"
@@ -436,123 +482,135 @@
         </section>
 
 
-        <!-- =========================
-             REWARDS
-        ========================== -->
-            <section
-    id="leaderboardScreen"
-    class="screen"
->
+        <!-- =========================================
+             LEADERBOARD
+        ========================================== -->
 
-    <header class="page-header">
-
-        <button
-            id="leaderboardBackButton"
-            class="page-back"
-            type="button"
+        <section
+            id="leaderboardScreen"
+            class="screen"
         >
-            →
-        </button>
 
-        <div>
+            <header class="page-header">
 
-            <h1>
-                لیدربرد
-            </h1>
-
-            <p>
-                رتبه‌بندی این ماه
-            </p>
-
-        </div>
-
-        <div class="reward-score">
-
-            🏆
-            <span id="playerCount">
-                0
-            </span>
-
-        </div>
-
-    </header>
+                <button
+                    id="leaderboardBackButton"
+                    class="page-back"
+                    type="button"
+                >
+                    →
+                </button>
 
 
-    <div class="leaderboard-summary">
+                <div>
 
-        <div>
+                    <h1>
+                        لیدربرد
+                    </h1>
 
-            <span>
-                بازیکنان این ماه
-            </span>
+                    <p>
+                        رتبه‌بندی این ماه
+                    </p>
 
-            <strong id="leaderboardPlayers">
-                0
-            </strong>
-
-        </div>
+                </div>
 
 
-        <div>
+                <div class="reward-score">
 
-            <span>
-                رتبه شما
-            </span>
+                    🏆
 
-            <strong id="myRank">
-                —
-            </strong>
+                    <span id="playerCount">
+                        0
+                    </span>
 
-        </div>
+                </div>
 
-    </div>
+            </header>
 
 
-    <div
-        id="leaderboardList"
-        class="leaderboard-list"
-    >
+            <div class="leaderboard-summary">
 
-        <div class="leaderboard-loading">
-            در حال دریافت اطلاعات...
-        </div>
+                <div>
 
-    </div>
+                    <span>
+                        بازیکنان این ماه
+                    </span>
 
+                    <strong
+                        id="leaderboardPlayers"
+                    >
+                        0
+                    </strong>
 
-    <div
-        id="myLeaderboardCard"
-        class="my-leaderboard-card"
-    >
-
-        <div>
-
-            <span>
-                جایگاه شما
-            </span>
-
-            <strong id="myRankBottom">
-                —
-            </strong>
-
-        </div>
+                </div>
 
 
-        <div>
+                <div>
 
-            <span>
-                امتیاز
-            </span>
+                    <span>
+                        رتبه شما
+                    </span>
 
-            <strong id="myBestScore">
-                0
-            </strong>
+                    <strong id="myRank">
+                        —
+                    </strong>
 
-        </div>
+                </div>
 
-    </div>
+            </div>
 
-</section>
+
+            <div
+                id="leaderboardList"
+                class="leaderboard-list"
+            >
+
+                <div class="leaderboard-loading">
+                    در حال دریافت اطلاعات...
+                </div>
+
+            </div>
+
+
+            <div
+                id="myLeaderboardCard"
+                class="my-leaderboard-card"
+            >
+
+                <div>
+
+                    <span>
+                        جایگاه شما
+                    </span>
+
+                    <strong id="myRankBottom">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        بهترین رکورد
+                    </span>
+
+                    <strong id="myBestScore">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             REWARDS
+        ========================================== -->
+
         <section
             id="rewardsScreen"
             class="screen"
@@ -566,6 +624,7 @@
                 >
                     →
                 </button>
+
 
                 <div>
 
@@ -581,10 +640,13 @@
 
 
                 <div class="reward-score">
+
                     ★
+
                     <span id="rewardScore">
                         0
                     </span>
+
                 </div>
 
             </header>
@@ -598,9 +660,9 @@
         </section>
 
 
-        <!-- =========================
-             PLACEHOLDER
-        ========================== -->
+        <!-- =========================================
+             PLACEHOLDER PAGES
+        ========================================== -->
 
         <section
             id="placeholderScreen"
@@ -615,6 +677,7 @@
                 >
                     →
                 </button>
+
 
                 <div>
 
@@ -640,12 +703,25 @@
     </main>
 
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- TELEGRAM -->
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script
+        src="https://telegram.org/js/telegram-web-app.js"
+    ></script>
+
+
+    <!-- SUPABASE -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <!-- APP -->
 
     <script src="app.js"></script>
 
 </body>
 
 </html>
+```
