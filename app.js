@@ -21,11 +21,15 @@ if (tg) {
     } catch (e) {}
 
     try {
-        tg.setHeaderColor("#07080d");
+        tg.setHeaderColor(
+            "#07080d"
+        );
     } catch (e) {}
 
     try {
-        tg.setBackgroundColor("#07080d");
+        tg.setBackgroundColor(
+            "#07080d"
+        );
     } catch (e) {}
 
 }
@@ -38,15 +42,24 @@ if (tg) {
 const SUPABASE_URL =
     "https://dnhzloyskxcihkkaspez.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_f8eKkpgrTdFK08_XQq-ozg_24-UOyLh";
 
-let supabaseClient = null;
 
+let supabaseClient =
+    null;
+
+
+/*
+   مهم:
+   این بار دوباره const تعریف نمی‌کنیم.
+*/
 
 if (
     window.supabase &&
-    typeof window.supabase.createClient === "function"
+    typeof window.supabase.createClient ===
+        "function"
 ) {
 
     try {
@@ -74,30 +87,48 @@ if (
 ========================================================= */
 
 const licenseScreen =
-    document.getElementById("licenseScreen");
+    document.getElementById(
+        "licenseScreen"
+    );
+
 
 const homeScreen =
-    document.getElementById("homeScreen");
+    document.getElementById(
+        "homeScreen"
+    );
+
 
 const gameScreen =
-    document.getElementById("gameScreen");
+    document.getElementById(
+        "gameScreen"
+    );
 
-const rewardsScreen =
-    document.getElementById("rewardsScreen");
 
 const leaderboardScreen =
-    document.getElementById("leaderboardScreen");
+    document.getElementById(
+        "leaderboardScreen"
+    );
+
+
+const rewardsScreen =
+    document.getElementById(
+        "rewardsScreen"
+    );
+
 
 const placeholderScreen =
-    document.getElementById("placeholderScreen");
+    document.getElementById(
+        "placeholderScreen"
+    );
 
 
 /* =========================================================
-   USER
+   TELEGRAM USER
 ========================================================= */
 
 const user =
-    tg?.initDataUnsafe?.user || null;
+    tg?.initDataUnsafe?.user ||
+    null;
 
 
 function loadUser() {
@@ -107,15 +138,18 @@ function loadUser() {
             "homeProfileName"
         );
 
+
     const usernameElement =
         document.getElementById(
             "homeProfileUsername"
         );
 
+
     const photo =
         document.getElementById(
             "homeProfilePhoto"
         );
+
 
     const fallback =
         document.getElementById(
@@ -124,10 +158,13 @@ function loadUser() {
 
 
     const firstName =
-        user?.first_name || "";
+        user?.first_name ||
+        "";
+
 
     const lastName =
-        user?.last_name || "";
+        user?.last_name ||
+        "";
 
 
     const fullName =
@@ -144,7 +181,8 @@ function loadUser() {
     if (nameElement) {
 
         nameElement.textContent =
-            fullName || "کاربر";
+            fullName ||
+            "کاربر";
 
     }
 
@@ -231,10 +269,12 @@ function updatePointsUI() {
             "homeScore"
         );
 
+
     const rewardScore =
         document.getElementById(
             "rewardScore"
         );
+
 
     const gameScore =
         document.getElementById(
@@ -268,7 +308,9 @@ function updatePointsUI() {
 }
 
 
-function addPoints(amount) {
+function addPoints(
+    amount
+) {
 
     const value =
         Math.max(
@@ -289,13 +331,15 @@ function addPoints(amount) {
 
 
 /* =========================================================
-   SCREEN MANAGEMENT
+   SCREEN SYSTEM
 ========================================================= */
 
 function hideAllScreens() {
 
     document
-        .querySelectorAll(".screen")
+        .querySelectorAll(
+            ".screen"
+        )
         .forEach(
             screen => {
 
@@ -309,7 +353,9 @@ function hideAllScreens() {
 }
 
 
-function showScreen(name) {
+function showScreen(
+    name
+) {
 
     hideAllScreens();
 
@@ -355,11 +401,11 @@ function showScreen(name) {
             break;
 
 
-        case "rewards":
+        case "leaderboard":
 
-            if (rewardsScreen) {
+            if (leaderboardScreen) {
 
-                rewardsScreen.classList.add(
+                leaderboardScreen.classList.add(
                     "active"
                 );
 
@@ -368,11 +414,11 @@ function showScreen(name) {
             break;
 
 
-        case "leaderboard":
+        case "rewards":
 
-            if (leaderboardScreen) {
+            if (rewardsScreen) {
 
-                leaderboardScreen.classList.add(
+                rewardsScreen.classList.add(
                     "active"
                 );
 
@@ -402,16 +448,10 @@ function showScreen(name) {
 
 
 /* =========================================================
-   APP START
+   START APP
 ========================================================= */
 
 function startApp() {
-
-    /*
-       برای اینکه تست ورود راحت باشد،
-       فعلاً اگر License ذخیره شده باشد
-       کاربر مستقیم وارد Home می‌شود.
-    */
 
     const savedLicense =
         localStorage.getItem(
@@ -445,10 +485,12 @@ const licenseInput =
         "licenseInput"
     );
 
+
 const licenseButton =
     document.getElementById(
         "licenseButton"
     );
+
 
 const licenseMessage =
     document.getElementById(
@@ -456,7 +498,9 @@ const licenseMessage =
     );
 
 
-function checkLicense(value) {
+function checkLicense(
+    value
+) {
 
     const license =
         String(
@@ -469,7 +513,8 @@ function checkLicense(value) {
 
         return {
 
-            valid: false,
+            valid:
+                false,
 
             message:
                 "لطفاً لایسنس را وارد کنید."
@@ -485,7 +530,8 @@ function checkLicense(value) {
 
         return {
 
-            valid: false,
+            valid:
+                false,
 
             message:
                 "لایسنس باید حداقل ۸ کاراکتر باشد."
@@ -496,25 +542,21 @@ function checkLicense(value) {
 
 
     /*
-       فعلاً برای تست همه کدهای
-       ۸ کاراکتری یا بیشتر قبول می‌شوند.
+       فعلاً فقط برای تست.
 
-       بعداً این بخش به سیستم License
-       واقعی روی سرور وصل می‌شود.
+       بعداً سیستم واقعی License
+       روی Server قرار می‌گیرد.
     */
 
     return {
 
-        valid: true
+        valid:
+            true
 
     };
 
 }
 
-
-/*
-   دکمه ورود
-*/
 
 if (licenseButton) {
 
@@ -544,26 +586,20 @@ if (licenseButton) {
             }
 
 
-            if (!result.valid) {
+            if (
+                !result.valid
+            ) {
 
                 return;
 
             }
 
 
-            /*
-               ذخیره License
-            */
-
             localStorage.setItem(
                 "dex_license",
                 value
             );
 
-
-            /*
-               ورود به Home
-            */
 
             showScreen(
                 "home"
@@ -574,10 +610,6 @@ if (licenseButton) {
 
 }
 
-
-/*
-   Enter روی کیبورد
-*/
 
 if (licenseInput) {
 
@@ -590,11 +622,7 @@ if (licenseInput) {
                 "Enter"
             ) {
 
-                if (licenseButton) {
-
-                    licenseButton.click();
-
-                }
+                licenseButton?.click();
 
             }
 
@@ -634,7 +662,7 @@ if (miniGameButton) {
 
 
 /* =========================================================
-   HOME BUTTONS
+   HOME CARDS
 ========================================================= */
 
 document
@@ -652,10 +680,6 @@ document
                         button.dataset.page;
 
 
-                    /*
-                       Rewards
-                    */
-
                     if (
                         page ===
                         "rewards"
@@ -663,18 +687,16 @@ document
 
                         renderRewards();
 
+
                         showScreen(
                             "rewards"
                         );
+
 
                         return;
 
                     }
 
-
-                    /*
-                       سایر صفحات
-                    */
 
                     const pageNames = {
 
@@ -706,7 +728,8 @@ document
 
                         title.textContent =
                             pageNames[page]
-                            || "بخش";
+                            ||
+                            "بخش";
 
                     }
 
@@ -755,73 +778,152 @@ document
 const rewards = [
 
     {
-        id: 1,
-        name: "کتاب الکترونیکی",
-        icon: "📘",
-        price: 5
+        id:
+            1,
+
+        name:
+            "کتاب الکترونیکی",
+
+        icon:
+            "📘",
+
+        price:
+            5
     },
 
-    {
-        id: 2,
-        name: "Badge اختصاصی",
-        icon: "🏅",
-        price: 10
-    },
 
     {
-        id: 3,
-        name: "والپیپر اختصاصی",
-        icon: "🖼️",
-        price: 15
+        id:
+            2,
+
+        name:
+            "Badge اختصاصی",
+
+        icon:
+            "🏅",
+
+        price:
+            10
     },
 
-    {
-        id: 4,
-        name: "پک آیکن",
-        icon: "✨",
-        price: 20
-    },
 
     {
-        id: 5,
-        name: "اکسسوری",
-        icon: "🧢",
-        price: 30
+        id:
+            3,
+
+        name:
+            "والپیپر اختصاصی",
+
+        icon:
+            "🖼️",
+
+        price:
+            15
     },
 
-    {
-        id: 6,
-        name: "T-Shirt",
-        icon: "👕",
-        price: 50
-    },
 
     {
-        id: 7,
-        name: "Design Audit",
-        icon: "🔍",
-        price: 80
+        id:
+            4,
+
+        name:
+            "پک آیکن",
+
+        icon:
+            "✨",
+
+        price:
+            20
     },
 
-    {
-        id: 8,
-        name: "منتورینگ خصوصی",
-        icon: "🧠",
-        price: 120
-    },
 
     {
-        id: 9,
-        name: "Desk Mat",
-        icon: "🖱️",
-        price: 160
+        id:
+            5,
+
+        name:
+            "اکسسوری",
+
+        icon:
+            "🧢",
+
+        price:
+            30
     },
 
+
     {
-        id: 10,
-        name: "دوره Premium",
-        icon: "🎓",
-        price: 250
+        id:
+            6,
+
+        name:
+            "T-Shirt",
+
+        icon:
+            "👕",
+
+        price:
+            50
+    },
+
+
+    {
+        id:
+            7,
+
+        name:
+            "Design Audit",
+
+        icon:
+            "🔍",
+
+        price:
+            80
+    },
+
+
+    {
+        id:
+            8,
+
+        name:
+            "منتورینگ خصوصی",
+
+        icon:
+            "🧠",
+
+        price:
+            120
+    },
+
+
+    {
+        id:
+            9,
+
+        name:
+            "Desk Mat",
+
+        icon:
+            "🖱️",
+
+        price:
+            160
+    },
+
+
+    {
+        id:
+            10,
+
+        name:
+            "دوره Premium",
+
+        icon:
+            "🎓",
+
+        price:
+            250
     }
 
 ];
@@ -883,7 +985,11 @@ function renderRewards() {
                     }"
                     data-reward-id="${reward.id}"
                     type="button"
-                    ${canBuy ? "" : "disabled"}
+                    ${
+                        canBuy
+                            ? ""
+                            : "disabled"
+                    }
                 >
                     ${
                         canBuy
@@ -963,7 +1069,8 @@ function renderRewards() {
    LEADERBOARD
 ========================================================= */
 
-let leaderboardData = [];
+let leaderboardData =
+    [];
 
 
 function getCurrentMonthKey() {
@@ -972,15 +1079,23 @@ function getCurrentMonthKey() {
         new Date();
 
 
-    return `${now.getFullYear()}-${
+    const year =
+        now.getFullYear();
+
+
+    const month =
         String(
             now.getMonth() + 1
         )
             .padStart(
                 2,
                 "0"
-            )
-    }-01`;
+            );
+
+
+    return (
+        `${year}-${month}-01`
+    );
 
 }
 
@@ -998,18 +1113,22 @@ async function loadLeaderboard() {
 
 
     list.innerHTML = `
+
         <div class="leaderboard-loading">
             در حال دریافت اطلاعات...
         </div>
+
     `;
 
 
     if (!supabaseClient) {
 
         list.innerHTML = `
+
             <div class="leaderboard-empty">
                 اتصال به دیتابیس برقرار نیست.
             </div>
+
         `;
 
         return;
@@ -1027,7 +1146,9 @@ async function loadLeaderboard() {
                 .from(
                     "game_leaderboard"
                 )
-                .select("*")
+                .select(
+                    "*"
+                )
                 .eq(
                     "month_key",
                     getCurrentMonthKey()
@@ -1035,7 +1156,15 @@ async function loadLeaderboard() {
                 .order(
                     "best_score",
                     {
-                        ascending: false
+                        ascending:
+                            false
+                    }
+                )
+                .order(
+                    "updated_at",
+                    {
+                        ascending:
+                            true
                     }
                 );
 
@@ -1063,44 +1192,14 @@ async function loadLeaderboard() {
 
 
         list.innerHTML = `
+
             <div class="leaderboard-empty">
                 دریافت لیدربرد با مشکل مواجه شد.
             </div>
+
         `;
 
     }
-
-}
-
-
-function escapeHtml(value) {
-
-    return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
 
 }
 
@@ -1117,6 +1216,10 @@ function renderLeaderboard() {
         return;
 
 
+    const totalPlayers =
+        leaderboardData.length;
+
+
     const playerCount =
         document.getElementById(
             "playerCount"
@@ -1127,10 +1230,6 @@ function renderLeaderboard() {
         document.getElementById(
             "leaderboardPlayers"
         );
-
-
-    const totalPlayers =
-        leaderboardData.length;
 
 
     if (playerCount) {
@@ -1159,9 +1258,11 @@ function renderLeaderboard() {
     ) {
 
         list.innerHTML = `
+
             <div class="leaderboard-empty">
                 هنوز کسی این ماه بازی نکرده.
             </div>
+
         `;
 
 
@@ -1186,7 +1287,7 @@ function renderLeaderboard() {
                 index + 1;
 
 
-            const isMe =
+            const isCurrentUser =
                 user &&
                 Number(
                     player.telegram_id
@@ -1203,37 +1304,54 @@ function renderLeaderboard() {
 
 
             row.className =
-                "leaderboard-row" +
-                (
-                    isMe
-                        ? " current-user"
-                        : ""
+                "leaderboard-row";
+
+
+            if (
+                isCurrentUser
+            ) {
+
+                row.classList.add(
+                    "current-user"
                 );
+
+            }
 
 
             let rankText =
-                String(rank);
+                String(
+                    rank
+                );
 
 
             if (
                 rank === 1
-            )
+            ) {
+
                 rankText =
                     "🥇";
+
+            }
 
 
             if (
                 rank === 2
-            )
+            ) {
+
                 rankText =
                     "🥈";
+
+            }
 
 
             if (
                 rank === 3
-            )
+            ) {
+
                 rankText =
                     "🥉";
+
+            }
 
 
             const name =
@@ -1251,6 +1369,51 @@ function renderLeaderboard() {
                     : "";
 
 
+            let avatarHTML;
+
+
+            if (
+                player.photo_url
+            ) {
+
+                avatarHTML = `
+
+                    <img
+                        class="leaderboard-avatar"
+                        src="${escapeHtml(
+                            player.photo_url
+                        )}"
+                        alt=""
+                    >
+
+                `;
+
+            } else {
+
+                const initial =
+                    (
+                        player.first_name ||
+                        "?"
+                    )
+                        .charAt(0)
+                        .toUpperCase();
+
+
+                avatarHTML = `
+
+                    <div
+                        class="leaderboard-avatar-fallback"
+                    >
+                        ${escapeHtml(
+                            initial
+                        )}
+                    </div>
+
+                `;
+
+            }
+
+
             row.innerHTML = `
 
                 <div
@@ -1264,6 +1427,9 @@ function renderLeaderboard() {
                 </div>
 
 
+                ${avatarHTML}
+
+
                 <div
                     class="leaderboard-user"
                 >
@@ -1271,7 +1437,9 @@ function renderLeaderboard() {
                     <div
                         class="leaderboard-name"
                     >
-                        ${escapeHtml(name)}
+                        ${escapeHtml(
+                            name
+                        )}
                     </div>
 
                     ${
@@ -1294,7 +1462,9 @@ function renderLeaderboard() {
                 <div
                     class="leaderboard-points"
                 >
-                    ★ ${player.best_score}
+                    ★ ${Number(
+                        player.best_score
+                    ) || 0}
                 </div>
 
             `;
@@ -1328,9 +1498,13 @@ function renderLeaderboard() {
 
         updateMyRank(
             myIndex + 1,
-            leaderboardData[
-                myIndex
-            ].best_score
+
+            Number(
+                leaderboardData[
+                    myIndex
+                ].best_score
+            ) || 0
+
         );
 
     } else {
@@ -1426,6 +1600,10 @@ if (leaderboardButton) {
 
 }
 
+
+/* =========================================================
+   LEADERBOARD BACK
+========================================================= */
 
 const leaderboardBackButton =
     document.getElementById(
@@ -1539,6 +1717,11 @@ let swipeStartY =
     0;
 
 
+/*
+   100m = 10 seconds
+   => 10m/s
+*/
+
 const METERS_PER_SECOND =
     10;
 
@@ -1553,8 +1736,11 @@ function resizeCanvas() {
         !canvas ||
         !gameWorld ||
         !ctx
-    )
+    ) {
+
         return;
+
+    }
 
 
     const rect =
@@ -1563,20 +1749,23 @@ function resizeCanvas() {
 
     const dpr =
         Math.min(
-            window.devicePixelRatio || 1,
+            window.devicePixelRatio ||
+                1,
             2
         );
 
 
     canvas.width =
         Math.floor(
-            rect.width * dpr
+            rect.width *
+            dpr
         );
 
 
     canvas.height =
         Math.floor(
-            rect.height * dpr
+            rect.height *
+            dpr
         );
 
 
@@ -1624,9 +1813,11 @@ function getGameSize() {
 
         return {
 
-            width: 0,
+            width:
+                0,
 
-            height: 0
+            height:
+                0
 
         };
 
@@ -1650,7 +1841,9 @@ function getGameSize() {
 }
 
 
-function getRoad(width) {
+function getRoad(
+    width
+) {
 
     const roadWidth =
         Math.min(
@@ -1674,7 +1867,8 @@ function getRoad(width) {
             roadWidth,
 
         laneWidth:
-            roadWidth / 3
+            roadWidth /
+            3
 
     };
 
@@ -1687,14 +1881,17 @@ function getLaneX(
 ) {
 
     const road =
-        getRoad(width);
+        getRoad(
+            width
+        );
 
 
     return (
         road.left +
         road.laneWidth *
             laneIndex +
-        road.laneWidth / 2
+        road.laneWidth /
+            2
     );
 
 }
@@ -1718,8 +1915,12 @@ function drawRoad() {
 
 
     const road =
-        getRoad(width);
+        getRoad(
+            width
+        );
 
+
+    /* grass */
 
     ctx.fillStyle =
         "#18311f";
@@ -1733,6 +1934,8 @@ function drawRoad() {
     );
 
 
+    /* road */
+
     ctx.fillStyle =
         "#25282c";
 
@@ -1744,6 +1947,8 @@ function drawRoad() {
         height
     );
 
+
+    /* side lines */
 
     ctx.fillStyle =
         "#d9d9d9";
@@ -1766,6 +1971,8 @@ function drawRoad() {
         height
     );
 
+
+    /* lanes */
 
     ctx.strokeStyle =
         "rgba(255,255,255,.22)";
@@ -1794,11 +2001,13 @@ function drawRoad() {
 
         ctx.beginPath();
 
+
         ctx.moveTo(
             x,
             -100 +
                 roadOffset
         );
+
 
         ctx.lineTo(
             x,
@@ -1807,12 +2016,76 @@ function drawRoad() {
                 roadOffset
         );
 
+
         ctx.stroke();
 
     }
 
 
     ctx.setLineDash([]);
+
+}
+
+
+/* =========================================================
+   ROUND RECT
+========================================================= */
+
+function roundRect(
+    context,
+    x,
+    y,
+    width,
+    height,
+    radius
+) {
+
+    context.beginPath();
+
+
+    context.moveTo(
+        x + radius,
+        y
+    );
+
+
+    context.arcTo(
+        x + width,
+        y,
+        x + width,
+        y + height,
+        radius
+    );
+
+
+    context.arcTo(
+        x + width,
+        y + height,
+        x,
+        y + height,
+        radius
+    );
+
+
+    context.arcTo(
+        x,
+        y + height,
+        x,
+        y,
+        radius
+    );
+
+
+    context.arcTo(
+        x,
+        y,
+        x + width,
+        y,
+        radius
+    );
+
+
+    context.closePath();
 
 }
 
@@ -1835,7 +2108,9 @@ function drawCar() {
 
 
     const road =
-        getRoad(width);
+        getRoad(
+            width
+        );
 
 
     const x =
@@ -1847,24 +2122,30 @@ function drawCar() {
 
     const carWidth =
         Math.min(
-            road.laneWidth * .52,
+            road.laneWidth *
+                .52,
             66
         );
 
 
     const carHeight =
-        carWidth * 1.60;
+        carWidth *
+        1.60;
 
 
     const y =
-        height - 170;
+        height -
+        170;
 
+
+    /* shadow */
 
     ctx.fillStyle =
         "rgba(0,0,0,.36)";
 
 
     ctx.beginPath();
+
 
     ctx.ellipse(
         x,
@@ -1880,15 +2161,19 @@ function drawCar() {
         Math.PI * 2
     );
 
+
     ctx.fill();
 
+
+    /* body */
 
     const body =
         ctx.createLinearGradient(
             x,
             y,
             x,
-            y + carHeight
+            y +
+                carHeight
         );
 
 
@@ -1910,7 +2195,8 @@ function drawCar() {
 
     roundRect(
         ctx,
-        x - carWidth / 2,
+        x -
+            carWidth / 2,
         y,
         carWidth,
         carHeight,
@@ -1921,22 +2207,29 @@ function drawCar() {
     ctx.fill();
 
 
+    /* windshield */
+
     ctx.fillStyle =
         "#18212a";
 
 
     roundRect(
         ctx,
+
         x -
             carWidth *
             .34,
+
         y +
             carHeight *
             .18,
+
         carWidth *
             .68,
+
         carHeight *
             .24,
+
         8
     );
 
@@ -1944,21 +2237,28 @@ function drawCar() {
     ctx.fill();
 
 
+    /* lights */
+
     ctx.fillStyle =
         "#fff0ae";
 
 
     roundRect(
         ctx,
+
         x -
             carWidth *
             .35,
+
         y +
             carHeight *
             .06,
+
         carWidth *
             .20,
+
         7,
+
         3
     );
 
@@ -1968,21 +2268,28 @@ function drawCar() {
 
     roundRect(
         ctx,
+
         x +
             carWidth *
             .15,
+
         y +
             carHeight *
             .06,
+
         carWidth *
             .20,
+
         7,
+
         3
     );
 
 
     ctx.fill();
 
+
+    /* wheels */
 
     ctx.fillStyle =
         "#08090c";
@@ -1992,11 +2299,14 @@ function drawCar() {
         x -
             carWidth *
             .57,
+
         y +
             carHeight *
             .25,
+
         carWidth *
             .13,
+
         carHeight *
             .27
     );
@@ -2006,72 +2316,47 @@ function drawCar() {
         x +
             carWidth *
             .44,
+
         y +
             carHeight *
             .25,
+
         carWidth *
             .13,
+
         carHeight *
             .27
     );
 
 
-}
+    /* highlight */
+
+    ctx.fillStyle =
+        "rgba(255,255,255,.14)";
 
 
-/* =========================================================
-   ROUND RECT
-========================================================= */
+    roundRect(
+        ctx,
 
-function roundRect(
-    context,
-    x,
-    y,
-    width,
-    height,
-    radius
-) {
+        x -
+            carWidth *
+            .20,
 
-    context.beginPath();
+        y +
+            carHeight *
+            .09,
 
-    context.moveTo(
-        x + radius,
-        y
+        carWidth *
+            .09,
+
+        carHeight *
+            .72,
+
+        5
     );
 
-    context.arcTo(
-        x + width,
-        y,
-        x + width,
-        y + height,
-        radius
-    );
 
-    context.arcTo(
-        x + width,
-        y + height,
-        x,
-        y + height,
-        radius
-    );
-
-    context.arcTo(
-        x,
-        y + height,
-        x,
-        y,
-        radius
-    );
-
-    context.arcTo(
-        x,
-        y,
-        x + width,
-        y,
-        radius
-    );
-
-    context.closePath();
+    ctx.fill();
 
 }
 
@@ -2086,20 +2371,23 @@ function createObstacle() {
 
         lane:
             Math.floor(
-                Math.random() * 3
+                Math.random() *
+                3
             ),
 
         y:
             -120,
 
         type:
-            Math.random() > .5
+            Math.random() >
+            .5
                 ? "car"
                 : "barrier",
 
         speed:
             .9 +
-            Math.random() * .4
+            Math.random() *
+            .4
 
     });
 
@@ -2121,7 +2409,9 @@ function drawObstacle(
 
 
     const road =
-        getRoad(width);
+        getRoad(
+            width
+        );
 
 
     const x =
@@ -2133,7 +2423,8 @@ function drawObstacle(
 
     const w =
         Math.min(
-            road.laneWidth * .58,
+            road.laneWidth *
+                .58,
             70
         );
 
@@ -2153,7 +2444,8 @@ function drawObstacle(
 
         roundRect(
             ctx,
-            x - w / 2,
+            x -
+                w / 2,
             obstacle.y,
             w,
             h,
@@ -2170,7 +2462,8 @@ function drawObstacle(
 
         roundRect(
             ctx,
-            x - w * .30,
+            x -
+                w * .30,
             obstacle.y + 12,
             w * .60,
             h * .33,
@@ -2189,7 +2482,8 @@ function drawObstacle(
 
         roundRect(
             ctx,
-            x - w / 2,
+            x -
+                w / 2,
             obstacle.y,
             w,
             42,
@@ -2274,22 +2568,27 @@ function checkCollision(
 
 
     const road =
-        getRoad(width);
+        getRoad(
+            width
+        );
 
 
     const carWidth =
         Math.min(
-            road.laneWidth * .52,
+            road.laneWidth *
+                .52,
             66
         );
 
 
     const carHeight =
-        carWidth * 1.60;
+        carWidth *
+        1.60;
 
 
     const carY =
-        height - 170;
+        height -
+        170;
 
 
     const obstacleHeight =
@@ -2337,10 +2636,18 @@ function updateGame(
     }
 
 
+    /*
+       Gradual acceleration
+    */
+
     gameSpeed +=
         delta *
         .020;
 
+
+    /*
+       Road movement
+    */
 
     roadOffset +=
         delta *
@@ -2350,6 +2657,10 @@ function updateGame(
             30
         );
 
+
+    /*
+       Spawn obstacles
+    */
 
     spawnTimer +=
         delta;
@@ -2369,12 +2680,18 @@ function updateGame(
         interval
     ) {
 
-        spawnTimer = 0;
+        spawnTimer =
+            0;
+
 
         createObstacle();
 
     }
 
+
+    /*
+       Move obstacles
+    */
 
     obstacles.forEach(
         obstacle => {
@@ -2400,6 +2717,10 @@ function updateGame(
         );
 
 
+    /*
+       Smooth lane movement
+    */
+
     currentLane +=
         (
             targetLane -
@@ -2410,6 +2731,10 @@ function updateGame(
             delta * 14
         );
 
+
+    /*
+       Every 100 meters = 1 point
+    */
 
     const milestone =
         Math.floor(
@@ -2442,6 +2767,10 @@ function updateGame(
 
     }
 
+
+    /*
+       Collision
+    */
 
     for (
         const obstacle
@@ -2549,8 +2878,11 @@ function startGame() {
         !canvas ||
         !ctx ||
         !gameWorld
-    )
+    ) {
+
         return;
+
+    }
 
 
     cancelAnimationFrame(
@@ -2667,7 +2999,7 @@ function endGame() {
 
 
     /*
-       ارسال رکورد به سرور.
+       ارسال بهترین رکورد به سرور
     */
 
     submitGameScore(
@@ -2707,7 +3039,7 @@ function endGame() {
 
 
 /* =========================================================
-   SUBMIT SCORE
+   SUBMIT GAME SCORE
 ========================================================= */
 
 async function submitGameScore(
@@ -2720,7 +3052,7 @@ async function submitGameScore(
     ) {
 
         console.error(
-            "Telegram user not available."
+            "Telegram user is unavailable."
         );
 
         return;
@@ -2741,7 +3073,7 @@ async function submitGameScore(
     if (!supabaseClient) {
 
         console.error(
-            "Supabase is not connected."
+            "Supabase is unavailable."
         );
 
         return;
@@ -2780,7 +3112,7 @@ async function submitGameScore(
         if (error) {
 
             console.error(
-                "Score submit error:",
+                "Submit score error:",
                 error
             );
 
@@ -2814,11 +3146,9 @@ async function submitGameScore(
 function exitGame() {
 
     /*
-       امتیاز بازی فعلاً برای حساب محلی
-       هم اضافه می‌شود.
+       فعلاً امتیاز حساب روی localStorage است.
 
-       بعداً این بخش را هم کاملاً
-       روی سرور منتقل می‌کنیم.
+       بعداً آن را هم به سرور منتقل می‌کنیم.
     */
 
     if (
@@ -2926,6 +3256,11 @@ if (gameBackButton) {
             );
 
 
+            /*
+               با زدن × در وسط بازی،
+               امتیاز همان بازی ثبت نمی‌شود.
+            */
+
             gamePoints =
                 0;
 
@@ -2967,7 +3302,8 @@ if (gameWorld) {
 
         },
         {
-            passive: true
+            passive:
+                true
         }
     );
 
@@ -2993,6 +3329,10 @@ if (gameWorld) {
                 touch.clientY -
                 swipeStartY;
 
+
+            /*
+               فقط Swipe افقی
+            */
 
             if (
                 Math.abs(dx) <=
@@ -3036,7 +3376,8 @@ if (gameWorld) {
 
         },
         {
-            passive: true
+            passive:
+                true
         }
     );
 
@@ -3073,12 +3414,79 @@ function showPointAnimation() {
 
 
 /* =========================================================
-   FINAL INITIALIZATION
+   SUPABASE TEST
+========================================================= */
+
+async function testSupabase() {
+
+    if (!supabaseClient) {
+
+        console.error(
+            "Supabase library was not loaded."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from(
+                    "game_leaderboard"
+                )
+                .select(
+                    "*"
+                )
+                .limit(
+                    5
+                );
+
+
+        if (error) {
+
+            console.error(
+                "Supabase Error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "Supabase connection successful:",
+            data
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Supabase Test Error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
 ========================================================= */
 
 loadUser();
 
 updatePointsUI();
+
+testSupabase();
 
 startApp();
 ```
