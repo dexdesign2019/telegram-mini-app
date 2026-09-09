@@ -1,3 +1,4 @@
+```javascript
 /* =========================================================
    TELEGRAM
 ========================================================= */
@@ -37,12 +38,8 @@ if (tg) {
 const SUPABASE_URL =
     "https://dnhzloyskxcihkkaspez.supabase.co";
 
-
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_f8eKkpgrTdFK08_XQq-ozg_24-UOyLh";
-
-
-
 
 let supabaseClient = null;
 
@@ -52,66 +49,18 @@ if (
     typeof window.supabase.createClient === "function"
 ) {
 
-    const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
-
-}
-
-
-/* =========================================================
-   SUPABASE TEST
-========================================================= */
-
-async function testSupabase() {
-
-    if (!supabaseClient) {
-
-        console.error(
-            "Supabase library was not loaded."
-        );
-
-        return;
-
-    }
-
-
     try {
 
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from("game_leaderboard")
-                .select("*")
-                .limit(5);
-
-
-        if (error) {
-
-            console.error(
-                "Supabase Error:",
-                error
+        supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_PUBLISHABLE_KEY
             );
-
-            return;
-
-        }
-
-
-        console.log(
-            "Supabase connection successful:",
-            data
-        );
-
 
     } catch (error) {
 
         console.error(
-            "Supabase Test Error:",
+            "Supabase initialization error:",
             error
         );
 
@@ -125,39 +74,22 @@ async function testSupabase() {
 ========================================================= */
 
 const licenseScreen =
-    document.getElementById(
-        "licenseScreen"
-    );
-
+    document.getElementById("licenseScreen");
 
 const homeScreen =
-    document.getElementById(
-        "homeScreen"
-    );
-
+    document.getElementById("homeScreen");
 
 const gameScreen =
-    document.getElementById(
-        "gameScreen"
-    );
-
+    document.getElementById("gameScreen");
 
 const rewardsScreen =
-    document.getElementById(
-        "rewardsScreen"
-    );
-
+    document.getElementById("rewardsScreen");
 
 const leaderboardScreen =
-    document.getElementById(
-        "leaderboardScreen"
-    );
-
+    document.getElementById("leaderboardScreen");
 
 const placeholderScreen =
-    document.getElementById(
-        "placeholderScreen"
-    );
+    document.getElementById("placeholderScreen");
 
 
 /* =========================================================
@@ -175,18 +107,15 @@ function loadUser() {
             "homeProfileName"
         );
 
-
     const usernameElement =
         document.getElementById(
             "homeProfileUsername"
         );
 
-
     const photo =
         document.getElementById(
             "homeProfilePhoto"
         );
-
 
     const fallback =
         document.getElementById(
@@ -196,7 +125,6 @@ function loadUser() {
 
     const firstName =
         user?.first_name || "";
-
 
     const lastName =
         user?.last_name || "";
@@ -229,8 +157,14 @@ function loadUser() {
     }
 
 
-    if (!photo || !fallback)
+    if (
+        !photo ||
+        !fallback
+    ) {
+
         return;
+
+    }
 
 
     if (user?.photo_url) {
@@ -254,7 +188,9 @@ function loadUser() {
 
         fallback.textContent =
             firstName
-                ? firstName.charAt(0).toUpperCase()
+                ? firstName
+                    .charAt(0)
+                    .toUpperCase()
                 : "?";
 
     }
@@ -295,12 +231,10 @@ function updatePointsUI() {
             "homeScore"
         );
 
-
     const rewardScore =
         document.getElementById(
             "rewardScore"
         );
-
 
     const gameScore =
         document.getElementById(
@@ -380,63 +314,85 @@ function showScreen(name) {
     hideAllScreens();
 
 
-    if (
-        name === "license" &&
-        licenseScreen
-    ) {
-        licenseScreen.classList.add(
-            "active"
-        );
-    }
+    switch (name) {
+
+        case "license":
+
+            if (licenseScreen) {
+
+                licenseScreen.classList.add(
+                    "active"
+                );
+
+            }
+
+            break;
 
 
-    if (
-        name === "home" &&
-        homeScreen
-    ) {
-        homeScreen.classList.add(
-            "active"
-        );
-    }
+        case "home":
+
+            if (homeScreen) {
+
+                homeScreen.classList.add(
+                    "active"
+                );
+
+            }
+
+            break;
 
 
-    if (
-        name === "game" &&
-        gameScreen
-    ) {
-        gameScreen.classList.add(
-            "active"
-        );
-    }
+        case "game":
+
+            if (gameScreen) {
+
+                gameScreen.classList.add(
+                    "active"
+                );
+
+            }
+
+            break;
 
 
-    if (
-        name === "rewards" &&
-        rewardsScreen
-    ) {
-        rewardsScreen.classList.add(
-            "active"
-        );
-    }
+        case "rewards":
+
+            if (rewardsScreen) {
+
+                rewardsScreen.classList.add(
+                    "active"
+                );
+
+            }
+
+            break;
 
 
-    if (
-        name === "leaderboard" &&
-        leaderboardScreen
-    ) {
-        leaderboardScreen.classList.add(
-            "active"
-        );
-    }
+        case "leaderboard":
+
+            if (leaderboardScreen) {
+
+                leaderboardScreen.classList.add(
+                    "active"
+                );
+
+            }
+
+            break;
 
 
-    if (
-        name === "placeholder" &&
-        placeholderScreen
-    ) {
-        placeholderScreen.classList.add(
-            "active"
-        );
+        case "placeholder":
+
+            if (placeholderScreen) {
+
+                placeholderScreen.classList.add(
+                    "active"
+                );
+
+            }
+
+            break;
+
     }
 
 
@@ -444,11 +400,18 @@ function showScreen(name) {
 
 }
 
+
 /* =========================================================
-   START APP
+   APP START
 ========================================================= */
 
 function startApp() {
+
+    /*
+       برای اینکه تست ورود راحت باشد،
+       فعلاً اگر License ذخیره شده باشد
+       کاربر مستقیم وارد Home می‌شود.
+    */
 
     const savedLicense =
         localStorage.getItem(
@@ -482,12 +445,10 @@ const licenseInput =
         "licenseInput"
     );
 
-
 const licenseButton =
     document.getElementById(
         "licenseButton"
     );
-
 
 const licenseMessage =
     document.getElementById(
@@ -498,7 +459,9 @@ const licenseMessage =
 function checkLicense(value) {
 
     const license =
-        String(value || "")
+        String(
+            value || ""
+        )
             .trim();
 
 
@@ -516,14 +479,16 @@ function checkLicense(value) {
     }
 
 
-    if (license.length < 8) {
+    if (
+        license.length < 8
+    ) {
 
         return {
 
             valid: false,
 
             message:
-                "لایسنس معتبر نیست."
+                "لایسنس باید حداقل ۸ کاراکتر باشد."
 
         };
 
@@ -531,10 +496,11 @@ function checkLicense(value) {
 
 
     /*
-        فعلاً برای تست.
+       فعلاً برای تست همه کدهای
+       ۸ کاراکتری یا بیشتر قبول می‌شوند.
 
-        در مرحله بعد این قسمت به
-        سیستم License واقعی وصل می‌شود.
+       بعداً این بخش به سیستم License
+       واقعی روی سرور وصل می‌شود.
     */
 
     return {
@@ -546,17 +512,25 @@ function checkLicense(value) {
 }
 
 
+/*
+   دکمه ورود
+*/
+
 if (licenseButton) {
 
     licenseButton.addEventListener(
         "click",
-        () => {
+        function () {
+
+            const value =
+                licenseInput
+                    ? licenseInput.value.trim()
+                    : "";
+
 
             const result =
                 checkLicense(
-                    licenseInput
-                        ? licenseInput.value
-                        : ""
+                    value
                 );
 
 
@@ -577,15 +551,19 @@ if (licenseButton) {
             }
 
 
-            if (licenseInput) {
+            /*
+               ذخیره License
+            */
 
-                localStorage.setItem(
-                    "dex_license",
-                    licenseInput.value.trim()
-                );
+            localStorage.setItem(
+                "dex_license",
+                value
+            );
 
-            }
 
+            /*
+               ورود به Home
+            */
 
             showScreen(
                 "home"
@@ -597,17 +575,26 @@ if (licenseButton) {
 }
 
 
+/*
+   Enter روی کیبورد
+*/
+
 if (licenseInput) {
 
     licenseInput.addEventListener(
         "keydown",
-        event => {
+        function (event) {
 
             if (
-                event.key === "Enter"
+                event.key ===
+                "Enter"
             ) {
 
-                licenseButton?.click();
+                if (licenseButton) {
+
+                    licenseButton.click();
+
+                }
 
             }
 
@@ -631,11 +618,12 @@ if (miniGameButton) {
 
     miniGameButton.addEventListener(
         "click",
-        () => {
+        function () {
 
             showScreen(
                 "game"
             );
+
 
             startGame();
 
@@ -650,20 +638,27 @@ if (miniGameButton) {
 ========================================================= */
 
 document
-    .querySelectorAll(".home-card")
+    .querySelectorAll(
+        ".home-card"
+    )
     .forEach(
         button => {
 
             button.addEventListener(
                 "click",
-                () => {
+                function () {
 
                     const page =
                         button.dataset.page;
 
 
+                    /*
+                       Rewards
+                    */
+
                     if (
-                        page === "rewards"
+                        page ===
+                        "rewards"
                     ) {
 
                         renderRewards();
@@ -676,6 +671,10 @@ document
 
                     }
 
+
+                    /*
+                       سایر صفحات
+                    */
 
                     const pageNames = {
 
@@ -728,13 +727,15 @@ document
 ========================================================= */
 
 document
-    .querySelectorAll(".page-back")
+    .querySelectorAll(
+        ".page-back"
+    )
     .forEach(
         button => {
 
             button.addEventListener(
                 "click",
-                () => {
+                function () {
 
                     showScreen(
                         "home"
@@ -851,13 +852,13 @@ function renderRewards() {
                 );
 
 
-            card.className =
-                "reward-card";
-
-
             const canBuy =
                 totalPoints >=
                 reward.price;
+
+
+            card.className =
+                "reward-card";
 
 
             card.innerHTML = `
@@ -911,7 +912,7 @@ function renderRewards() {
 
                 button.addEventListener(
                     "click",
-                    () => {
+                    function () {
 
                         const reward =
                             rewards.find(
@@ -971,19 +972,17 @@ function getCurrentMonthKey() {
         new Date();
 
 
-    return new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        1
-    )
-        .toISOString()
-        .slice(0, 10);
+    return `${now.getFullYear()}-${
+        String(
+            now.getMonth() + 1
+        )
+            .padStart(
+                2,
+                "0"
+            )
+    }-01`;
 
 }
-
-
-const currentMonth =
-    getCurrentMonthKey();
 
 
 async function loadLeaderboard() {
@@ -1031,18 +1030,12 @@ async function loadLeaderboard() {
                 .select("*")
                 .eq(
                     "month_key",
-                    currentMonth
+                    getCurrentMonthKey()
                 )
                 .order(
                     "best_score",
                     {
                         ascending: false
-                    }
-                )
-                .order(
-                    "updated_at",
-                    {
-                        ascending: true
                     }
                 );
 
@@ -1083,22 +1076,27 @@ async function loadLeaderboard() {
 function escapeHtml(value) {
 
     return String(value)
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
@@ -1156,7 +1154,8 @@ function renderLeaderboard() {
 
 
     if (
-        leaderboardData.length === 0
+        leaderboardData.length ===
+        0
     ) {
 
         list.innerHTML = `
@@ -1178,7 +1177,10 @@ function renderLeaderboard() {
 
 
     leaderboardData.forEach(
-        (player, index) => {
+        (
+            player,
+            index
+        ) => {
 
             const rank =
                 index + 1;
@@ -1209,45 +1211,29 @@ function renderLeaderboard() {
                 );
 
 
-            let avatarHTML;
+            let rankText =
+                String(rank);
 
 
             if (
-                player.photo_url
-            ) {
-
-                avatarHTML = `
-                    <img
-                        class="leaderboard-avatar"
-                        src="${escapeHtml(
-                            player.photo_url
-                        )}"
-                        alt=""
-                    >
-                `;
-
-            } else {
-
-                const initial =
-                    (
-                        player.first_name ||
-                        "?"
-                    )
-                        .charAt(0)
-                        .toUpperCase();
+                rank === 1
+            )
+                rankText =
+                    "🥇";
 
 
-                avatarHTML = `
-                    <div
-                        class="leaderboard-avatar-fallback"
-                    >
-                        ${escapeHtml(
-                            initial
-                        )}
-                    </div>
-                `;
+            if (
+                rank === 2
+            )
+                rankText =
+                    "🥈";
 
-            }
+
+            if (
+                rank === 3
+            )
+                rankText =
+                    "🥉";
 
 
             const name =
@@ -1255,47 +1241,14 @@ function renderLeaderboard() {
                     player.last_name || ""
                 }`
                     .trim()
-                || "کاربر";
+                ||
+                "کاربر";
 
 
             const username =
                 player.username
                     ? `@${player.username}`
                     : "";
-
-
-            let rankDisplay =
-                String(rank);
-
-
-            if (
-                rank === 1
-            ) {
-
-                rankDisplay =
-                    "🥇";
-
-            }
-
-
-            if (
-                rank === 2
-            ) {
-
-                rankDisplay =
-                    "🥈";
-
-            }
-
-
-            if (
-                rank === 3
-            ) {
-
-                rankDisplay =
-                    "🥉";
-
-            }
 
 
             row.innerHTML = `
@@ -1307,10 +1260,9 @@ function renderLeaderboard() {
                             : ""
                     }"
                 >
-                    ${rankDisplay}
+                    ${rankText}
                 </div>
 
-                ${avatarHTML}
 
                 <div
                     class="leaderboard-user"
@@ -1337,6 +1289,7 @@ function renderLeaderboard() {
                     }
 
                 </div>
+
 
                 <div
                     class="leaderboard-points"
@@ -1394,30 +1347,30 @@ function renderLeaderboard() {
 
 function updateMyRank(
     rank,
-    score = 0
+    score
 ) {
 
-    const rankTop =
+    const myRank =
         document.getElementById(
             "myRank"
         );
 
 
-    const rankBottom =
+    const myRankBottom =
         document.getElementById(
             "myRankBottom"
         );
 
 
-    const bestScore =
+    const myBestScore =
         document.getElementById(
             "myBestScore"
         );
 
 
-    if (rankTop) {
+    if (myRank) {
 
-        rankTop.textContent =
+        myRank.textContent =
             rank
                 ? `#${rank}`
                 : "—";
@@ -1425,9 +1378,9 @@ function updateMyRank(
     }
 
 
-    if (rankBottom) {
+    if (myRankBottom) {
 
-        rankBottom.textContent =
+        myRankBottom.textContent =
             rank
                 ? `#${rank}`
                 : "—";
@@ -1435,10 +1388,10 @@ function updateMyRank(
     }
 
 
-    if (bestScore) {
+    if (myBestScore) {
 
-        bestScore.textContent =
-            score;
+        myBestScore.textContent =
+            score || 0;
 
     }
 
@@ -1459,7 +1412,7 @@ if (leaderboardButton) {
 
     leaderboardButton.addEventListener(
         "click",
-        async () => {
+        async function () {
 
             showScreen(
                 "leaderboard"
@@ -1474,10 +1427,6 @@ if (leaderboardButton) {
 }
 
 
-/* =========================================================
-   LEADERBOARD BACK
-========================================================= */
-
 const leaderboardBackButton =
     document.getElementById(
         "leaderboardBackButton"
@@ -1488,10 +1437,10 @@ if (leaderboardBackButton) {
 
     leaderboardBackButton.addEventListener(
         "click",
-        () => {
+        function () {
 
             showScreen(
-                "home"
+                "game"
             );
 
         }
@@ -1595,7 +1544,7 @@ const METERS_PER_SECOND =
 
 
 /* =========================================================
-   CANVAS SIZE
+   CANVAS
 ========================================================= */
 
 function resizeCanvas() {
@@ -1653,7 +1602,7 @@ function resizeCanvas() {
 
 window.addEventListener(
     "resize",
-    () => {
+    function () {
 
         if (gameRunning) {
 
@@ -1674,8 +1623,11 @@ function getGameSize() {
     if (!gameWorld) {
 
         return {
+
             width: 0,
+
             height: 0
+
         };
 
     }
@@ -1708,7 +1660,10 @@ function getRoad(width) {
 
 
     const left =
-        (width - roadWidth) / 2;
+        (
+            width -
+            roadWidth
+        ) / 2;
 
 
     return {
@@ -1834,7 +1789,7 @@ function drawRoad() {
         const x =
             road.left +
             road.laneWidth *
-            i;
+                i;
 
 
         ctx.beginPath();
@@ -1858,68 +1813,6 @@ function drawRoad() {
 
 
     ctx.setLineDash([]);
-
-}
-
-
-/* =========================================================
-   ROUND RECT
-========================================================= */
-
-function roundRect(
-    context,
-    x,
-    y,
-    width,
-    height,
-    radius
-) {
-
-    context.beginPath();
-
-    context.moveTo(
-        x + radius,
-        y
-    );
-
-
-    context.arcTo(
-        x + width,
-        y,
-        x + width,
-        y + height,
-        radius
-    );
-
-
-    context.arcTo(
-        x + width,
-        y + height,
-        x,
-        y + height,
-        radius
-    );
-
-
-    context.arcTo(
-        x,
-        y + height,
-        x,
-        y,
-        radius
-    );
-
-
-    context.arcTo(
-        x,
-        y,
-        x + width,
-        y,
-        radius
-    );
-
-
-    context.closePath();
 
 }
 
@@ -1973,7 +1866,6 @@ function drawCar() {
 
     ctx.beginPath();
 
-
     ctx.ellipse(
         x,
         y +
@@ -1987,7 +1879,6 @@ function drawCar() {
         0,
         Math.PI * 2
     );
-
 
     ctx.fill();
 
@@ -2125,27 +2016,62 @@ function drawCar() {
     );
 
 
-    ctx.fillStyle =
-        "rgba(255,255,255,.14)";
+}
 
 
-    roundRect(
-        ctx,
-        x -
-            carWidth *
-            .20,
-        y +
-            carHeight *
-            .09,
-        carWidth *
-            .09,
-        carHeight *
-            .72,
-        5
+/* =========================================================
+   ROUND RECT
+========================================================= */
+
+function roundRect(
+    context,
+    x,
+    y,
+    width,
+    height,
+    radius
+) {
+
+    context.beginPath();
+
+    context.moveTo(
+        x + radius,
+        y
     );
 
+    context.arcTo(
+        x + width,
+        y,
+        x + width,
+        y + height,
+        radius
+    );
 
-    ctx.fill();
+    context.arcTo(
+        x + width,
+        y + height,
+        x,
+        y + height,
+        radius
+    );
+
+    context.arcTo(
+        x,
+        y + height,
+        x,
+        y,
+        radius
+    );
+
+    context.arcTo(
+        x,
+        y,
+        x + width,
+        y,
+        radius
+    );
+
+    context.closePath();
 
 }
 
@@ -2255,25 +2181,6 @@ function drawObstacle(
         ctx.fill();
 
 
-        ctx.fillStyle =
-            "#ffe9a8";
-
-
-        ctx.fillRect(
-            x - w * .31,
-            obstacle.y + h - 14,
-            w * .18,
-            6
-        );
-
-
-        ctx.fillRect(
-            x + w * .13,
-            obstacle.y + h - 14,
-            w * .18,
-            6
-        );
-
     } else {
 
         ctx.fillStyle =
@@ -2370,35 +2277,37 @@ function checkCollision(
         getRoad(width);
 
 
-    const carW =
+    const carWidth =
         Math.min(
             road.laneWidth * .52,
             66
         );
 
 
-    const carH =
-        carW * 1.60;
+    const carHeight =
+        carWidth * 1.60;
 
 
     const carY =
         height - 170;
 
 
-    const obstacleH =
+    const obstacleHeight =
         74;
 
 
     return (
 
         obstacle.y +
-            obstacleH >=
+            obstacleHeight >=
             carY + 10
 
         &&
 
         obstacle.y <=
-            carY + carH - 10
+            carY +
+            carHeight -
+            10
 
     );
 
@@ -2437,7 +2346,8 @@ function updateGame(
         delta *
         (
             180 +
-            gameSpeed * 30
+            gameSpeed *
+            30
         );
 
 
@@ -2528,7 +2438,6 @@ function updateGame(
 
         showPointAnimation();
 
-
         updatePointsUI();
 
     }
@@ -2599,7 +2508,8 @@ function gameLoop(
         (
             timestamp -
             lastFrame
-        ) / 1000;
+        ) /
+        1000;
 
 
     lastFrame =
@@ -2732,93 +2642,7 @@ function startGame() {
 
 }
 
-/* =========================================================
-   SEND GAME SCORE TO SERVER
-========================================================= */
 
-async function submitGameScore(score) {
-
-    if (!user) {
-
-        console.error(
-            "Telegram user not found."
-        );
-
-        return;
-
-    }
-
-
-    if (!score || score <= 0) {
-
-        return;
-
-    }
-
-
-    if (!supabaseClient) {
-
-        console.error(
-            "Supabase is not connected."
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient.functions.invoke(
-                "submit-score",
-                {
-                    body: {
-
-                        initData:
-                            tg?.initData || "",
-
-                        score:
-                            Math.floor(
-                                score
-                            )
-
-                    }
-                }
-            );
-
-
-        if (error) {
-
-            console.error(
-                "Submit score error:",
-                error
-            );
-
-            return;
-
-        }
-
-
-        console.log(
-            "Score submitted successfully:",
-            data
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Score request failed:",
-            error
-        );
-
-    }
-
-}
 /* =========================================================
    END GAME
 ========================================================= */
@@ -2829,22 +2653,13 @@ function endGame() {
         return;
 
 
-    gameRunning = false;
-
-    gameOver = true;
-
-
-    submitGameScore(
-        gamePoints
-    );
+    gameRunning =
+        false;
 
 
-    cancelAnimationFrame(
-        animationId
-    );
+    gameOver =
+        true;
 
-    // ادامه کد قبلی...
-}
 
     cancelAnimationFrame(
         animationId
@@ -2852,9 +2667,7 @@ function endGame() {
 
 
     /*
-        فعلاً برای تست دیتابیس:
-
-        رکورد بازی به Supabase فرستاده می‌شود.
+       ارسال رکورد به سرور.
     */
 
     submitGameScore(
@@ -2894,7 +2707,7 @@ function endGame() {
 
 
 /* =========================================================
-   SAVE GAME SCORE
+   SUBMIT SCORE
 ========================================================= */
 
 async function submitGameScore(
@@ -2903,6 +2716,19 @@ async function submitGameScore(
 
     if (
         !user ||
+        !tg
+    ) {
+
+        console.error(
+            "Telegram user not available."
+        );
+
+        return;
+
+    }
+
+
+    if (
         !score ||
         score <= 0
     ) {
@@ -2915,7 +2741,7 @@ async function submitGameScore(
     if (!supabaseClient) {
 
         console.error(
-            "Cannot save score: Supabase unavailable."
+            "Supabase is not connected."
         );
 
         return;
@@ -2926,172 +2752,53 @@ async function submitGameScore(
     try {
 
         const {
-            data: existing,
-            error:
-                selectError
+            data,
+            error
         } =
             await supabaseClient
-                .from(
-                    "game_leaderboard"
-                )
-                .select(
-                    "best_score,games_played"
-                )
-                .eq(
-                    "month_key",
-                    currentMonth
-                )
-                .eq(
-                    "telegram_id",
-                    Number(
-                        user.id
-                    )
-                )
-                .maybeSingle();
+                .functions
+                .invoke(
+                    "submit-score",
+                    {
 
+                        body: {
 
-        if (selectError) {
+                            initData:
+                                tg.initData,
 
-            throw selectError;
+                            score:
+                                Math.floor(
+                                    score
+                                )
 
-        }
+                        }
 
-
-        if (existing) {
-
-            const newBest =
-                Math.max(
-                    Number(
-                        existing.best_score
-                    ) || 0,
-
-                    Number(score)
+                    }
                 );
 
 
-            const {
-                error:
-                    updateError
-            } =
-                await supabaseClient
-                    .from(
-                        "game_leaderboard"
-                    )
-                    .update({
+        if (error) {
 
-                        best_score:
-                            newBest,
+            console.error(
+                "Score submit error:",
+                error
+            );
 
-                        games_played:
-                            (
-                                Number(
-                                    existing.games_played
-                                ) || 0
-                            ) + 1,
-
-                        first_name:
-                            user.first_name
-                            || "",
-
-                        last_name:
-                            user.last_name
-                            || "",
-
-                        username:
-                            user.username
-                            || null,
-
-                        photo_url:
-                            user.photo_url
-                            || null,
-
-                        updated_at:
-                            new Date()
-                                .toISOString()
-
-                    })
-                    .eq(
-                        "month_key",
-                        currentMonth
-                    )
-                    .eq(
-                        "telegram_id",
-                        Number(
-                            user.id
-                        )
-                    );
-
-
-            if (updateError) {
-
-                throw updateError;
-
-            }
-
-        } else {
-
-            const {
-                error:
-                    insertError
-            } =
-                await supabaseClient
-                    .from(
-                        "game_leaderboard"
-                    )
-                    .insert({
-
-                        month_key:
-                            currentMonth,
-
-                        telegram_id:
-                            Number(
-                                user.id
-                            ),
-
-                        first_name:
-                            user.first_name
-                            || "",
-
-                        last_name:
-                            user.last_name
-                            || "",
-
-                        username:
-                            user.username
-                            || null,
-
-                        photo_url:
-                            user.photo_url
-                            || null,
-
-                        best_score:
-                            Number(score),
-
-                        games_played:
-                            1
-
-                    });
-
-
-            if (insertError) {
-
-                throw insertError;
-
-            }
+            return;
 
         }
 
 
         console.log(
-            "Game score saved:",
-            score
+            "Score submitted:",
+            data
         );
 
 
     } catch (error) {
 
         console.error(
-            "Score save error:",
+            "Score request failed:",
             error
         );
 
@@ -3105,6 +2812,14 @@ async function submitGameScore(
 ========================================================= */
 
 function exitGame() {
+
+    /*
+       امتیاز بازی فعلاً برای حساب محلی
+       هم اضافه می‌شود.
+
+       بعداً این بخش را هم کاملاً
+       روی سرور منتقل می‌کنیم.
+    */
 
     if (
         gamePoints > 0
@@ -3151,7 +2866,7 @@ if (restartGameButton) {
 
     restartGameButton.addEventListener(
         "click",
-        () => {
+        function () {
 
             startGame();
 
@@ -3171,7 +2886,7 @@ if (exitGameButton) {
 
     exitGameButton.addEventListener(
         "click",
-        () => {
+        function () {
 
             exitGame();
 
@@ -3191,7 +2906,7 @@ if (gameBackButton) {
 
     gameBackButton.addEventListener(
         "click",
-        () => {
+        function () {
 
             if (gameOver) {
 
@@ -3233,10 +2948,14 @@ if (gameWorld) {
 
     gameWorld.addEventListener(
         "touchstart",
-        event => {
+        function (event) {
 
             const touch =
                 event.changedTouches[0];
+
+
+            if (!touch)
+                return;
 
 
             swipeStartX =
@@ -3255,10 +2974,14 @@ if (gameWorld) {
 
     gameWorld.addEventListener(
         "touchend",
-        event => {
+        function (event) {
 
             const touch =
                 event.changedTouches[0];
+
+
+            if (!touch)
+                return;
 
 
             const dx =
@@ -3282,7 +3005,8 @@ if (gameWorld) {
 
 
             if (
-                Math.abs(dx) < 25
+                Math.abs(dx) <
+                25
             ) {
 
                 return;
@@ -3290,7 +3014,9 @@ if (gameWorld) {
             }
 
 
-            if (dx > 0) {
+            if (
+                dx > 0
+            ) {
 
                 targetLane =
                     Math.min(
@@ -3344,440 +3070,15 @@ function showPointAnimation() {
     );
 
 }
+
+
 /* =========================================================
-   LEADERBOARD BUTTON
-========================================================= */
-
-const leaderboardButton =
-    document.getElementById(
-        "leaderboardButton"
-    );
-
-
-const leaderboardScreen =
-    document.getElementById(
-        "leaderboardScreen"
-    );
-
-
-const leaderboardBackButton =
-    document.getElementById(
-        "leaderboardBackButton"
-    );
-
-
-if (leaderboardButton) {
-
-    leaderboardButton.addEventListener(
-        "click",
-        async () => {
-
-            showScreen(
-                "leaderboard"
-            );
-
-
-            await loadLeaderboard();
-
-        }
-    );
-
-}
-
-
-if (leaderboardBackButton) {
-
-    leaderboardBackButton.addEventListener(
-        "click",
-        () => {
-
-            showScreen(
-                "game"
-            );
-
-        }
-    );
-
-}
-/* =========================================================
-   LEADERBOARD
-========================================================= */
-
-let leaderboardData = [];
-
-
-function getCurrentMonthKey() {
-
-    const now =
-        new Date();
-
-
-    return new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        1
-    )
-        .toISOString()
-        .slice(
-            0,
-            10
-        );
-
-}
-
-
-async function loadLeaderboard() {
-
-    const list =
-        document.getElementById(
-            "leaderboardList"
-        );
-
-
-    if (!list)
-        return;
-
-
-    list.innerHTML = `
-        <div class="leaderboard-loading">
-            در حال دریافت اطلاعات...
-        </div>
-    `;
-
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from(
-                    "game_leaderboard"
-                )
-                .select("*")
-                .eq(
-                    "month_key",
-                    getCurrentMonthKey()
-                )
-                .order(
-                    "best_score",
-                    {
-                        ascending: false
-                    }
-                );
-
-
-        if (error) {
-
-            throw error;
-
-        }
-
-
-        leaderboardData =
-            data || [];
-
-
-        renderLeaderboard();
-
-
-    } catch (error) {
-
-        console.error(
-            "Leaderboard error:",
-            error
-        );
-
-
-        list.innerHTML = `
-            <div class="leaderboard-empty">
-                دریافت اطلاعات با مشکل مواجه شد.
-            </div>
-        `;
-
-    }
-
-}
-
-
-function renderLeaderboard() {
-
-    const list =
-        document.getElementById(
-            "leaderboardList"
-        );
-
-
-    if (!list)
-        return;
-
-
-    list.innerHTML =
-        "";
-
-
-    const count =
-        leaderboardData.length;
-
-
-    const playerCount =
-        document.getElementById(
-            "playerCount"
-        );
-
-
-    const players =
-        document.getElementById(
-            "leaderboardPlayers"
-        );
-
-
-    if (playerCount) {
-
-        playerCount.textContent =
-            count;
-
-    }
-
-
-    if (players) {
-
-        players.textContent =
-            count;
-
-    }
-
-
-    leaderboardData.forEach(
-        (player, index) => {
-
-            const rank =
-                index + 1;
-
-
-            const isMe =
-                user &&
-                Number(
-                    player.telegram_id
-                ) ===
-                Number(
-                    user.id
-                );
-
-
-            const row =
-                document.createElement(
-                    "div"
-                );
-
-
-            row.className =
-                "leaderboard-row" +
-                (
-                    isMe
-                        ? " current-user"
-                        : ""
-                );
-
-
-            let rankText =
-                rank;
-
-
-            if (rank === 1)
-                rankText = "🥇";
-
-            if (rank === 2)
-                rankText = "🥈";
-
-            if (rank === 3)
-                rankText = "🥉";
-
-
-            const name =
-                `${player.first_name || ""} ${
-                    player.last_name || ""
-                }`
-                    .trim()
-                ||
-                "کاربر";
-
-
-            const username =
-                player.username
-                    ? `@${player.username}`
-                    : "";
-
-
-            row.innerHTML = `
-
-                <div class="leaderboard-rank ${
-                    rank <= 3
-                        ? "top"
-                        : ""
-                }">
-                    ${rankText}
-                </div>
-
-                <div class="leaderboard-user">
-
-                    <div class="leaderboard-name">
-                        ${escapeHtml(name)}
-                    </div>
-
-                    ${
-                        username
-                            ? `
-                                <div class="leaderboard-username">
-                                    ${escapeHtml(
-                                        username
-                                    )}
-                                </div>
-                              `
-                            : ""
-                    }
-
-                </div>
-
-                <div class="leaderboard-points">
-                    ★ ${player.best_score}
-                </div>
-
-            `;
-
-
-            list.appendChild(
-                row
-            );
-
-        }
-    );
-
-
-    const myIndex =
-        user
-            ? leaderboardData.findIndex(
-                player =>
-                    Number(
-                        player.telegram_id
-                    ) ===
-                    Number(
-                        user.id
-                    )
-            )
-            : -1;
-
-
-    if (
-        myIndex >= 0
-    ) {
-
-        updateMyRank(
-            myIndex + 1,
-            leaderboardData[
-                myIndex
-            ].best_score
-        );
-
-    } else {
-
-        updateMyRank(
-            null,
-            0
-        );
-
-    }
-
-}
-
-
-function updateMyRank(
-    rank,
-    score
-) {
-
-    const myRank =
-        document.getElementById(
-            "myRank"
-        );
-
-
-    const myRankBottom =
-        document.getElementById(
-            "myRankBottom"
-        );
-
-
-    const myBestScore =
-        document.getElementById(
-            "myBestScore"
-        );
-
-
-    if (myRank) {
-
-        myRank.textContent =
-            rank
-                ? `#${rank}`
-                : "—";
-
-    }
-
-
-    if (myRankBottom) {
-
-        myRankBottom.textContent =
-            rank
-                ? `#${rank}`
-                : "—";
-
-    }
-
-
-    if (myBestScore) {
-
-        myBestScore.textContent =
-            score || 0;
-
-    }
-
-}
-
-
-function escapeHtml(value) {
-
-    return String(value)
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-/* =========================================================
-   INITIALIZATION
+   FINAL INITIALIZATION
 ========================================================= */
 
 loadUser();
 
 updatePointsUI();
 
-testSupabase();
-
 startApp();
+```
