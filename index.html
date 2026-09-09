@@ -6,8 +6,10 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     >
+
+    <meta name="theme-color" content="#07080d">
 
     <title>DEX DESIGN</title>
 
@@ -18,27 +20,24 @@
 
     <main class="app">
 
-        <div class="background-glow glow-one"></div>
-        <div class="background-glow glow-two"></div>
+        <div class="bg-glow glow-a"></div>
+        <div class="bg-glow glow-b"></div>
 
-        <!-- LOGIN SCREEN -->
-        <section id="licenseScreen" class="screen active">
 
-            <div class="brand">
+        <!-- =========================
+             LICENSE
+        ========================== -->
 
-                <div class="brand-logo">
-                    DX
-                </div>
+        <section id="licenseScreen" class="screen">
 
-                <div class="brand-text">
-                    DEX DESIGN
-                </div>
-
+            <div class="brand-center">
+                <div class="brand-mark">DX</div>
+                <div class="brand-title">DEX DESIGN</div>
             </div>
 
-            <div class="license-box">
+            <div class="license-card">
 
-                <div class="license-icon">
+                <div class="license-symbol">
                     ✦
                 </div>
 
@@ -47,48 +46,43 @@
                 </h1>
 
                 <p>
-                    برای ادامه، لایسنس خود را وارد کنید.
+                    برای دسترسی به برنامه، لایسنس خود را وارد کنید.
                 </p>
 
-                <div class="input-wrapper">
-
-                    <input
-                        id="licenseInput"
-                        type="text"
-                        placeholder="XXXX-XXXX-XXXX"
-                        autocomplete="off"
-                        spellcheck="false"
-                    >
-
-                </div>
+                <input
+                    id="licenseInput"
+                    type="text"
+                    placeholder="LICENSE-CODE"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
 
                 <button
                     id="licenseButton"
-                    type="button"
+                    class="primary-button"
                 >
                     ورود
                 </button>
 
                 <div
                     id="licenseMessage"
-                    class="license-message"
+                    class="message"
                 ></div>
 
-            </div>
-
-            <div class="footer-text">
-                DEX DESIGN
             </div>
 
         </section>
 
 
-        <!-- HOME SCREEN -->
+        <!-- =========================
+             HOME
+        ========================== -->
+
         <section id="homeScreen" class="screen">
 
-            <!-- HEADER -->
+            <header class="top-header">
 
-            <header class="home-header">
+                <!-- SCORE -->
 
                 <div class="score-box">
 
@@ -96,13 +90,13 @@
                         ★
                     </div>
 
-                    <div class="score-info">
+                    <div class="score-text">
 
                         <span>
                             امتیاز
                         </span>
 
-                        <strong id="score">
+                        <strong id="homeScore">
                             0
                         </strong>
 
@@ -111,27 +105,29 @@
                 </div>
 
 
+                <!-- PROFILE -->
+
                 <div class="profile-mini">
 
                     <img
-                        id="profilePhoto"
+                        id="homeProfilePhoto"
                         class="profile-photo"
                         alt="Profile"
                     >
 
                     <div
-                        id="profileFallback"
+                        id="homeProfileFallback"
                         class="profile-fallback"
                     >
                     </div>
 
-                    <div class="profile-text">
+                    <div class="profile-info">
 
-                        <strong id="profileName">
+                        <strong id="homeProfileName">
                             کاربر
                         </strong>
 
-                        <span id="profileUsername">
+                        <span id="homeProfileUsername">
                             @username
                         </span>
 
@@ -144,11 +140,11 @@
 
             <!-- LEVEL -->
 
-            <section class="level-section">
+            <section class="level-area">
 
                 <div class="level-ring">
 
-                    <div class="level-content">
+                    <div class="level-inner">
 
                         <strong>
                             A1
@@ -165,110 +161,323 @@
             </section>
 
 
-            <!-- MENU -->
+            <!-- HOME MENU -->
 
-            <section class="home-menu">
+            <section class="home-grid">
 
                 <button
-                    class="menu-card"
+                    class="home-card"
                     data-page="achievements"
                 >
-
-                    <span class="menu-icon">
+                    <span class="home-card-icon">
                         🏆
                     </span>
 
-                    <span class="menu-title">
+                    <span>
                         دستاوردها
                     </span>
-
                 </button>
 
 
                 <button
-                    class="menu-card"
+                    class="home-card"
                     data-page="rewards"
                 >
-
-                    <span class="menu-icon">
+                    <span class="home-card-icon">
                         🎁
                     </span>
 
-                    <span class="menu-title">
+                    <span>
                         جوایز
                     </span>
-
                 </button>
 
 
                 <button
-                    class="menu-card"
+                    class="home-card"
                     data-page="points"
                 >
-
-                    <span class="menu-icon">
+                    <span class="home-card-icon">
                         ★
                     </span>
 
-                    <span class="menu-title">
+                    <span>
                         دریافت امتیاز
                     </span>
-
                 </button>
 
 
                 <button
-                    class="menu-card"
+                    class="home-card"
                     data-page="learning"
                 >
-
-                    <span class="menu-icon">
+                    <span class="home-card-icon">
                         ◈
                     </span>
 
-                    <span class="menu-title">
+                    <span>
                         مسیر یادگیری
                     </span>
-
                 </button>
 
 
                 <button
-                    class="menu-card"
+                    class="home-card"
                     data-page="upgrade"
                 >
-
-                    <span class="menu-icon">
+                    <span class="home-card-icon">
                         ↑
                     </span>
 
-                    <span class="menu-title">
+                    <span>
                         ارتقای سطح
                     </span>
-
                 </button>
 
 
                 <button
-                    class="menu-card"
+                    class="home-card"
                     data-page="guide"
                 >
-
-                    <span class="menu-icon">
+                    <span class="home-card-icon">
                         ?
                     </span>
 
-                    <span class="menu-title">
+                    <span>
                         راهنما
                     </span>
-
                 </button>
 
             </section>
 
 
-            <div class="home-footer">
+            <!-- MINI GAME -->
+
+            <button
+                id="miniGameButton"
+                class="mini-game-button"
+            >
+
+                <span class="mini-game-icon">
+                    🏎
+                </span>
+
+                <span class="mini-game-label">
+                    مینی گیم
+                </span>
+
+                <span class="mini-game-arrow">
+                    ←
+                </span>
+
+            </button>
+
+
+            <footer class="footer">
                 DEX DESIGN
+            </footer>
+
+        </section>
+
+
+        <!-- =========================
+             GAME
+        ========================== -->
+
+        <section id="gameScreen" class="screen game-screen">
+
+            <div class="game-topbar">
+
+                <button
+                    id="gameBackButton"
+                    class="game-back"
+                >
+                    ×
+                </button>
+
+
+                <div class="game-distance">
+
+                    <span>
+                        مسافت
+                    </span>
+
+                    <strong id="distanceText">
+                        0m
+                    </strong>
+
+                </div>
+
+
+                <div class="game-score">
+
+                    <span>
+                        امتیاز
+                    </span>
+
+                    <strong id="gameScore">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div id="gameWorld" class="game-world">
+
+                <canvas id="gameCanvas"></canvas>
+
+                <div
+                    id="pointAnimation"
+                    class="point-animation"
+                >
+                    +1
+                </div>
+
+                <div class="swipe-hint">
+                    ← Swipe →
+                </div>
+
+            </div>
+
+
+            <!-- GAME OVER -->
+
+            <div
+                id="gameOver"
+                class="game-over hidden"
+            >
+
+                <div class="game-over-card">
+
+                    <div class="game-over-icon">
+                        💥
+                    </div>
+
+                    <div class="game-over-title">
+                        بازی تمام شد
+                    </div>
+
+                    <div class="game-over-subtitle">
+                        با یک مانع برخورد کردی
+                    </div>
+
+
+                    <div class="final-score">
+
+                        <span>
+                            امتیاز این بازی
+                        </span>
+
+                        <strong id="finalGameScore">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="game-over-buttons">
+
+                        <button
+                            id="exitGameButton"
+                            class="secondary-button"
+                        >
+                            خروج
+                        </button>
+
+                        <button
+                            id="restartGameButton"
+                            class="primary-button"
+                        >
+                            تلاش مجدد
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             REWARDS
+        ========================== -->
+
+        <section id="rewardsScreen" class="screen">
+
+            <header class="page-header">
+
+                <button
+                    class="page-back"
+                    data-back="home"
+                >
+                    →
+                </button>
+
+                <div>
+
+                    <h1>
+                        جوایز
+                    </h1>
+
+                    <p>
+                        امتیازت را خرج کن
+                    </p>
+
+                </div>
+
+                <div class="reward-score">
+                    ★ <span id="rewardScore">0</span>
+                </div>
+
+            </header>
+
+
+            <div
+                id="rewardsGrid"
+                class="rewards-grid"
+            ></div>
+
+        </section>
+
+
+        <!-- =========================
+             SIMPLE PLACEHOLDER PAGES
+        ========================== -->
+
+        <section
+            id="placeholderScreen"
+            class="screen"
+        >
+
+            <header class="page-header">
+
+                <button
+                    class="page-back"
+                    data-back="home"
+                >
+                    →
+                </button>
+
+                <div>
+
+                    <h1 id="placeholderTitle">
+                        بخش
+                    </h1>
+
+                    <p>
+                        به‌زودی
+                    </p>
+
+                </div>
+
+            </header>
+
+            <div class="coming-soon">
+                این بخش در مرحله بعدی ساخته می‌شود.
             </div>
 
         </section>
