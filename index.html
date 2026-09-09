@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="fa" dir="rtl">
 
 <head>
@@ -28,12 +28,20 @@
              LICENSE
         ========================== -->
 
-        <section id="licenseScreen" class="screen">
+        <section id="licenseScreen" class="screen active">
 
             <div class="brand-center">
-                <div class="brand-mark">DX</div>
-                <div class="brand-title">DEX DESIGN</div>
+
+                <div class="brand-mark">
+                    DX
+                </div>
+
+                <div class="brand-title">
+                    DEX DESIGN
+                </div>
+
             </div>
+
 
             <div class="license-card">
 
@@ -60,6 +68,7 @@
                 <button
                     id="licenseButton"
                     class="primary-button"
+                    type="button"
                 >
                     ورود
                 </button>
@@ -82,8 +91,6 @@
 
             <header class="top-header">
 
-                <!-- SCORE -->
-
                 <div class="score-box">
 
                     <div class="score-star">
@@ -105,8 +112,6 @@
                 </div>
 
 
-                <!-- PROFILE -->
-
                 <div class="profile-mini">
 
                     <img
@@ -118,8 +123,7 @@
                     <div
                         id="homeProfileFallback"
                         class="profile-fallback"
-                    >
-                    </div>
+                    ></div>
 
                     <div class="profile-info">
 
@@ -137,8 +141,6 @@
 
             </header>
 
-
-            <!-- LEVEL -->
 
             <section class="level-area">
 
@@ -161,14 +163,14 @@
             </section>
 
 
-            <!-- HOME MENU -->
-
             <section class="home-grid">
 
                 <button
                     class="home-card"
                     data-page="achievements"
+                    type="button"
                 >
+
                     <span class="home-card-icon">
                         🏆
                     </span>
@@ -176,13 +178,16 @@
                     <span>
                         دستاوردها
                     </span>
+
                 </button>
 
 
                 <button
                     class="home-card"
                     data-page="rewards"
+                    type="button"
                 >
+
                     <span class="home-card-icon">
                         🎁
                     </span>
@@ -190,13 +195,16 @@
                     <span>
                         جوایز
                     </span>
+
                 </button>
 
 
                 <button
                     class="home-card"
                     data-page="points"
+                    type="button"
                 >
+
                     <span class="home-card-icon">
                         ★
                     </span>
@@ -204,13 +212,16 @@
                     <span>
                         دریافت امتیاز
                     </span>
+
                 </button>
 
 
                 <button
                     class="home-card"
                     data-page="learning"
+                    type="button"
                 >
+
                     <span class="home-card-icon">
                         ◈
                     </span>
@@ -218,13 +229,16 @@
                     <span>
                         مسیر یادگیری
                     </span>
+
                 </button>
 
 
                 <button
                     class="home-card"
                     data-page="upgrade"
+                    type="button"
                 >
+
                     <span class="home-card-icon">
                         ↑
                     </span>
@@ -232,13 +246,16 @@
                     <span>
                         ارتقای سطح
                     </span>
+
                 </button>
 
 
                 <button
                     class="home-card"
                     data-page="guide"
+                    type="button"
                 >
+
                     <span class="home-card-icon">
                         ?
                     </span>
@@ -246,20 +263,20 @@
                     <span>
                         راهنما
                     </span>
+
                 </button>
 
             </section>
 
 
-            <!-- MINI GAME -->
-
             <button
                 id="miniGameButton"
                 class="mini-game-button"
+                type="button"
             >
 
                 <span class="mini-game-icon">
-                    🏎
+                    🏎️
                 </span>
 
                 <span class="mini-game-label">
@@ -284,13 +301,17 @@
              GAME
         ========================== -->
 
-        <section id="gameScreen" class="screen game-screen">
+        <section
+            id="gameScreen"
+            class="screen game-screen"
+        >
 
             <div class="game-topbar">
 
                 <button
                     id="gameBackButton"
                     class="game-back"
+                    type="button"
                 >
                     ×
                 </button>
@@ -324,7 +345,10 @@
             </div>
 
 
-            <div id="gameWorld" class="game-world">
+            <div
+                id="gameWorld"
+                class="game-world"
+            >
 
                 <canvas id="gameCanvas"></canvas>
 
@@ -336,13 +360,11 @@
                 </div>
 
                 <div class="swipe-hint">
-                    ← Swipe →
+                    ← برای تغییر لاین Swipe کن →
                 </div>
 
             </div>
 
-
-            <!-- GAME OVER -->
 
             <div
                 id="gameOver"
@@ -382,6 +404,7 @@
                         <button
                             id="exitGameButton"
                             class="secondary-button"
+                            type="button"
                         >
                             خروج
                         </button>
@@ -389,6 +412,7 @@
                         <button
                             id="restartGameButton"
                             class="primary-button"
+                            type="button"
                         >
                             تلاش مجدد
                         </button>
@@ -406,13 +430,16 @@
              REWARDS
         ========================== -->
 
-        <section id="rewardsScreen" class="screen">
+        <section
+            id="rewardsScreen"
+            class="screen"
+        >
 
             <header class="page-header">
 
                 <button
                     class="page-back"
-                    data-back="home"
+                    type="button"
                 >
                     →
                 </button>
@@ -429,8 +456,12 @@
 
                 </div>
 
+
                 <div class="reward-score">
-                    ★ <span id="rewardScore">0</span>
+                    ★
+                    <span id="rewardScore">
+                        0
+                    </span>
                 </div>
 
             </header>
@@ -445,7 +476,7 @@
 
 
         <!-- =========================
-             SIMPLE PLACEHOLDER PAGES
+             PLACEHOLDER
         ========================== -->
 
         <section
@@ -457,7 +488,7 @@
 
                 <button
                     class="page-back"
-                    data-back="home"
+                    type="button"
                 >
                     →
                 </button>
@@ -475,6 +506,7 @@
                 </div>
 
             </header>
+
 
             <div class="coming-soon">
                 این بخش در مرحله بعدی ساخته می‌شود.
