@@ -1,6 +1,22 @@
 /* =========================================================
    TELEGRAM
 ========================================================= */
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+    "https://dnhzloyskxcihkkaspez.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_f8eKkpgrTdFK08_XQq-ozg_24-UOyLh";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 const tg =
     window.Telegram &&
