@@ -316,6 +316,16 @@
                     ×
                 </button>
 
+                <button
+                    id="leaderboardButton"
+                    class="leaderboard-button"
+                    type="button"
+                >
+                    🏆
+                    <span>
+                        لیدربرد
+                    </span>
+                </button>
 
                 <div class="game-distance">
 
@@ -429,7 +439,120 @@
         <!-- =========================
              REWARDS
         ========================== -->
+            <section
+    id="leaderboardScreen"
+    class="screen"
+>
 
+    <header class="page-header">
+
+        <button
+            id="leaderboardBackButton"
+            class="page-back"
+            type="button"
+        >
+            →
+        </button>
+
+        <div>
+
+            <h1>
+                لیدربرد
+            </h1>
+
+            <p>
+                رتبه‌بندی این ماه
+            </p>
+
+        </div>
+
+        <div class="reward-score">
+
+            🏆
+            <span id="playerCount">
+                0
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <div class="leaderboard-summary">
+
+        <div>
+
+            <span>
+                بازیکنان این ماه
+            </span>
+
+            <strong id="leaderboardPlayers">
+                0
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                رتبه شما
+            </span>
+
+            <strong id="myRank">
+                —
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="leaderboardList"
+        class="leaderboard-list"
+    >
+
+        <div class="leaderboard-loading">
+            در حال دریافت اطلاعات...
+        </div>
+
+    </div>
+
+
+    <div
+        id="myLeaderboardCard"
+        class="my-leaderboard-card"
+    >
+
+        <div>
+
+            <span>
+                جایگاه شما
+            </span>
+
+            <strong id="myRankBottom">
+                —
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                امتیاز
+            </span>
+
+            <strong id="myBestScore">
+                0
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
         <section
             id="rewardsScreen"
             class="screen"
