@@ -5,10 +5,12 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    >
 
-    <title>Dex Mini App</title>
+    <title>Dex Design</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -16,22 +18,203 @@
 
 <body>
 
-    <div class="app">
+    <main class="app">
 
-        <h1>سلام 👋</h1>
+        <!-- Background decoration -->
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
 
-        <p id="userName">
-            در حال دریافت اطلاعات...
-        </p>
+        <!-- Header -->
+        <header class="header">
 
-        <button id="helloBtn">
-            کلیک کن
-        </button>
+            <div class="brand">
+                <div class="brand-mark">DX</div>
 
-    </div>
+                <div>
+                    <div class="brand-name">
+                        DEX DESIGN
+                    </div>
 
+                    <div class="brand-subtitle">
+                        TELEGRAM MINI APP
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- Profile -->
+        <section class="profile-section">
+
+            <div class="avatar-wrapper">
+
+                <img
+                    id="profilePhoto"
+                    class="avatar"
+                    alt="Profile"
+                >
+
+                <div
+                    id="avatarFallback"
+                    class="avatar fallback"
+                >
+                </div>
+
+                <div class="online-dot"></div>
+
+            </div>
+
+
+            <h1 id="fullName">
+                در حال دریافت...
+            </h1>
+
+            <div
+                id="username"
+                class="username"
+            >
+                @username
+            </div>
+
+        </section>
+
+
+        <!-- Information Card -->
+        <section class="info-card">
+
+            <div class="card-title">
+                اطلاعات پروفایل
+            </div>
+
+
+            <!-- Name -->
+            <div class="info-row">
+
+                <div class="icon-box">
+                    👤
+                </div>
+
+                <div class="info-content">
+
+                    <div class="label">
+                        نام
+                    </div>
+
+                    <div
+                        id="nameValue"
+                        class="value"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Username -->
+            <div class="info-row">
+
+                <div class="icon-box">
+                    @
+                </div>
+
+                <div class="info-content">
+
+                    <div class="label">
+                        نام کاربری
+                    </div>
+
+                    <div
+                        id="usernameValue"
+                        class="value"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ID -->
+            <div class="info-row">
+
+                <div class="icon-box">
+                    🆔
+                </div>
+
+                <div class="info-content">
+
+                    <div class="label">
+                        Telegram ID
+                    </div>
+
+                    <div
+                        id="idValue"
+                        class="value id-value"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+                <button
+                    id="copyId"
+                    class="copy-button"
+                    type="button"
+                >
+                    کپی
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Status -->
+        <section class="status-card">
+
+            <div class="status-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <div class="status-title">
+                    اتصال موفق
+                </div>
+
+                <div class="status-text">
+                    اطلاعات حساب از Telegram دریافت شد
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer>
+
+            <span>
+                Powered by
+            </span>
+
+            <strong>
+                DEX DESIGN
+            </strong>
+
+        </footer>
+
+    </main>
+
+
+    <!-- Telegram -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+    <!-- App -->
     <script src="app.js"></script>
 
 </body>
