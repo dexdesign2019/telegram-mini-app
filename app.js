@@ -1,3 +1,4 @@
+```javascript
 /* =========================================================
    TELEGRAM
 ========================================================= */
@@ -57,14 +58,27 @@ function loadUser() {
             : "username ندارد";
 
 
-    document.getElementById(
-        "homeProfileName"
-    ).textContent = name || "کاربر";
+    const nameElement =
+        document.getElementById(
+            "homeProfileName"
+        );
+
+    const usernameElement =
+        document.getElementById(
+            "homeProfileUsername"
+        );
 
 
-    document.getElementById(
-        "homeProfileUsername"
-    ).textContent = username;
+    if (nameElement) {
+        nameElement.textContent =
+            name || "کاربر";
+    }
+
+
+    if (usernameElement) {
+        usernameElement.textContent =
+            username;
+    }
 
 
     const photo =
@@ -79,19 +93,29 @@ function loadUser() {
         );
 
 
+    if (!photo || !fallback) {
+        return;
+    }
+
+
     if (user?.photo_url) {
 
-        photo.src = user.photo_url;
+        photo.src =
+            user.photo_url;
 
-        photo.style.display = "block";
+        photo.style.display =
+            "block";
 
-        fallback.style.display = "none";
+        fallback.style.display =
+            "none";
 
     } else {
 
-        photo.style.display = "none";
+        photo.style.display =
+            "none";
 
-        fallback.style.display = "flex";
+        fallback.style.display =
+            "flex";
 
         fallback.textContent =
             (user?.first_name || "?")
@@ -109,16 +133,13 @@ function loadUser() {
 
 let totalPoints =
     Number(
-        localStorage.getItem("dex_total_points")
+        localStorage.getItem(
+            "dex_total_points"
+        )
     ) || 0;
 
 
-/*
-    Prototype only.
-
-    در نسخه نهایی این مقدار باید
-    از سرور دریافت شود.
-*/
+let gamePoints = 0;
 
 
 function savePoints() {
@@ -134,38 +155,59 @@ function savePoints() {
 function updatePointsUI() {
 
     const homeScore =
-        document.getElementById("homeScore");
+        document.getElementById(
+            "homeScore"
+        );
 
     const rewardScore =
-        document.getElementById("rewardScore");
+        document.getElementById(
+            "rewardScore"
+        );
 
     const gameScore =
-        document.getElementById("gameScore");
+        document.getElementById(
+            "gameScore"
+        );
 
 
-    if (homeScore)
-        homeScore.textContent = totalPoints;
+    if (homeScore) {
+
+        homeScore.textContent =
+            totalPoints;
+
+    }
 
 
-    if (rewardScore)
-        rewardScore.textContent = totalPoints;
+    if (rewardScore) {
+
+        rewardScore.textContent =
+            totalPoints;
+
+    }
 
 
-    if (gameScore)
-        gameScore.textContent = gamePoints;
+    if (gameScore) {
+
+        gameScore.textContent =
+            gamePoints;
+
+    }
 
 }
 
 
 function addPoints(amount) {
 
-    amount = Math.max(
-        0,
-        Number(amount) || 0
-    );
+    amount =
+        Math.max(
+            0,
+            Number(amount) || 0
+        );
 
 
-    totalPoints += amount;
+    totalPoints +=
+        amount;
+
 
     savePoints();
 
@@ -195,25 +237,26 @@ const licenseMessage =
 
 
 /*
-    موقتاً برای تست:
+    موقتاً فقط برای تست.
 
-    هر کد حداقل 8 کاراکتری قبول می‌شود.
-
-    سیستم اصلی License بعداً به سرور وصل می‌شود.
+    سیستم واقعی License بعداً روی سرور
+    پیاده‌سازی خواهد شد.
 */
 
 
 function checkLicense(license) {
 
     const value =
-        license.trim();
+        String(license || "")
+            .trim();
 
 
     if (!value) {
 
         return {
             valid: false,
-            message: "لطفاً لایسنس را وارد کنید."
+            message:
+                "لطفاً لایسنس را وارد کنید."
         };
 
     }
@@ -223,7 +266,8 @@ function checkLicense(license) {
 
         return {
             valid: false,
-            message: "لایسنس معتبر نیست."
+            message:
+                "لایسنس معتبر نیست."
         };
 
     }
@@ -236,67 +280,98 @@ function checkLicense(license) {
 }
 
 
-licenseButton.addEventListener(
-    "click",
-    () => {
+if (licenseButton) {
 
-        const result =
-            checkLicense(
-                licenseInput.value
+    licenseButton.addEventListener(
+        "click",
+        () => {
+
+            const result =
+                checkLicense(
+                    licenseInput
+                        ? licenseInput.value
+                        : ""
+                );
+
+
+            if (licenseMessage) {
+
+                licenseMessage.textContent =
+                    result.valid
+                        ? ""
+                        : result.message;
+
+            }
+
+
+            if (!result.valid) {
+
+                return;
+
+            }
+
+
+            if (licenseInput) {
+
+                localStorage.setItem(
+                    "dex_license",
+                    licenseInput.value.trim()
+                );
+
+            }
+
+
+            showScreen(
+                "home"
             );
 
+        }
+    );
 
-        licenseMessage.textContent =
-            result.valid
-                ? ""
-                : result.message;
-
-
-        if (!result.valid)
-            return;
+}
 
 
-        localStorage.setItem(
-            "dex_license",
-            licenseInput.value.trim()
-        );
+if (licenseInput) {
 
+    licenseInput.addEventListener(
+        "keydown",
+        (event) => {
 
-        showScreen("home");
+            if (
+                event.key === "Enter"
+            ) {
 
-    }
-);
+                if (licenseButton) {
 
+                    licenseButton.click();
 
-licenseInput.addEventListener(
-    "keydown",
-    (event) => {
+                }
 
-        if (event.key === "Enter") {
-
-            licenseButton.click();
+            }
 
         }
+    );
 
-    }
-);
+}
 
 
 /* =========================================================
-   SCREENS
+   SCREEN MANAGEMENT
 ========================================================= */
 
 function hideAllScreens() {
 
     document
         .querySelectorAll(".screen")
-        .forEach(screen => {
+        .forEach(
+            screen => {
 
-            screen.classList.remove(
-                "active"
-            );
+                screen.classList.remove(
+                    "active"
+                );
 
-        });
+            }
+        );
 
 }
 
@@ -306,26 +381,79 @@ function showScreen(name) {
     hideAllScreens();
 
 
-    if (name === "home")
-        homeScreen.classList.add("active");
+    /*
+       مهم:
+       صفحه License هم باید فعال شود.
+    */
+
+    if (
+        name === "license" &&
+        licenseScreen
+    ) {
+
+        licenseScreen.classList.add(
+            "active"
+        );
+
+    }
 
 
-    if (name === "game")
-        gameScreen.classList.add("active");
+    if (
+        name === "home" &&
+        homeScreen
+    ) {
+
+        homeScreen.classList.add(
+            "active"
+        );
+
+    }
 
 
-    if (name === "rewards")
-        rewardsScreen.classList.add("active");
+    if (
+        name === "game" &&
+        gameScreen
+    ) {
+
+        gameScreen.classList.add(
+            "active"
+        );
+
+    }
 
 
-    if (name === "placeholder")
-        placeholderScreen.classList.add("active");
+    if (
+        name === "rewards" &&
+        rewardsScreen
+    ) {
+
+        rewardsScreen.classList.add(
+            "active"
+        );
+
+    }
+
+
+    if (
+        name === "placeholder" &&
+        placeholderScreen
+    ) {
+
+        placeholderScreen.classList.add(
+            "active"
+        );
+
+    }
 
 
     updatePointsUI();
 
 }
 
+
+/* =========================================================
+   APP START
+========================================================= */
 
 function startApp() {
 
@@ -337,11 +465,15 @@ function startApp() {
 
     if (savedLicense) {
 
-        showScreen("home");
+        showScreen(
+            "home"
+        );
 
     } else {
 
-        showScreen("license");
+        showScreen(
+            "license"
+        );
 
     }
 
@@ -349,84 +481,120 @@ function startApp() {
 
 
 /* =========================================================
-   HOME
+   HOME → GAME
 ========================================================= */
 
-document
-    .getElementById("miniGameButton")
-    .addEventListener(
+const miniGameButton =
+    document.getElementById(
+        "miniGameButton"
+    );
+
+
+if (miniGameButton) {
+
+    miniGameButton.addEventListener(
         "click",
         () => {
 
-            showScreen("game");
+            showScreen(
+                "game"
+            );
 
             startGame();
 
         }
     );
 
+}
+
+
+/* =========================================================
+   HOME BUTTONS
+========================================================= */
 
 document
     .querySelectorAll(".home-card")
-    .forEach(button => {
+    .forEach(
+        button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                const page =
-                    button.dataset.page;
+                    const page =
+                        button.dataset.page;
 
 
-                if (page === "rewards") {
+                    /*
+                       Rewards
+                    */
 
-                    renderRewards();
+                    if (
+                        page ===
+                        "rewards"
+                    ) {
+
+                        renderRewards();
+
+                        showScreen(
+                            "rewards"
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                       سایر صفحات
+                    */
+
+                    const names = {
+
+                        achievements:
+                            "دستاوردها",
+
+                        points:
+                            "دریافت امتیاز",
+
+                        learning:
+                            "مسیر یادگیری",
+
+                        upgrade:
+                            "ارتقای سطح",
+
+                        guide:
+                            "راهنما"
+
+                    };
+
+
+                    const placeholderTitle =
+                        document.getElementById(
+                            "placeholderTitle"
+                        );
+
+
+                    if (
+                        placeholderTitle
+                    ) {
+
+                        placeholderTitle.textContent =
+                            names[page] ||
+                            "بخش";
+
+                    }
+
 
                     showScreen(
-                        "rewards"
+                        "placeholder"
                     );
 
-                    return;
-
                 }
+            );
 
-
-                const names = {
-
-                    achievements:
-                        "دستاوردها",
-
-                    points:
-                        "دریافت امتیاز",
-
-                    learning:
-                        "مسیر یادگیری",
-
-                    upgrade:
-                        "ارتقای سطح",
-
-                    guide:
-                        "راهنما"
-
-                };
-
-
-                document
-                    .getElementById(
-                        "placeholderTitle"
-                    )
-                    .textContent =
-                    names[page] || "بخش";
-
-
-                showScreen(
-                    "placeholder"
-                );
-
-            }
-        );
-
-    });
+        }
+    );
 
 
 /* =========================================================
@@ -435,18 +603,22 @@ document
 
 document
     .querySelectorAll(".page-back")
-    .forEach(button => {
+    .forEach(
+        button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                showScreen("home");
+                    showScreen(
+                        "home"
+                    );
 
-            }
-        );
+                }
+            );
 
-    });
+        }
+    );
 
 
 /* =========================================================
@@ -536,108 +708,125 @@ function renderRewards() {
         );
 
 
+    if (!container)
+        return;
+
+
     container.innerHTML = "";
 
 
-    rewards.forEach(reward => {
+    rewards.forEach(
+        reward => {
 
-        const canBuy =
-            totalPoints >= reward.price;
+            const canBuy =
+                totalPoints >=
+                reward.price;
 
 
-        const card =
-            document.createElement(
-                "div"
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "reward-card";
+
+
+            card.innerHTML = `
+
+                <div class="reward-icon">
+                    ${reward.icon}
+                </div>
+
+                <div class="reward-name">
+                    ${reward.name}
+                </div>
+
+                <div class="reward-price">
+                    ★ ${reward.price} امتیاز
+                </div>
+
+                <button
+                    class="reward-button ${canBuy ? "" : "disabled"}"
+                    data-reward="${reward.id}"
+                >
+                    ${
+                        canBuy
+                            ? "دریافت جایزه"
+                            : "امتیاز کافی نیست"
+                    }
+                </button>
+
+            `;
+
+
+            container.appendChild(
+                card
             );
 
-
-        card.className =
-            "reward-card";
-
-
-        card.innerHTML = `
-
-            <div class="reward-icon">
-                ${reward.icon}
-            </div>
-
-            <div class="reward-name">
-                ${reward.name}
-            </div>
-
-            <div class="reward-price">
-                ★ ${reward.price} امتیاز
-            </div>
-
-            <button
-                class="reward-button ${canBuy ? "" : "disabled"}"
-                data-reward="${reward.id}"
-            >
-                ${canBuy ? "دریافت جایزه" : "امتیاز کافی نیست"}
-            </button>
-
-        `;
-
-
-        container.appendChild(card);
-
-    });
+        }
+    );
 
 
     document
-        .querySelectorAll(".reward-button")
-        .forEach(button => {
+        .querySelectorAll(
+            ".reward-button"
+        )
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                    const reward =
-                        rewards.find(
-                            item =>
-                                item.id ===
-                                Number(
-                                    button.dataset.reward
-                                )
+                        const reward =
+                            rewards.find(
+                                item =>
+                                    item.id ===
+                                    Number(
+                                        button.dataset.reward
+                                    )
+                            );
+
+
+                        if (!reward)
+                            return;
+
+
+                        if (
+                            totalPoints <
+                            reward.price
+                        )
+                            return;
+
+
+                        totalPoints -=
+                            reward.price;
+
+
+                        savePoints();
+
+                        updatePointsUI();
+
+                        renderRewards();
+
+
+                        alert(
+                            `🎁 ${reward.name} دریافت شد!`
                         );
 
+                    }
+                );
 
-                    if (!reward)
-                        return;
-
-
-                    if (
-                        totalPoints <
-                        reward.price
-                    )
-                        return;
-
-
-                    totalPoints -=
-                        reward.price;
-
-
-                    savePoints();
-
-                    updatePointsUI();
-
-                    renderRewards();
-
-
-                    alert(
-                        `🎁 ${reward.name} دریافت شد!`
-                    );
-
-                }
-            );
-
-        });
+            }
+        );
 
 }
 
 
 /* =========================================================
-   GAME ENGINE
+   GAME
 ========================================================= */
 
 const canvas =
@@ -645,8 +834,11 @@ const canvas =
         "gameCanvas"
     );
 
+
 const ctx =
-    canvas.getContext("2d");
+    canvas
+        ? canvas.getContext("2d")
+        : null;
 
 
 const gameWorld =
@@ -677,8 +869,6 @@ let gameLastTime = 0;
 
 let gameDistance = 0;
 
-let gamePoints = 0;
-
 let gameSpeed = 1;
 
 let lane = 1;
@@ -699,22 +889,26 @@ let swipeStartY = 0;
 
 
 /*
-    Every 10 real seconds:
-
-    100m
-
-    یعنی 10 متر بر ثانیه.
-
-    سرعت تصویری بازی به‌تدریج
-    افزایش پیدا می‌کند، ولی منطق
-    امتیازدهی بر اساس milestone است.
+   100 متر در هر 10 ثانیه
+   = 10 متر در ثانیه
 */
-
 
 const METERS_PER_SECOND = 10;
 
 
+/* =========================================================
+   CANVAS
+========================================================= */
+
 function resizeCanvas() {
+
+    if (
+        !canvas ||
+        !gameWorld ||
+        !ctx
+    )
+        return;
+
 
     const rect =
         gameWorld.getBoundingClientRect();
@@ -763,18 +957,31 @@ window.addEventListener(
     "resize",
     () => {
 
-        if (gameRunning)
+        if (gameRunning) {
+
             resizeCanvas();
+
+        }
 
     }
 );
 
 
 /* =========================================================
-   GAME GEOMETRY
+   GAME SIZE
 ========================================================= */
 
 function getGameSize() {
+
+    if (!gameWorld) {
+
+        return {
+            width: 0,
+            height: 0
+        };
+
+    }
+
 
     const rect =
         gameWorld.getBoundingClientRect();
@@ -818,7 +1025,10 @@ function getRoad(width) {
 }
 
 
-function laneCenter(index, width) {
+function laneCenter(
+    index,
+    width
+) {
 
     const road =
         getRoad(width);
@@ -839,15 +1049,21 @@ function laneCenter(index, width) {
 
 function drawRoad() {
 
-    const { width, height } =
-        getGameSize();
+    if (!ctx)
+        return;
+
+
+    const {
+        width,
+        height
+    } = getGameSize();
 
 
     const road =
         getRoad(width);
 
 
-    /* grass */
+    /* Grass */
 
     ctx.fillStyle =
         "#18311f";
@@ -860,20 +1076,24 @@ function drawRoad() {
     );
 
 
-    /* subtle grass stripes */
+    /* Grass lines */
 
     ctx.fillStyle =
         "#1b3923";
 
 
-    const grassStripe =
+    const stripe =
         42;
 
 
     for (
-        let y = -grassStripe + roadOffset * .25;
+        let y =
+            -stripe +
+            roadOffset * .25;
+
         y < height;
-        y += grassStripe
+
+        y += stripe
     ) {
 
         ctx.fillRect(
@@ -886,7 +1106,7 @@ function drawRoad() {
     }
 
 
-    /* road */
+    /* Road */
 
     ctx.fillStyle =
         "#24272b";
@@ -899,17 +1119,20 @@ function drawRoad() {
     );
 
 
-    /* asphalt texture */
+    /* Texture */
 
     ctx.strokeStyle =
         "rgba(255,255,255,.025)";
 
-    ctx.lineWidth = 1;
+    ctx.lineWidth =
+        1;
 
 
     for (
         let y = -80;
+
         y < height + 80;
+
         y += 34
     ) {
 
@@ -921,7 +1144,8 @@ function drawRoad() {
         );
 
         ctx.lineTo(
-            road.left + road.width,
+            road.left +
+            road.width,
             y + roadOffset * .4
         );
 
@@ -930,7 +1154,7 @@ function drawRoad() {
     }
 
 
-    /* side lines */
+    /* Side lines */
 
     ctx.fillStyle =
         "#d8d8d8";
@@ -944,21 +1168,23 @@ function drawRoad() {
 
 
     ctx.fillRect(
-        road.left + road.width - 3,
+        road.left +
+        road.width -
+        3,
         0,
         3,
         height
     );
 
 
-    /* lane lines */
+    /* Lane lines */
 
     ctx.setLineDash(
         [28, 25]
     );
 
-
-    ctx.lineWidth = 3;
+    ctx.lineWidth =
+        3;
 
     ctx.strokeStyle =
         "rgba(255,255,255,.25)";
@@ -1003,8 +1229,18 @@ function drawRoad() {
 
 function drawCar() {
 
-    const { width, height } =
-        getGameSize();
+    if (!ctx)
+        return;
+
+
+    const {
+        width,
+        height
+    } = getGameSize();
+
+
+    const road =
+        getRoad(width);
 
 
     const x =
@@ -1016,7 +1252,7 @@ function drawCar() {
 
     const carWidth =
         Math.min(
-            getRoad(width).laneWidth * .52,
+            road.laneWidth * .52,
             67
         );
 
@@ -1029,7 +1265,7 @@ function drawCar() {
         height - 165;
 
 
-    /* shadow */
+    /* Shadow */
 
     ctx.fillStyle =
         "rgba(0,0,0,.35)";
@@ -1050,7 +1286,7 @@ function drawCar() {
     ctx.fill();
 
 
-    /* body */
+    /* Body */
 
     const gradient =
         ctx.createLinearGradient(
@@ -1090,7 +1326,7 @@ function drawCar() {
     ctx.fill();
 
 
-    /* windshield */
+    /* Windshield */
 
     ctx.fillStyle =
         "#1b2129";
@@ -1109,7 +1345,7 @@ function drawCar() {
     ctx.fill();
 
 
-    /* front light */
+    /* Lights */
 
     ctx.fillStyle =
         "#ffe8a3";
@@ -1141,7 +1377,7 @@ function drawCar() {
     ctx.fill();
 
 
-    /* wheels */
+    /* Wheels */
 
     ctx.fillStyle =
         "#0a0b0e";
@@ -1163,7 +1399,7 @@ function drawCar() {
     );
 
 
-    /* shine */
+    /* Highlight */
 
     ctx.fillStyle =
         "rgba(255,255,255,.16)";
@@ -1185,7 +1421,7 @@ function drawCar() {
 
 
 /* =========================================================
-   HELPER
+   ROUND RECT
 ========================================================= */
 
 function roundRect(
@@ -1242,7 +1478,7 @@ function roundRect(
 
 
 /* =========================================================
-   OBSTACLES
+   CREATE OBSTACLE
 ========================================================= */
 
 function createObstacle() {
@@ -1255,12 +1491,15 @@ function createObstacle() {
 
     obstacles.push({
 
-        lane: randomLane,
+        lane:
+            randomLane,
 
-        y: -120,
+        y:
+            -120,
 
         speed:
-            1 + Math.random() * .8,
+            1 +
+            Math.random() * .8,
 
         type:
             Math.random() > .5
@@ -1272,12 +1511,21 @@ function createObstacle() {
 }
 
 
+/* =========================================================
+   DRAW OBSTACLE
+========================================================= */
+
 function drawObstacle(
     obstacle
 ) {
 
-    const { width } =
-        getGameSize();
+    if (!ctx)
+        return;
+
+
+    const {
+        width
+    } = getGameSize();
 
 
     const road =
@@ -1392,8 +1640,10 @@ function drawObstacle(
             ctx.save();
 
             ctx.translate(
-                x + i * w * .25,
-                obstacle.y + h * .28
+                x +
+                i * w * .25,
+                obstacle.y +
+                h * .28
             );
 
             ctx.rotate(
@@ -1426,8 +1676,10 @@ function hasCollision(
     obstacle
 ) {
 
-    const { width, height } =
-        getGameSize();
+    const {
+        width,
+        height
+    } = getGameSize();
 
 
     const road =
@@ -1468,14 +1720,16 @@ function hasCollision(
 
 
     if (
-        obstacle.lane !== lane
+        obstacle.lane !==
+        Math.round(lane)
     )
         return false;
 
 
     return (
 
-        obstacle.y + obstacleH * .75
+        obstacle.y +
+            obstacleH * .75
             >= carY
 
         &&
@@ -1492,7 +1746,8 @@ function hasCollision(
             ) - carX
         )
         <
-        (carW + obstacleW) / 2.25
+        (carW + obstacleW) /
+        2.25
 
     );
 
@@ -1507,24 +1762,22 @@ function updateGame(
     delta
 ) {
 
-    /*
-       Distance is fixed at:
-
-       10 meters / second
-
-       => 100 meters / 10 seconds
-    */
-
     gameDistance +=
         METERS_PER_SECOND *
         delta;
 
 
-    distanceText.textContent =
-        `${Math.floor(gameDistance)}m`;
+    if (distanceText) {
+
+        distanceText.textContent =
+            `${Math.floor(
+                gameDistance
+            )}m`;
+
+    }
 
 
-    /* gradual visual speed */
+    /* gradual acceleration */
 
     gameSpeed +=
         delta * .018;
@@ -1532,17 +1785,21 @@ function updateGame(
 
     roadOffset +=
         delta *
-        (170 + gameSpeed * 30);
+        (
+            170 +
+            gameSpeed * 30
+        );
 
 
     /* obstacle spawn */
 
-    obstacleTimer += delta;
+    obstacleTimer +=
+        delta;
 
 
     const spawnInterval =
         Math.max(
-            0.55,
+            .55,
             .95 -
             gameSpeed * .055
         );
@@ -1560,16 +1817,19 @@ function updateGame(
     }
 
 
-    /* obstacles */
+    /* move obstacles */
 
     obstacles.forEach(
         obstacle => {
 
             obstacle.y +=
                 delta *
-                (210 +
-                 gameSpeed * 70 *
-                 obstacle.speed);
+                (
+                    210 +
+                    gameSpeed *
+                    70 *
+                    obstacle.speed
+                );
 
         }
     );
@@ -1578,21 +1838,25 @@ function updateGame(
     obstacles =
         obstacles.filter(
             obstacle =>
-                obstacle.y < 1100
+                obstacle.y <
+                1100
         );
 
 
-    /* lane movement */
+    /* Smooth lane movement */
 
     lane +=
-        (targetLane - lane) *
+        (
+            targetLane -
+            lane
+        ) *
         Math.min(
             1,
             delta * 14
         );
 
 
-    /* milestone */
+    /* Score milestone */
 
     const milestone =
         Math.floor(
@@ -1628,7 +1892,7 @@ function updateGame(
     }
 
 
-    /* collisions */
+    /* Collision */
 
     for (
         const obstacle
@@ -1653,7 +1917,7 @@ function updateGame(
 
 
 /* =========================================================
-   GAME DRAW
+   DRAW GAME
 ========================================================= */
 
 function drawGame() {
@@ -1683,15 +1947,19 @@ function gameLoop(
         return;
 
 
-    if (!gameLastTime)
+    if (!gameLastTime) {
+
         gameLastTime =
             timestamp;
 
+    }
+
 
     let delta =
-        (timestamp -
-         gameLastTime) /
-        1000;
+        (
+            timestamp -
+            gameLastTime
+        ) / 1000;
 
 
     gameLastTime =
@@ -1727,6 +1995,14 @@ function gameLoop(
 
 function startGame() {
 
+    if (
+        !canvas ||
+        !ctx ||
+        !gameWorld
+    )
+        return;
+
+
     cancelAnimationFrame(
         animationId
     );
@@ -1760,20 +2036,33 @@ function startGame() {
     lastPointMilestone = 0;
 
 
-    document
-        .getElementById(
+    const gameOverElement =
+        document.getElementById(
             "gameOver"
-        )
-        .classList.add(
-            "hidden"
         );
 
 
-    document
-        .getElementById(
+    if (gameOverElement) {
+
+        gameOverElement.classList.add(
+            "hidden"
+        );
+
+    }
+
+
+    const finalScore =
+        document.getElementById(
             "finalGameScore"
-        )
-        .textContent = "0";
+        );
+
+
+    if (finalScore) {
+
+        finalScore.textContent =
+            "0";
+
+    }
 
 
     updatePointsUI();
@@ -1807,32 +2096,48 @@ function endGame() {
     );
 
 
-    document
-        .getElementById(
+    const finalScore =
+        document.getElementById(
             "finalGameScore"
-        )
-        .textContent =
-        gamePoints;
+        );
 
 
-    document
-        .getElementById(
+    if (finalScore) {
+
+        finalScore.textContent =
+            gamePoints;
+
+    }
+
+
+    const gameOverElement =
+        document.getElementById(
             "gameOver"
-        )
-        .classList.remove(
+        );
+
+
+    if (gameOverElement) {
+
+        gameOverElement.classList.remove(
             "hidden"
         );
+
+    }
 
 }
 
 
 /* =========================================================
-   GAME POINT ANIMATION
+   POINT ANIMATION
 ========================================================= */
 
 function showPointAnimation(
     amount
 ) {
+
+    if (!pointAnimation)
+        return;
+
 
     pointAnimation.textContent =
         `+${amount}`;
@@ -1854,17 +2159,24 @@ function showPointAnimation(
 
 
 /* =========================================================
-   ADD GAME SCORE WHEN EXITING
+   EXIT GAME
 ========================================================= */
 
 function finishGameAndExit() {
 
     /*
-       امتیاز حاصل از همان بازی
-       وارد امتیاز حساب می‌شود.
+       Prototype:
+
+       در این نسخه امتیاز بازی
+       هنگام خروج به حساب اضافه می‌شود.
+
+       نسخه نهایی:
+       امتیاز باید روی سرور ثبت شود.
     */
 
-    if (gamePoints > 0) {
+    if (
+        gamePoints > 0
+    ) {
 
         addPoints(
             gamePoints
@@ -1873,9 +2185,19 @@ function finishGameAndExit() {
     }
 
 
+    gameRunning = false;
+
+    cancelAnimationFrame(
+        animationId
+    );
+
+
     gamePoints = 0;
 
-    showScreen("home");
+
+    showScreen(
+        "home"
+    );
 
 }
 
@@ -1884,11 +2206,15 @@ function finishGameAndExit() {
    GAME BUTTONS
 ========================================================= */
 
-document
-    .getElementById(
+const restartGameButton =
+    document.getElementById(
         "restartGameButton"
-    )
-    .addEventListener(
+    );
+
+
+if (restartGameButton) {
+
+    restartGameButton.addEventListener(
         "click",
         () => {
 
@@ -1897,12 +2223,18 @@ document
         }
     );
 
+}
 
-document
-    .getElementById(
+
+const exitGameButton =
+    document.getElementById(
         "exitGameButton"
-    )
-    .addEventListener(
+    );
+
+
+if (exitGameButton) {
+
+    exitGameButton.addEventListener(
         "click",
         () => {
 
@@ -1911,18 +2243,22 @@ document
         }
     );
 
+}
 
-document
-    .getElementById(
+
+const gameBackButton =
+    document.getElementById(
         "gameBackButton"
-    )
-    .addEventListener(
+    );
+
+
+if (gameBackButton) {
+
+    gameBackButton.addEventListener(
         "click",
         () => {
 
-            if (
-                gameOver
-            ) {
+            if (gameOver) {
 
                 finishGameAndExit();
 
@@ -1943,97 +2279,97 @@ document
         }
     );
 
+}
+
 
 /* =========================================================
    SWIPE
 ========================================================= */
 
-gameWorld.addEventListener(
-    "touchstart",
-    event => {
+if (gameWorld) {
 
-        const touch =
-            event.changedTouches[0];
+    gameWorld.addEventListener(
+        "touchstart",
+        event => {
 
-
-        swipeStartX =
-            touch.clientX;
+            const touch =
+                event.changedTouches[0];
 
 
-        swipeStartY =
-            touch.clientY;
-
-    },
-    {
-        passive: true
-    }
-);
+            swipeStartX =
+                touch.clientX;
 
 
-gameWorld.addEventListener(
-    "touchend",
-    event => {
+            swipeStartY =
+                touch.clientY;
 
-        const touch =
-            event.changedTouches[0];
-
-
-        const dx =
-            touch.clientX -
-            swipeStartX;
-
-
-        const dy =
-            touch.clientY -
-            swipeStartY;
-
-
-        /*
-           فقط حرکت افقی
-        */
-
-        if (
-            Math.abs(dx)
-            <=
-            Math.abs(dy)
-        )
-            return;
-
-
-        if (
-            Math.abs(dx) <
-            25
-        )
-            return;
-
-
-        if (dx > 0) {
-
-            targetLane =
-                Math.min(
-                    2,
-                    targetLane + 1
-                );
-
-        } else {
-
-            targetLane =
-                Math.max(
-                    0,
-                    targetLane - 1
-                );
-
+        },
+        {
+            passive: true
         }
+    );
 
-    },
-    {
-        passive: true
-    }
-);
+
+    gameWorld.addEventListener(
+        "touchend",
+        event => {
+
+            const touch =
+                event.changedTouches[0];
+
+
+            const dx =
+                touch.clientX -
+                swipeStartX;
+
+
+            const dy =
+                touch.clientY -
+                swipeStartY;
+
+
+            if (
+                Math.abs(dx) <=
+                Math.abs(dy)
+            )
+                return;
+
+
+            if (
+                Math.abs(dx) < 25
+            )
+                return;
+
+
+            if (dx > 0) {
+
+                targetLane =
+                    Math.min(
+                        2,
+                        targetLane + 1
+                    );
+
+            } else {
+
+                targetLane =
+                    Math.max(
+                        0,
+                        targetLane - 1
+                    );
+
+            }
+
+        },
+        {
+            passive: true
+        }
+    );
+
+}
 
 
 /* =========================================================
-   INITIALIZE
+   START
 ========================================================= */
 
 loadUser();
@@ -2041,3 +2377,4 @@ loadUser();
 updatePointsUI();
 
 startApp();
+```
