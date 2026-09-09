@@ -1,77 +1,112 @@
 const tg = window.Telegram.WebApp;
 
 
-/* Telegram آماده شود */
+/* ---------------------------
+   TELEGRAM
+---------------------------- */
+
 tg.ready();
 
-
-/* صفحه را بزرگ‌تر کن */
 tg.expand();
 
 
-/* کاربر Telegram */
-const user = tg.initDataUnsafe?.user;
+/* ---------------------------
+   ELEMENTS
+---------------------------- */
+
+const licenseScreen =
+    document.getElementById("licenseScreen");
+
+const homeScreen =
+    document.getElementById("homeScreen");
 
 
-/* عناصر صفحه */
-const profilePhoto = document.getElementById("profilePhoto");
-const avatarFallback = document.getElementById("avatarFallback");
+const licenseInput =
+    document.getElementById("licenseInput");
 
-const fullName = document.getElementById("fullName");
-const username = document.getElementById("username");
+const licenseButton =
+    document.getElementById("licenseButton");
 
-const nameValue = document.getElementById("nameValue");
-const usernameValue = document.getElementById("usernameValue");
-const idValue = document.getElementById("idValue");
-
-const copyId = document.getElementById("copyId");
+const licenseMessage =
+    document.getElementById("licenseMessage");
 
 
-/* اگر Mini App از داخل Telegram باز شده باشد */
-if (user) {
+const profilePhoto =
+    document.getElementById("profilePhoto");
 
-    /* نام */
-    const firstName = user.first_name || "";
-    const lastName = user.last_name || "";
+const profileFallback =
+    document.getElementById("profileFallback");
 
-    const fullUserName =
+const profileName =
+    document.getElementById("profileName");
+
+const profileUsername =
+    document.getElementById("profileUsername");
+
+
+/* ---------------------------
+   TELEGRAM USER
+---------------------------- */
+
+const user =
+    tg.initDataUnsafe?.user;
+
+
+/* ---------------------------
+   SHOW USER
+---------------------------- */
+
+function loadTelegramUser() {
+
+    if (!user) {
+
+        profileName.textContent =
+            "مهمان";
+
+        profileUsername.textContent =
+            "Telegram";
+
+        profilePhoto.style.display =
+            "none";
+
+        profileFallback.style.display =
+            "flex";
+
+        profileFallback.textContent =
+            "?";
+
+        return;
+    }
+
+
+    const firstName =
+        user.first_name || "";
+
+    const lastName =
+        user.last_name || "";
+
+
+    const fullName =
         `${firstName} ${lastName}`.trim();
 
 
-    fullName.textContent =
-        fullUserName || "کاربر Telegram";
+    profileName.textContent =
+        fullName || "کاربر";
 
 
-    nameValue.textContent =
-        fullUserName || "ثبت نشده";
-
-
-    /* Username */
     if (user.username) {
 
-        username.textContent =
-            `@${user.username}`;
-
-        usernameValue.textContent =
+        profileUsername.textContent =
             `@${user.username}`;
 
     } else {
 
-        username.textContent =
-            "Username ندارد";
-
-        usernameValue.textContent =
-            "ثبت نشده";
+        profileUsername.textContent =
+            "username ندارد";
 
     }
 
 
-    /* Telegram ID */
-    idValue.textContent =
-        user.id;
-
-
-    /* عکس پروفایل */
     if (user.photo_url) {
 
         profilePhoto.src =
@@ -80,7 +115,7 @@ if (user) {
         profilePhoto.style.display =
             "block";
 
-        avatarFallback.style.display =
+        profileFallback.style.display =
             "none";
 
     } else {
@@ -88,84 +123,197 @@ if (user) {
         profilePhoto.style.display =
             "none";
 
-        avatarFallback.style.display =
+        profileFallback.style.display =
             "flex";
 
-        avatarFallback.textContent =
+        profileFallback.textContent =
             (firstName || "?")
                 .charAt(0)
                 .toUpperCase();
 
     }
 
+}
 
-} else {
 
-    /*
-       اگر صفحه مستقیماً در مرورگر باز شود
-       و داخل Telegram نباشد
-    */
+/* ---------------------------
+   SCREEN CHANGE
+---------------------------- */
 
-    fullName.textContent =
-        "مهمان";
+function showHome() {
 
-    username.textContent =
-        "Telegram یافت نشد";
+    licenseScreen.classList.remove("active");
 
-    nameValue.textContent =
-        "اطلاعات در دسترس نیست";
-
-    usernameValue.textContent =
-        "اطلاعات در دسترس نیست";
-
-    idValue.textContent =
-        "—";
-
-    profilePhoto.style.display =
-        "none";
-
-    avatarFallback.style.display =
-        "flex";
-
-    avatarFallback.textContent =
-        "?";
+    homeScreen.classList.add("active");
 
 }
 
 
-/* کپی کردن ID */
+/* ---------------------------
+   LICENSE CHECK
+---------------------------- */
 
-copyId.addEventListener("click", async () => {
+/*
+    این قسمت فعلاً موقت است.
 
-    const id = user?.id;
+    لایسنس واقعی را بعداً به سرور
+    وصل می‌کنیم.
 
-    if (!id) {
-        return;
+    لیست لایسنس‌ها را نباید اینجا
+    قرار بدهیم.
+*/
+
+async function checkLicense(license) {
+
+    const cleanLicense =
+        license.trim();
+
+
+    if (!cleanLicense) {
+
+        return {
+            valid: false,
+            message: "لطفاً لایسنس را وارد کنید."
+        };
+
     }
 
-    try {
 
-        await navigator.clipboard.writeText(
-            String(id)
+    /*
+       فعلاً برای تست:
+
+       هر لایسنس با حداقل 8 کاراکتر
+       معتبر فرض می‌شود.
+
+       این قسمت موقتی است و در نسخه
+       واقعی حذف خواهد شد.
+    */
+
+    if (cleanLicense.length < 8) {
+
+        return {
+            valid: false,
+            message: "فرمت لایسنس صحیح نیست."
+        };
+
+    }
+
+
+    return {
+        valid: true
+    };
+
+}
+
+
+/* ---------------------------
+   LICENSE BUTTON
+---------------------------- */
+
+licenseButton.addEventListener(
+    "click",
+    async function () {
+
+        licenseMessage.textContent =
+            "";
+
+        const license =
+            licenseInput.value;
+
+
+        licenseButton.classList.add(
+            "loading"
         );
 
-        copyId.textContent =
-            "کپی شد ✓";
+        licenseButton.textContent =
+            "در حال بررسی...";
 
 
-        setTimeout(() => {
-
-            copyId.textContent =
-                "کپی";
-
-        }, 1500);
+        const result =
+            await checkLicense(license);
 
 
-    } catch {
+        licenseButton.classList.remove(
+            "loading"
+        );
 
-        copyId.textContent =
-            "خطا";
+        licenseButton.textContent =
+            "ورود";
+
+
+        if (!result.valid) {
+
+            licenseMessage.textContent =
+                result.message;
+
+            return;
+
+        }
+
+
+        /*
+           لایسنس معتبر است
+        */
+
+        showHome();
 
     }
+);
+
+
+/* ---------------------------
+   ENTER KEY
+---------------------------- */
+
+licenseInput.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "Enter") {
+
+            licenseButton.click();
+
+        }
+
+    }
+);
+
+
+/* ---------------------------
+   MENU BUTTONS
+---------------------------- */
+
+const menuButtons =
+    document.querySelectorAll(".menu-card");
+
+
+menuButtons.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        function () {
+
+            const page =
+                button.dataset.page;
+
+
+            /*
+               فعلاً فقط تست کنیم
+               که دکمه‌ها کار می‌کنند.
+            */
+
+            alert(
+                `بخش ${page} در مرحله بعد ساخته می‌شود.`
+            );
+
+        }
+    );
 
 });
+
+
+/* ---------------------------
+   START
+---------------------------- */
+
+loadTelegramUser();
