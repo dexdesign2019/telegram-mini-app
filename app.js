@@ -1,18 +1,32 @@
-```javascript
 /* =========================================================
    TELEGRAM
 ========================================================= */
 
-const tg = window.Telegram.WebApp;
+const tg =
+    window.Telegram &&
+    window.Telegram.WebApp
+        ? window.Telegram.WebApp
+        : null;
 
-tg.ready();
-tg.expand();
 
-try {
-    tg.setHeaderColor("#07080d");
-    tg.setBackgroundColor("#07080d");
-} catch (e) {
-    console.log("Telegram theme methods unavailable.");
+if (tg) {
+
+    try {
+        tg.ready();
+    } catch (e) {}
+
+    try {
+        tg.expand();
+    } catch (e) {}
+
+    try {
+        tg.setHeaderColor("#07080d");
+    } catch (e) {}
+
+    try {
+        tg.setBackgroundColor("#07080d");
+    } catch (e) {}
+
 }
 
 
@@ -41,22 +55,10 @@ const placeholderScreen =
 ========================================================= */
 
 const user =
-    tg.initDataUnsafe?.user || null;
+    tg?.initDataUnsafe?.user || null;
 
 
 function loadUser() {
-
-    const name =
-        user
-            ? `${user.first_name || ""} ${user.last_name || ""}`.trim()
-            : "مهمان";
-
-
-    const username =
-        user?.username
-            ? `@${user.username}`
-            : "username ندارد";
-
 
     const nameElement =
         document.getElementById(
@@ -68,24 +70,10 @@ function loadUser() {
             "homeProfileUsername"
         );
 
-
-    if (nameElement) {
-        nameElement.textContent =
-            name || "کاربر";
-    }
-
-
-    if (usernameElement) {
-        usernameElement.textContent =
-            username;
-    }
-
-
     const photo =
         document.getElementById(
             "homeProfilePhoto"
         );
-
 
     const fallback =
         document.getElementById(
@@ -93,9 +81,43 @@ function loadUser() {
         );
 
 
-    if (!photo || !fallback) {
-        return;
+    const firstName =
+        user?.first_name || "";
+
+
+    const lastName =
+        user?.last_name || "";
+
+
+    const fullName =
+        `${firstName} ${lastName}`
+            .trim();
+
+
+    const username =
+        user?.username
+            ? `@${user.username}`
+            : "username ندارد";
+
+
+    if (nameElement) {
+
+        nameElement.textContent =
+            fullName || "کاربر";
+
     }
+
+
+    if (usernameElement) {
+
+        usernameElement.textContent =
+            username;
+
+    }
+
+
+    if (!photo || !fallback)
+        return;
 
 
     if (user?.photo_url) {
@@ -118,9 +140,9 @@ function loadUser() {
             "flex";
 
         fallback.textContent =
-            (user?.first_name || "?")
-                .charAt(0)
-                .toUpperCase();
+            firstName
+                ? firstName.charAt(0).toUpperCase()
+                : "?";
 
     }
 
@@ -198,7 +220,7 @@ function updatePointsUI() {
 
 function addPoints(amount) {
 
-    amount =
+    const value =
         Math.max(
             0,
             Number(amount) || 0
@@ -206,7 +228,7 @@ function addPoints(amount) {
 
 
     totalPoints +=
-        amount;
+        value;
 
 
     savePoints();
@@ -217,146 +239,7 @@ function addPoints(amount) {
 
 
 /* =========================================================
-   LICENSE
-========================================================= */
-
-const licenseInput =
-    document.getElementById(
-        "licenseInput"
-    );
-
-const licenseButton =
-    document.getElementById(
-        "licenseButton"
-    );
-
-const licenseMessage =
-    document.getElementById(
-        "licenseMessage"
-    );
-
-
-/*
-    موقتاً فقط برای تست.
-
-    سیستم واقعی License بعداً روی سرور
-    پیاده‌سازی خواهد شد.
-*/
-
-
-function checkLicense(license) {
-
-    const value =
-        String(license || "")
-            .trim();
-
-
-    if (!value) {
-
-        return {
-            valid: false,
-            message:
-                "لطفاً لایسنس را وارد کنید."
-        };
-
-    }
-
-
-    if (value.length < 8) {
-
-        return {
-            valid: false,
-            message:
-                "لایسنس معتبر نیست."
-        };
-
-    }
-
-
-    return {
-        valid: true
-    };
-
-}
-
-
-if (licenseButton) {
-
-    licenseButton.addEventListener(
-        "click",
-        () => {
-
-            const result =
-                checkLicense(
-                    licenseInput
-                        ? licenseInput.value
-                        : ""
-                );
-
-
-            if (licenseMessage) {
-
-                licenseMessage.textContent =
-                    result.valid
-                        ? ""
-                        : result.message;
-
-            }
-
-
-            if (!result.valid) {
-
-                return;
-
-            }
-
-
-            if (licenseInput) {
-
-                localStorage.setItem(
-                    "dex_license",
-                    licenseInput.value.trim()
-                );
-
-            }
-
-
-            showScreen(
-                "home"
-            );
-
-        }
-    );
-
-}
-
-
-if (licenseInput) {
-
-    licenseInput.addEventListener(
-        "keydown",
-        (event) => {
-
-            if (
-                event.key === "Enter"
-            ) {
-
-                if (licenseButton) {
-
-                    licenseButton.click();
-
-                }
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   SCREEN MANAGEMENT
+   SCREENS
 ========================================================= */
 
 function hideAllScreens() {
@@ -380,11 +263,6 @@ function showScreen(name) {
 
     hideAllScreens();
 
-
-    /*
-       مهم:
-       صفحه License هم باید فعال شود.
-    */
 
     if (
         name === "license" &&
@@ -452,7 +330,134 @@ function showScreen(name) {
 
 
 /* =========================================================
-   APP START
+   LICENSE
+========================================================= */
+
+const licenseInput =
+    document.getElementById(
+        "licenseInput"
+    );
+
+
+const licenseButton =
+    document.getElementById(
+        "licenseButton"
+    );
+
+
+const licenseMessage =
+    document.getElementById(
+        "licenseMessage"
+    );
+
+
+function checkLicense(value) {
+
+    const license =
+        String(value || "")
+            .trim();
+
+
+    if (!license) {
+
+        return {
+            valid: false,
+            message:
+                "لطفاً لایسنس را وارد کنید."
+        };
+
+    }
+
+
+    if (license.length < 8) {
+
+        return {
+            valid: false,
+            message:
+                "لایسنس معتبر نیست."
+        };
+
+    }
+
+
+    /*
+        موقتاً برای تست.
+
+        بعداً این قسمت را به سرور
+        و لیست لایسنس‌های واقعی وصل می‌کنیم.
+    */
+
+    return {
+        valid: true
+    };
+
+}
+
+
+if (licenseButton) {
+
+    licenseButton.addEventListener(
+        "click",
+        () => {
+
+            const result =
+                checkLicense(
+                    licenseInput
+                        ? licenseInput.value
+                        : ""
+                );
+
+
+            if (licenseMessage) {
+
+                licenseMessage.textContent =
+                    result.valid
+                        ? ""
+                        : result.message;
+
+            }
+
+
+            if (!result.valid)
+                return;
+
+
+            localStorage.setItem(
+                "dex_license",
+                licenseInput.value.trim()
+            );
+
+
+            showScreen("home");
+
+        }
+    );
+
+}
+
+
+if (licenseInput) {
+
+    licenseInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                licenseButton?.click();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   START APP
 ========================================================= */
 
 function startApp() {
@@ -465,15 +470,11 @@ function startApp() {
 
     if (savedLicense) {
 
-        showScreen(
-            "home"
-        );
+        showScreen("home");
 
     } else {
 
-        showScreen(
-            "license"
-        );
+        showScreen("license");
 
     }
 
@@ -481,7 +482,7 @@ function startApp() {
 
 
 /* =========================================================
-   HOME → GAME
+   HOME BUTTONS
 ========================================================= */
 
 const miniGameButton =
@@ -496,9 +497,7 @@ if (miniGameButton) {
         "click",
         () => {
 
-            showScreen(
-                "game"
-            );
+            showScreen("game");
 
             startGame();
 
@@ -508,93 +507,83 @@ if (miniGameButton) {
 }
 
 
-/* =========================================================
-   HOME BUTTONS
-========================================================= */
-
-document
-    .querySelectorAll(".home-card")
-    .forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const page =
-                        button.dataset.page;
+const homeCards =
+    document.querySelectorAll(
+        ".home-card"
+    );
 
 
-                    /*
-                       Rewards
-                    */
+homeCards.forEach(
+    button => {
 
-                    if (
-                        page ===
-                        "rewards"
-                    ) {
+        button.addEventListener(
+            "click",
+            () => {
 
-                        renderRewards();
-
-                        showScreen(
-                            "rewards"
-                        );
-
-                        return;
-
-                    }
+                const page =
+                    button.dataset.page;
 
 
-                    /*
-                       سایر صفحات
-                    */
+                if (
+                    page ===
+                    "rewards"
+                ) {
 
-                    const names = {
-
-                        achievements:
-                            "دستاوردها",
-
-                        points:
-                            "دریافت امتیاز",
-
-                        learning:
-                            "مسیر یادگیری",
-
-                        upgrade:
-                            "ارتقای سطح",
-
-                        guide:
-                            "راهنما"
-
-                    };
-
-
-                    const placeholderTitle =
-                        document.getElementById(
-                            "placeholderTitle"
-                        );
-
-
-                    if (
-                        placeholderTitle
-                    ) {
-
-                        placeholderTitle.textContent =
-                            names[page] ||
-                            "بخش";
-
-                    }
-
+                    renderRewards();
 
                     showScreen(
-                        "placeholder"
+                        "rewards"
                     );
 
-                }
-            );
+                    return;
 
-        }
-    );
+                }
+
+
+                const pageNames = {
+
+                    achievements:
+                        "دستاوردها",
+
+                    points:
+                        "دریافت امتیاز",
+
+                    learning:
+                        "مسیر یادگیری",
+
+                    upgrade:
+                        "ارتقای سطح",
+
+                    guide:
+                        "راهنما"
+
+                };
+
+
+                const title =
+                    document.getElementById(
+                        "placeholderTitle"
+                    );
+
+
+                if (title) {
+
+                    title.textContent =
+                        pageNames[page]
+                        || "بخش";
+
+                }
+
+
+                showScreen(
+                    "placeholder"
+                );
+
+            }
+        );
+
+    }
+);
 
 
 /* =========================================================
@@ -712,16 +701,12 @@ function renderRewards() {
         return;
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
 
 
     rewards.forEach(
         reward => {
-
-            const canBuy =
-                totalPoints >=
-                reward.price;
-
 
             const card =
                 document.createElement(
@@ -731,6 +716,11 @@ function renderRewards() {
 
             card.className =
                 "reward-card";
+
+
+            const canBuy =
+                totalPoints >=
+                reward.price;
 
 
             card.innerHTML = `
@@ -748,8 +738,14 @@ function renderRewards() {
                 </div>
 
                 <button
-                    class="reward-button ${canBuy ? "" : "disabled"}"
-                    data-reward="${reward.id}"
+                    class="reward-button ${
+                        canBuy
+                            ? ""
+                            : "disabled"
+                    }"
+                    data-reward-id="${reward.id}"
+                    type="button"
+                    ${canBuy ? "" : "disabled"}
                 >
                     ${
                         canBuy
@@ -769,7 +765,7 @@ function renderRewards() {
     );
 
 
-    document
+    container
         .querySelectorAll(
             ".reward-button"
         )
@@ -785,7 +781,7 @@ function renderRewards() {
                                 item =>
                                     item.id ===
                                     Number(
-                                        button.dataset.reward
+                                        button.dataset.rewardId
                                     )
                             );
 
@@ -826,7 +822,7 @@ function renderRewards() {
 
 
 /* =========================================================
-   GAME
+   GAME VARIABLES
 ========================================================= */
 
 const canvas =
@@ -847,57 +843,85 @@ const gameWorld =
     );
 
 
-const pointAnimation =
-    document.getElementById(
-        "pointAnimation"
-    );
-
-
 const distanceText =
     document.getElementById(
         "distanceText"
     );
 
 
-let animationId = null;
+const pointAnimation =
+    document.getElementById(
+        "pointAnimation"
+    );
 
-let gameRunning = false;
 
-let gameOver = false;
+let animationId =
+    null;
 
-let gameLastTime = 0;
 
-let gameDistance = 0;
+let gameRunning =
+    false;
 
-let gameSpeed = 1;
 
-let lane = 1;
+let gameOver =
+    false;
 
-let targetLane = 1;
 
-let roadOffset = 0;
+let lastFrame =
+    0;
 
-let obstacleTimer = 0;
 
-let obstacles = [];
+let gameDistance =
+    0;
 
-let lastPointMilestone = 0;
 
-let swipeStartX = 0;
+let gameSpeed =
+    1;
 
-let swipeStartY = 0;
+
+let currentLane =
+    1;
+
+
+let targetLane =
+    1;
+
+
+let roadOffset =
+    0;
+
+
+let spawnTimer =
+    0;
+
+
+let obstacles =
+    [];
+
+
+let lastMilestone =
+    0;
+
+
+let swipeStartX =
+    0;
+
+
+let swipeStartY =
+    0;
 
 
 /*
-   100 متر در هر 10 ثانیه
-   = 10 متر در ثانیه
+    100m = 10 seconds
+    10m per second
 */
 
-const METERS_PER_SECOND = 10;
+const METERS_PER_SECOND =
+    10;
 
 
 /* =========================================================
-   CANVAS
+   CANVAS SIZE
 ========================================================= */
 
 function resizeCanvas() {
@@ -968,7 +992,7 @@ window.addEventListener(
 
 
 /* =========================================================
-   GAME SIZE
+   ROAD
 ========================================================= */
 
 function getGameSize() {
@@ -988,11 +1012,8 @@ function getGameSize() {
 
 
     return {
-
         width: rect.width,
-
         height: rect.height
-
     };
 
 }
@@ -1007,15 +1028,16 @@ function getRoad(width) {
         );
 
 
-    const roadLeft =
+    const left =
         (width - roadWidth) / 2;
 
 
     return {
 
-        left: roadLeft,
+        left,
 
-        width: roadWidth,
+        width:
+            roadWidth,
 
         laneWidth:
             roadWidth / 3
@@ -1025,8 +1047,8 @@ function getRoad(width) {
 }
 
 
-function laneCenter(
-    index,
+function getLaneX(
+    laneIndex,
     width
 ) {
 
@@ -1036,7 +1058,8 @@ function laneCenter(
 
     return (
         road.left +
-        road.laneWidth * index +
+        road.laneWidth *
+            laneIndex +
         road.laneWidth / 2
     );
 
@@ -1063,7 +1086,7 @@ function drawRoad() {
         getRoad(width);
 
 
-    /* Grass */
+    /* grass */
 
     ctx.fillStyle =
         "#18311f";
@@ -1076,40 +1099,10 @@ function drawRoad() {
     );
 
 
-    /* Grass lines */
+    /* road */
 
     ctx.fillStyle =
-        "#1b3923";
-
-
-    const stripe =
-        42;
-
-
-    for (
-        let y =
-            -stripe +
-            roadOffset * .25;
-
-        y < height;
-
-        y += stripe
-    ) {
-
-        ctx.fillRect(
-            0,
-            y,
-            width,
-            2
-        );
-
-    }
-
-
-    /* Road */
-
-    ctx.fillStyle =
-        "#24272b";
+        "#25282c";
 
     ctx.fillRect(
         road.left,
@@ -1119,45 +1112,10 @@ function drawRoad() {
     );
 
 
-    /* Texture */
-
-    ctx.strokeStyle =
-        "rgba(255,255,255,.025)";
-
-    ctx.lineWidth =
-        1;
-
-
-    for (
-        let y = -80;
-
-        y < height + 80;
-
-        y += 34
-    ) {
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            road.left,
-            y + roadOffset * .4
-        );
-
-        ctx.lineTo(
-            road.left +
-            road.width,
-            y + roadOffset * .4
-        );
-
-        ctx.stroke();
-
-    }
-
-
-    /* Side lines */
+    /* side lines */
 
     ctx.fillStyle =
-        "#d8d8d8";
+        "#d9d9d9";
 
     ctx.fillRect(
         road.left,
@@ -1169,25 +1127,25 @@ function drawRoad() {
 
     ctx.fillRect(
         road.left +
-        road.width -
-        3,
+            road.width -
+            3,
         0,
         3,
         height
     );
 
 
-    /* Lane lines */
+    /* lane lines */
 
-    ctx.setLineDash(
-        [28, 25]
-    );
+    ctx.strokeStyle =
+        "rgba(255,255,255,.22)";
 
     ctx.lineWidth =
         3;
 
-    ctx.strokeStyle =
-        "rgba(255,255,255,.25)";
+    ctx.setLineDash(
+        [30, 24]
+    );
 
 
     for (
@@ -1198,19 +1156,21 @@ function drawRoad() {
 
         const x =
             road.left +
-            road.laneWidth * i;
+            road.laneWidth *
+                i;
 
 
         ctx.beginPath();
 
         ctx.moveTo(
             x,
-            -100
+            -100 + roadOffset
         );
 
         ctx.lineTo(
             x,
-            height + 100
+            height + 100 +
+                roadOffset
         );
 
         ctx.stroke();
@@ -1220,208 +1180,47 @@ function drawRoad() {
 
     ctx.setLineDash([]);
 
-}
+
+    /* subtle road texture */
+
+    ctx.strokeStyle =
+        "rgba(255,255,255,.018)";
 
 
-/* =========================================================
-   DRAW CAR
-========================================================= */
-
-function drawCar() {
-
-    if (!ctx)
-        return;
+    ctx.lineWidth =
+        1;
 
 
-    const {
-        width,
-        height
-    } = getGameSize();
+    for (
+        let y = -50;
+        y < height + 50;
+        y += 35
+    ) {
 
+        ctx.beginPath();
 
-    const road =
-        getRoad(width);
-
-
-    const x =
-        laneCenter(
-            lane,
-            width
+        ctx.moveTo(
+            road.left,
+            y +
+                (roadOffset * .4)
         );
 
-
-    const carWidth =
-        Math.min(
-            road.laneWidth * .52,
-            67
+        ctx.lineTo(
+            road.left +
+                road.width,
+            y +
+                (roadOffset * .4)
         );
 
+        ctx.stroke();
 
-    const carHeight =
-        carWidth * 1.6;
-
-
-    const y =
-        height - 165;
-
-
-    /* Shadow */
-
-    ctx.fillStyle =
-        "rgba(0,0,0,.35)";
-
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        x,
-        y + carHeight * .48,
-        carWidth * .65,
-        carHeight * .18,
-        0,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-
-    /* Body */
-
-    const gradient =
-        ctx.createLinearGradient(
-            x,
-            y,
-            x,
-            y + carHeight
-        );
-
-
-    gradient.addColorStop(
-        0,
-        "#f44336"
-    );
-
-
-    gradient.addColorStop(
-        1,
-        "#a91511"
-    );
-
-
-    ctx.fillStyle =
-        gradient;
-
-
-    roundRect(
-        ctx,
-        x - carWidth / 2,
-        y,
-        carWidth,
-        carHeight,
-        14
-    );
-
-
-    ctx.fill();
-
-
-    /* Windshield */
-
-    ctx.fillStyle =
-        "#1b2129";
-
-
-    roundRect(
-        ctx,
-        x - carWidth * .34,
-        y + carHeight * .17,
-        carWidth * .68,
-        carHeight * .25,
-        8
-    );
-
-
-    ctx.fill();
-
-
-    /* Lights */
-
-    ctx.fillStyle =
-        "#ffe8a3";
-
-
-    roundRect(
-        ctx,
-        x - carWidth * .35,
-        y + carHeight * .06,
-        carWidth * .20,
-        carHeight * .09,
-        4
-    );
-
-
-    ctx.fill();
-
-
-    roundRect(
-        ctx,
-        x + carWidth * .15,
-        y + carHeight * .06,
-        carWidth * .20,
-        carHeight * .09,
-        4
-    );
-
-
-    ctx.fill();
-
-
-    /* Wheels */
-
-    ctx.fillStyle =
-        "#0a0b0e";
-
-
-    ctx.fillRect(
-        x - carWidth * .57,
-        y + carHeight * .23,
-        carWidth * .13,
-        carHeight * .28
-    );
-
-
-    ctx.fillRect(
-        x + carWidth * .44,
-        y + carHeight * .23,
-        carWidth * .13,
-        carHeight * .28
-    );
-
-
-    /* Highlight */
-
-    ctx.fillStyle =
-        "rgba(255,255,255,.16)";
-
-
-    roundRect(
-        ctx,
-        x - carWidth * .20,
-        y + carHeight * .08,
-        carWidth * .10,
-        carHeight * .75,
-        5
-    );
-
-
-    ctx.fill();
+    }
 
 }
 
 
 /* =========================================================
-   ROUND RECT
+   ROUNDED RECT
 ========================================================= */
 
 function roundRect(
@@ -1478,42 +1277,268 @@ function roundRect(
 
 
 /* =========================================================
-   CREATE OBSTACLE
+   CAR
 ========================================================= */
 
-function createObstacle() {
+function drawCar() {
 
-    const randomLane =
-        Math.floor(
-            Math.random() * 3
+    if (!ctx)
+        return;
+
+
+    const {
+        width,
+        height
+    } = getGameSize();
+
+
+    const road =
+        getRoad(width);
+
+
+    const x =
+        getLaneX(
+            currentLane,
+            width
         );
 
 
-    obstacles.push({
+    const carWidth =
+        Math.min(
+            road.laneWidth * .52,
+            66
+        );
 
-        lane:
-            randomLane,
 
-        y:
-            -120,
+    const carHeight =
+        carWidth * 1.60;
 
-        speed:
-            1 +
-            Math.random() * .8,
 
-        type:
-            Math.random() > .5
-                ? "barrier"
-                : "traffic"
+    const y =
+        height - 170;
 
-    });
+
+    /* shadow */
+
+    ctx.fillStyle =
+        "rgba(0,0,0,.36)";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x,
+        y +
+            carHeight *
+            .50,
+        carWidth *
+            .62,
+        carHeight *
+            .14,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /* body */
+
+    const body =
+        ctx.createLinearGradient(
+            x,
+            y,
+            x,
+            y + carHeight
+        );
+
+
+    body.addColorStop(
+        0,
+        "#f74b43"
+    );
+
+
+    body.addColorStop(
+        1,
+        "#a91411"
+    );
+
+
+    ctx.fillStyle =
+        body;
+
+
+    roundRect(
+        ctx,
+        x - carWidth / 2,
+        y,
+        carWidth,
+        carHeight,
+        13
+    );
+
+
+    ctx.fill();
+
+
+    /* windshield */
+
+    ctx.fillStyle =
+        "#18212a";
+
+
+    roundRect(
+        ctx,
+        x -
+            carWidth *
+            .34,
+        y +
+            carHeight *
+            .18,
+        carWidth *
+            .68,
+        carHeight *
+            .24,
+        8
+    );
+
+
+    ctx.fill();
+
+
+    /* front lights */
+
+    ctx.fillStyle =
+        "#fff0ae";
+
+
+    roundRect(
+        ctx,
+        x -
+            carWidth *
+            .35,
+        y +
+            carHeight *
+            .06,
+        carWidth *
+            .20,
+        7,
+        3
+    );
+
+
+    ctx.fill();
+
+
+    roundRect(
+        ctx,
+        x +
+            carWidth *
+            .15,
+        y +
+            carHeight *
+            .06,
+        carWidth *
+            .20,
+        7,
+        3
+    );
+
+
+    ctx.fill();
+
+
+    /* wheels */
+
+    ctx.fillStyle =
+        "#08090c";
+
+
+    ctx.fillRect(
+        x -
+            carWidth *
+            .57,
+        y +
+            carHeight *
+            .25,
+        carWidth *
+            .13,
+        carHeight *
+            .27
+    );
+
+
+    ctx.fillRect(
+        x +
+            carWidth *
+            .44,
+        y +
+            carHeight *
+            .25,
+        carWidth *
+            .13,
+        carHeight *
+            .27
+    );
+
+
+    /* highlight */
+
+    ctx.fillStyle =
+        "rgba(255,255,255,.14)";
+
+
+    roundRect(
+        ctx,
+        x -
+            carWidth *
+            .20,
+        y +
+            carHeight *
+            .09,
+        carWidth *
+            .09,
+        carHeight *
+            .72,
+        5
+    );
+
+
+    ctx.fill();
 
 }
 
 
 /* =========================================================
-   DRAW OBSTACLE
+   OBSTACLES
 ========================================================= */
+
+function createObstacle() {
+
+    obstacles.push({
+
+        lane:
+            Math.floor(
+                Math.random() * 3
+            ),
+
+        y:
+            -120,
+
+        type:
+            Math.random() > .5
+                ? "car"
+                : "barrier",
+
+        speed:
+            .9 +
+            Math.random() * .4
+
+    });
+
+}
+
 
 function drawObstacle(
     obstacle
@@ -1533,7 +1558,7 @@ function drawObstacle(
 
 
     const x =
-        laneCenter(
+        getLaneX(
             obstacle.lane,
             width
         );
@@ -1547,16 +1572,16 @@ function drawObstacle(
 
 
     const h =
-        75;
+        74;
 
 
     if (
         obstacle.type ===
-        "traffic"
+        "car"
     ) {
 
         ctx.fillStyle =
-            "#315ec9";
+            "#2f63d4";
 
 
         roundRect(
@@ -1565,7 +1590,7 @@ function drawObstacle(
             obstacle.y,
             w,
             h,
-            11
+            10
         );
 
 
@@ -1573,15 +1598,15 @@ function drawObstacle(
 
 
         ctx.fillStyle =
-            "#1b2029";
+            "#1c222b";
 
 
         roundRect(
             ctx,
             x - w * .30,
-            obstacle.y + 13,
+            obstacle.y + 12,
             w * .60,
-            h * .32,
+            h * .33,
             7
         );
 
@@ -1590,20 +1615,20 @@ function drawObstacle(
 
 
         ctx.fillStyle =
-            "#f4d36c";
+            "#ffe9a8";
 
 
         ctx.fillRect(
-            x - w * .32,
-            obstacle.y + h - 15,
+            x - w * .31,
+            obstacle.y + h - 14,
             w * .18,
             6
         );
 
 
         ctx.fillRect(
-            x + w * .14,
-            obstacle.y + h - 15,
+            x + w * .13,
+            obstacle.y + h - 14,
             w * .18,
             6
         );
@@ -1611,7 +1636,7 @@ function drawObstacle(
     } else {
 
         ctx.fillStyle =
-            "#e5483f";
+            "#e64b42";
 
 
         roundRect(
@@ -1619,7 +1644,7 @@ function drawObstacle(
             x - w / 2,
             obstacle.y,
             w,
-            h * .55,
+            42,
             9
         );
 
@@ -1628,7 +1653,7 @@ function drawObstacle(
 
 
         ctx.fillStyle =
-            "#fff3d0";
+            "#fff2ce";
 
 
         for (
@@ -1641,9 +1666,12 @@ function drawObstacle(
 
             ctx.translate(
                 x +
-                i * w * .25,
+                    i *
+                    w *
+                    .24,
+
                 obstacle.y +
-                h * .28
+                    21
             );
 
             ctx.rotate(
@@ -1652,10 +1680,10 @@ function drawObstacle(
 
 
             ctx.fillRect(
-                -w * .07,
-                -h * .03,
-                w * .14,
-                h * .34
+                -4,
+                -14,
+                8,
+                28
             );
 
 
@@ -1672,9 +1700,19 @@ function drawObstacle(
    COLLISION
 ========================================================= */
 
-function hasCollision(
+function checkCollision(
     obstacle
 ) {
+
+    if (
+        obstacle.lane !==
+        Math.round(currentLane)
+    ) {
+
+        return false;
+
+    }
+
 
     const {
         width,
@@ -1686,26 +1724,19 @@ function hasCollision(
         getRoad(width);
 
 
-    const carX =
-        laneCenter(
-            lane,
-            width
-        );
-
-
     const carW =
         Math.min(
             road.laneWidth * .52,
-            67
+            66
         );
 
 
     const carH =
-        carW * 1.6;
+        carW * 1.60;
 
 
     const carY =
-        height - 165;
+        height - 170;
 
 
     const obstacleW =
@@ -1716,39 +1747,45 @@ function hasCollision(
 
 
     const obstacleH =
-        75;
-
-
-    if (
-        obstacle.lane !==
-        Math.round(lane)
-    )
-        return false;
+        74;
 
 
     return (
-
         obstacle.y +
-            obstacleH * .75
-            >= carY
-
+            obstacleH >=
+            carY + 10
         &&
+        obstacle.y <=
+            carY + carH - 10
+    );
 
-        obstacle.y
-            <= carY + carH
+}
 
-        &&
 
-        Math.abs(
-            laneCenter(
-                obstacle.lane,
-                width
-            ) - carX
-        )
-        <
-        (carW + obstacleW) /
-        2.25
+/* =========================================================
+   POINT ANIMATION
+========================================================= */
 
+function showPointAnimation() {
+
+    if (!pointAnimation)
+        return;
+
+
+    pointAnimation.textContent =
+        "+1";
+
+
+    pointAnimation.classList.remove(
+        "show"
+    );
+
+
+    void pointAnimation.offsetWidth;
+
+
+    pointAnimation.classList.add(
+        "show"
     );
 
 }
@@ -1758,9 +1795,15 @@ function hasCollision(
    GAME UPDATE
 ========================================================= */
 
-function updateGame(
-    delta
-) {
+function updateGame(delta) {
+
+    /*
+        Distance:
+
+        10 meters / second
+
+        100 meters / 10 seconds
+    */
 
     gameDistance +=
         METERS_PER_SECOND *
@@ -1770,54 +1813,62 @@ function updateGame(
     if (distanceText) {
 
         distanceText.textContent =
-            `${Math.floor(
-                gameDistance
-            )}m`;
+            `${Math.floor(gameDistance)}m`;
 
     }
 
 
-    /* gradual acceleration */
+    /*
+        Gradual acceleration
+    */
 
     gameSpeed +=
-        delta * .018;
+        delta * .020;
 
+
+    /*
+        Road movement
+    */
 
     roadOffset +=
         delta *
         (
-            170 +
+            180 +
             gameSpeed * 30
         );
 
 
-    /* obstacle spawn */
+    /*
+        Spawn
+    */
 
-    obstacleTimer +=
-        delta;
+    spawnTimer += delta;
 
 
-    const spawnInterval =
+    const interval =
         Math.max(
-            .55,
+            .52,
             .95 -
-            gameSpeed * .055
+                gameSpeed *
+                .055
         );
 
 
     if (
-        obstacleTimer >=
-        spawnInterval
+        spawnTimer >=
+        interval
     ) {
 
-        obstacleTimer = 0;
+        spawnTimer = 0;
 
         createObstacle();
 
     }
 
 
-    /* move obstacles */
+    /*
+        Move obstacles
+    */
 
     obstacles.forEach(
         obstacle => {
@@ -1825,7 +1876,7 @@ function updateGame(
             obstacle.y +=
                 delta *
                 (
-                    210 +
+                    215 +
                     gameSpeed *
                     70 *
                     obstacle.speed
@@ -1843,12 +1894,14 @@ function updateGame(
         );
 
 
-    /* Smooth lane movement */
+    /*
+        Smooth lane movement
+    */
 
-    lane +=
+    currentLane +=
         (
             targetLane -
-            lane
+            currentLane
         ) *
         Math.min(
             1,
@@ -1856,35 +1909,44 @@ function updateGame(
         );
 
 
-    /* Score milestone */
+    /*
+        Score
+    */
 
     const milestone =
         Math.floor(
-            gameDistance / 100
+            gameDistance /
+            100
         );
 
 
     if (
         milestone >
-        lastPointMilestone
+        lastMilestone
     ) {
 
         const gained =
             milestone -
-            lastPointMilestone;
+            lastMilestone;
 
 
         gamePoints +=
             gained;
 
 
-        lastPointMilestone =
+        lastMilestone =
             milestone;
 
 
-        showPointAnimation(
-            gained
-        );
+        for (
+            let i = 0;
+            i < gained;
+            i++
+        ) {
+
+            showPointAnimation();
+
+        }
 
 
         updatePointsUI();
@@ -1892,7 +1954,9 @@ function updateGame(
     }
 
 
-    /* Collision */
+    /*
+        Collision
+    */
 
     for (
         const obstacle
@@ -1900,7 +1964,7 @@ function updateGame(
     ) {
 
         if (
-            hasCollision(
+            checkCollision(
                 obstacle
             )
         ) {
@@ -1924,11 +1988,9 @@ function drawGame() {
 
     drawRoad();
 
-
     obstacles.forEach(
         drawObstacle
     );
-
 
     drawCar();
 
@@ -1939,37 +2001,32 @@ function drawGame() {
    GAME LOOP
 ========================================================= */
 
-function gameLoop(
-    timestamp
-) {
+function gameLoop(timestamp) {
 
     if (!gameRunning)
         return;
 
 
-    if (!gameLastTime) {
-
-        gameLastTime =
+    if (!lastFrame)
+        lastFrame =
             timestamp;
-
-    }
 
 
     let delta =
         (
             timestamp -
-            gameLastTime
+            lastFrame
         ) / 1000;
 
 
-    gameLastTime =
+    lastFrame =
         timestamp;
 
 
     delta =
         Math.min(
             delta,
-            .033
+            0.033
         );
 
 
@@ -2011,29 +2068,52 @@ function startGame() {
     resizeCanvas();
 
 
-    gameRunning = true;
+    gameRunning =
+        true;
 
-    gameOver = false;
 
-    gameLastTime = 0;
+    gameOver =
+        false;
 
-    gameDistance = 0;
 
-    gamePoints = 0;
+    lastFrame =
+        0;
 
-    gameSpeed = 1;
 
-    lane = 1;
+    gameDistance =
+        0;
 
-    targetLane = 1;
 
-    roadOffset = 0;
+    gamePoints =
+        0;
 
-    obstacleTimer = 0;
 
-    obstacles = [];
+    gameSpeed =
+        1;
 
-    lastPointMilestone = 0;
+
+    currentLane =
+        1;
+
+
+    targetLane =
+        1;
+
+
+    roadOffset =
+        0;
+
+
+    spawnTimer =
+        0;
+
+
+    obstacles =
+        [];
+
+
+    lastMilestone =
+        0;
 
 
     const gameOverElement =
@@ -2051,16 +2131,10 @@ function startGame() {
     }
 
 
-    const finalScore =
-        document.getElementById(
-            "finalGameScore"
-        );
+    if (distanceText) {
 
-
-    if (finalScore) {
-
-        finalScore.textContent =
-            "0";
+        distanceText.textContent =
+            "0m";
 
     }
 
@@ -2077,7 +2151,7 @@ function startGame() {
 
 
 /* =========================================================
-   GAME OVER
+   END GAME
 ========================================================= */
 
 function endGame() {
@@ -2086,9 +2160,12 @@ function endGame() {
         return;
 
 
-    gameRunning = false;
+    gameRunning =
+        false;
 
-    gameOver = true;
+
+    gameOver =
+        true;
 
 
     cancelAnimationFrame(
@@ -2128,51 +2205,10 @@ function endGame() {
 
 
 /* =========================================================
-   POINT ANIMATION
-========================================================= */
-
-function showPointAnimation(
-    amount
-) {
-
-    if (!pointAnimation)
-        return;
-
-
-    pointAnimation.textContent =
-        `+${amount}`;
-
-
-    pointAnimation.classList.remove(
-        "show"
-    );
-
-
-    void pointAnimation.offsetWidth;
-
-
-    pointAnimation.classList.add(
-        "show"
-    );
-
-}
-
-
-/* =========================================================
    EXIT GAME
 ========================================================= */
 
-function finishGameAndExit() {
-
-    /*
-       Prototype:
-
-       در این نسخه امتیاز بازی
-       هنگام خروج به حساب اضافه می‌شود.
-
-       نسخه نهایی:
-       امتیاز باید روی سرور ثبت شود.
-    */
+function exitGame() {
 
     if (
         gamePoints > 0
@@ -2185,14 +2221,17 @@ function finishGameAndExit() {
     }
 
 
-    gameRunning = false;
+    gameRunning =
+        false;
+
 
     cancelAnimationFrame(
         animationId
     );
 
 
-    gamePoints = 0;
+    gamePoints =
+        0;
 
 
     showScreen(
@@ -2238,7 +2277,7 @@ if (exitGameButton) {
         "click",
         () => {
 
-            finishGameAndExit();
+            exitGame();
 
         }
     );
@@ -2260,21 +2299,34 @@ if (gameBackButton) {
 
             if (gameOver) {
 
-                finishGameAndExit();
+                exitGame();
 
-            } else {
-
-                gameRunning = false;
-
-                cancelAnimationFrame(
-                    animationId
-                );
-
-                showScreen(
-                    "home"
-                );
+                return;
 
             }
+
+
+            gameRunning =
+                false;
+
+
+            cancelAnimationFrame(
+                animationId
+            );
+
+
+            /*
+                در این حالت بازی لغو می‌شود
+                و امتیاز بازی ذخیره نمی‌شود.
+            */
+
+            gamePoints =
+                0;
+
+
+            showScreen(
+                "home"
+            );
 
         }
     );
@@ -2369,7 +2421,7 @@ if (gameWorld) {
 
 
 /* =========================================================
-   START
+   INITIALIZATION
 ========================================================= */
 
 loadUser();
@@ -2377,4 +2429,3 @@ loadUser();
 updatePointsUI();
 
 startApp();
-```
