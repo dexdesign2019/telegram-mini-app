@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>گوشی سه بعدی</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:#222;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:tahoma;
+    overflow:hidden;
+}
+
+.phone{
+    width:300px;
+    height:600px;
+    background:#050505;
+    border-radius:45px;
+    padding:15px;
+    box-shadow:0 30px 60px #000;
+    transform:rotateY(-15deg);
+}
+
+.screen{
+    background:#f2f2f2;
+    height:100%;
+    border-radius:35px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:25px;
+}
+
+button{
+    width:200px;
+    padding:18px;
+    font-size:22px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+    <div class="screen">
+        <button onclick="selectFile('text')">📝 متن</button>
+        <button onclick="selectFile('music')">🎵 آهنگ</button>
+        <button onclick="selectFile('video')">🎬 ویدئو</button>
+    </div>
+</div>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
+
+function selectFile(type){
+
+    tg.sendData(JSON.stringify({
+        type:type
+    }));
+
+    alert("درخواست ارسال شد");
+}
+</script>
+
+</body>
+</html>
