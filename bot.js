@@ -1,4 +1,5 @@
 const TelegramBot = require("node-telegram-bot-api");
+const path = require("path");
 
 const TOKEN = "8822767949:AAHc74cvjc7f_TB-uhE8AeP8v237AM8aj-0";
 
@@ -7,21 +8,20 @@ const bot = new TelegramBot(TOKEN, {
 });
 
 
-bot.on("message", (msg) => {
+bot.on("message", async (msg) => {
 
     if (!msg.web_app_data) return;
 
-
     const userId = msg.chat.id;
 
-    const data = JSON.parse(
-        msg.web_app_data.data
-    );
+    const data = JSON.parse(msg.web_app_data.data);
+
+    console.log("دریافت شد:", data);
 
 
     if (data.type === "text") {
 
-        bot.sendMessage(
+        await bot.sendMessage(
             userId,
             "سلام 👋 این متن انتخابی شماست."
         );
@@ -31,9 +31,11 @@ bot.on("message", (msg) => {
 
     if (data.type === "music") {
 
-        bot.sendAudio(
+        const musicPath = path.join(__dirname, "music.mp3");
+
+        await bot.sendAudio(
             userId,
-            "./music.mp3"
+            musicPath
         );
 
     }
@@ -41,12 +43,21 @@ bot.on("message", (msg) => {
 
     if (data.type === "video") {
 
-        bot.sendVideo(
+        const videoPath = path.join(__dirname, "video.mp4");
+
+        await bot.sendVideo(
             userId,
-            "./video.mp4"
+            videoPath
         );
 
     }
 
 });
+
+
+bot.on("polling_error", (error) => {
+    console.log("Polling Error:", error.message);
+});
+
+
 console.log("Bot started successfully");
