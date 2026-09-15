@@ -49,3 +49,4 @@ bot.on("message", (msg) => {
     }
 
 });
+console.log("Bot started successfully");
